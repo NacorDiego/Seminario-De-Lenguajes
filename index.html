@@ -4,33 +4,147 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FUENTES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- MIS ESTILOS -->
+    <link rel="stylesheet" href="estilos.css">
     <title>Document</title>
-    <script src="./traerDatos.js"></script>
 </head>
 <body>
     <header class="header">
-        <nav>
-            <img src="" alt="logo">
+        <nav class="nav">
+            <img class="imagen-logo" src="./imgs/logo.svg" alt="logo">
         </nav>
     </header>
-    <main class="container">
-        <form action="">
-            <input type="text"></input>
-            <select name="" id="">
-                <option value="pepe">Pepe</option>
-                <option value="oscar">oscar</option>
-            </select>
-            <select name="" id="">
-                <option value="pepe">Pepe</option>
-                <option value="oscar">oscar</option>
-            </select>
-            <select name="" id="">
-                <option value="pepe">Pepe</option>
-                <option value="oscar">oscar</option>
-            </select>
-            <button type="submit">Filtrar</button>
-        </form>
-        <div id="videojuegos-lista"></div>
+    <main class="contenedor">
+        <!-- FORMULARIO -->
+        <div class="contenedor100">
+            <form class="formulario" action="">
+                <div class="campo">
+                    <label class="campo-label" for="nombre">Nombre</label>
+                    <input id="nombre" type="text"></input>
+                </div>
+                <div class="campo">
+                    <label class="campo-label" for="genero">Genero</label>
+                    <select name="" id="genero">
+                        <option value="pepe">Pepe</option>
+                        <option value="oscar">oscar</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label class="campo-label" for="plataforma">Plataforma</label>
+                    <select name="" id="plataforma">
+                        <option value="pepe">Pepe</option>
+                        <option value="oscar">oscar</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label class="campo-label" for="ordenar">Ordenar por nombre</label>
+                    <select name="" id="ordenar">
+                        <option value="pepe">Pepe</option>
+                        <option value="oscar">oscar</option>
+                    </select>
+                </div>
+                <button class="boton-filtros" type="submit">Filtrar</button>
+            </form>
+        </div>
+        <!-- LISTA DE CARDS -->
+        <div id="videojuegos-contenedor" class="videojuegos-contenedor">
+            <ul class="videojuegos-lista">
+                <li class="juego">
+                    <div class="card">
+                        <img src="https://thecatapi.com/api/images/get?format=src&type=gif" alt="cat">
+                        <div class="container">
+                            <h4>
+                                sarasa
+                            </h4>
+                            <ul style="list-style: none;">
+                                <li><b>Genero:</b></li>
+                                <li><b>Plataforma:</b></li>
+                                <li><b>Descripcion:</b></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li class="juego">
+                    <div class="card">
+                        <img src="https://thecatapi.com/api/images/get?format=src&type=gif" alt="cat">
+                        <div class="container">
+                            <h4>
+                                sarasa
+                            </h4>
+                            <ul style="list-style: none;">
+                                <li><b>Genero:</b></li>
+                                <li><b>Plataforma:</b></li>
+                                <li><b>Descripcion:</b></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li class="juego">
+                    <div class="card">
+                        <img src="https://thecatapi.com/api/images/get?format=src&type=gif" alt="cat">
+                        <div class="container">
+                            <h4>
+                                sarasa
+                            </h4>
+                            <ul style="list-style: none;">
+                                <li><b>Genero:</b></li>
+                                <li><b>Plataforma:</b></li>
+                                <li><b>Descripcion:</b></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li class="juego">
+                    <div class="card">
+                        <img src="https://thecatapi.com/api/images/get?format=src&type=gif" alt="cat">
+                        <div class="container">
+                            <h4>
+                                sarasa
+                            </h4>
+                            <ul style="list-style: none;">
+                                <li><b>Genero:</b></li>
+                                <li><b>Plataforma:</b></li>
+                                <li><b>Descripcion:</b></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li class="juego">
+                    <div class="card">
+                        <img src="https://thecatapi.com/api/images/get?format=src&type=gif" alt="cat">
+                        <div class="container">
+                            <h4>
+                                sarasa
+                            </h4>
+                            <ul style="list-style: none;">
+                                <li><b>Genero:</b></li>
+                                <li><b>Plataforma:</b></li>
+                                <li><b>Descripcion:</b></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li class="juego">
+                    <div class="card">
+                        <img src="https://thecatapi.com/api/images/get?format=src&type=gif" alt="cat">
+                        <div class="container">
+                            <h4>
+                                sarasa
+                            </h4>
+                            <ul style="list-style: none;">
+                                <li><b>Genero:</b></li>
+                                <li><b>Plataforma:</b></li>
+                                <li><b>Descripcion:</b></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </main>
     <footer class="footer">
         <span>Diego Ezequiel Nacor - Emanuel Gomez - 2023</span>
