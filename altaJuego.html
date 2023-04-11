@@ -22,47 +22,59 @@
     <main class="contenedor">
         <!-- FORMULARIO -->
         <div class="contenedor100">
-            <form id="form-principal" class="formulario">
-                <div class="campo">
-                    <label class="campo-label" for="nombre">Nombre</label>
-                    <input id="nombre" type="text" onfocus=""></input>
-                    <span id="error-nombre"></span>
-                </div>
-                <div class="campo">
-                    <label class="campo-label" for="img-juego">Imagen del juego</label>
-                    <input id="img-juego" type="file"></input>
-                    <span id="error-img"></span>
-                </div>
-                <div class="campo">
-                    <label class="campo-label" for="descripcion">Descripcion</label>
-                    <input id="descripcion" type="text"></input>
-                    <span id="error-descrip"></span>
-                </div>
-                <div class="campo">
-                    <label class="campo-label" for="plataforma">Plataforma</label>
-                    <select name="" id="plataforma">
-                        <option value="0" selected>Seleccionar...</option>
-                        <option value="1">Opción 1</option>
-                        <option value="2">Opción 2</option>
-                    </select>
-                    <span id="error-plataforma"></span>
-                </div>
-                <div class="campo">
-                    <label class="campo-label" for="url">Url</label>
-                    <input id="url" type="text"></input>
-                    <span id="error-url"></span>
-                </div>
-                <div class="campo">
-                    <label class="campo-label" for="genero">Genero</label>
-                    <select name="" id="genero">
-                        <option value="Ordenar" selected>Seleccionar...</option>
-                        <option value="Ordenar">Opción 1</option>
-                        <option value="Ordenar">Opción 2</option>
-                    </select>
-                </div>
-                <input type="button" value="Agregar" class="boton-filtros" onclick="validacion()"></input>
-                <!-- <button id="btn-form" class="boton-filtros" onClick="Validacion()">Agregar</button> -->
-            </form>
+            <div class="contenedor70">
+                <form id="form-principal" class="form-agregar-juego">
+                    <div class="campo-juego">
+                        <label class="campo-juego-label" for="nombre">Nombre</label>
+                        <input class="campo-juego-input" id="nombre" type="text" placeholder="Ingrese el nombre del juego..."></input>
+                        <div class="contenedor-error">
+                            <span class="span-error" id="error-nombre"></span>
+                        </div>
+                    </div>
+                    <div class="campo-juego">
+                        <label class="campo-juego-label" for="img-juego">Imagen</label>
+                        <input class="campo-juego-input-img" id="img-juego" type="file"></input>
+                        <div class="contenedor-error">
+                            <span class="span-error" id="error-img"></span>
+                        </div>
+                    </div>
+                    <div class="campo-juego">
+                        <label class="campo-juego-label" for="descripcion">Descripción</label>
+                        <input class="campo-juego-input" id="descripcion" type="text"></input>
+                        <div class="contenedor-error">
+                            <span class="span-error" id="error-descrip"></span>
+                        </div>
+                    </div>
+                    <div class="campo-juego">
+                        <label class="campo-juego-label" for="plataforma">Plataforma</label>
+                        <select class="campo-juego-input" name="" id="plataforma">
+                            <option value="0" selected>Seleccionar...</option>
+                            <option value="1">Opción 1</option>
+                            <option value="2">Opción 2</option>
+                        </select>
+                        <div class="contenedor-error">
+                            <span class="span-error" id="error-plataforma"></span>
+                        </div>
+                    </div>
+                    <div class="campo-juego">
+                        <label class="campo-juego-label" for="url">Url</label>
+                        <input class="campo-juego-input" id="url" type="text"></input>
+                        <div class="contenedor-error">
+                            <span class="span-error" id="error-url"></span>
+                        </div>
+                    </div>
+                    <div class="campo-juego">
+                        <label class="campo-juego-label" for="genero">Genero</label>
+                        <select class="campo-juego-input" name="" id="genero">
+                            <option value="Ordenar" selected>Seleccionar...</option>
+                            <option value="Ordenar">Opción 1</option>
+                            <option value="Ordenar">Opción 2</option>
+                        </select>
+                    </div>
+                    <input type="button" value="Agregar juego" class="boton-juego" onclick="validacion()"></input>
+                    <!-- <button id="btn-form" class="boton-filtros" onClick="Validacion()">Agregar</button> -->
+                </form>
+            </div>
         </div>
     </main>
     <footer class="footer">

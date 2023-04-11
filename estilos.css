@@ -37,6 +37,11 @@ body {
     justify-content: center;
 }
 
+.contenedor70 {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+}
 
 .formulario {
     width: 65%;
@@ -140,4 +145,49 @@ body {
     display: flex;
     align-items: center;
     color: white;
+}
+
+.form-agregar-juego {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+}
+
+.campo-juego {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.campo-juego-label {
+    margin-bottom: .5rem;
+}
+
+.campo-juego-input {
+    height: 2rem;
+    border-radius: 5px;
+    border: none;
+    padding-left: .5rem;
+}
+
+.boton-juego {
+    padding: .8rem 1.4rem;
+    font-weight: 400;
+    color: white;
+    background-color: cornflowerblue;
+    border-color: rgb(78, 125, 212);
+    border-radius: 5px;
+}
+
+.contenedor-error {
+    margin-top: .5rem;
+    min-height: 1.2rem;
+    /* background-color: red; */
+}
+
+.span-error {
+    color: rgb(242, 49, 49);
 }
