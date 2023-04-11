@@ -36,21 +36,28 @@
                 <div class="campo">
                     <label class="campo-label" for="descripcion">Descripcion</label>
                     <input id="descripcion" type="text"></input>
+                    <span id="error-descrip"></span>
                 </div>
                 <div class="campo">
                     <label class="campo-label" for="plataforma">Plataforma</label>
-                    <select name="" id="Plataforma">
-                        <option value="Ordenar">Letra</option>
+                    <select name="" id="plataforma">
+                        <option value="0" selected>Seleccionar...</option>
+                        <option value="1">Opción 1</option>
+                        <option value="2">Opción 2</option>
                     </select>
+                    <span id="error-plataforma"></span>
                 </div>
                 <div class="campo">
                     <label class="campo-label" for="url">Url</label>
                     <input id="url" type="text"></input>
+                    <span id="error-url"></span>
                 </div>
                 <div class="campo">
                     <label class="campo-label" for="genero">Genero</label>
                     <select name="" id="genero">
-                        <option value="Ordenar">Letra</option>
+                        <option value="Ordenar" selected>Seleccionar...</option>
+                        <option value="Ordenar">Opción 1</option>
+                        <option value="Ordenar">Opción 2</option>
                     </select>
                 </div>
                 <input type="button" value="Agregar" class="boton-filtros" onclick="validacion()"></input>

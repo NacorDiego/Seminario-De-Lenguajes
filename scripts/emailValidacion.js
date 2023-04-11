@@ -1,32 +1,47 @@
 const validacion = () => {
-    nombreValidacion()
-    imgValidacion()
+    validacionNombre();
+    validacionImg();
+    validacionDescripcion();
+    validacionPlataforma();
+    validacionUrl();
 }
 
-const nombreValidacion = () => {
-    const getInputValue = document.getElementById('form-principal').querySelector('#nombre').value
+const validacionNombre = () => {
+    const getInputValue = document.getElementById('form-principal').querySelector('#nombre').value;
 
     if (getInputValue === '') {
-        document.getElementById('error-nombre').innerHTML = 'Campo requerido'
+        document.getElementById('error-nombre').innerHTML = 'Campo requerido.'
     } else {
         document.getElementById('error-nombre').innerHTML = ''
     }
-
-    console.log('getInputs',getInputValue)
 }
 
-const imgValidacion = () => {
-    const getInputValue = document.getElementById('form-principal').querySelector('#img-juego').value
+const validacionImg = () => {
+    const getInputValue = document.getElementById('form-principal').querySelector('#img-juego').value;
 
-    const getFinalExtension = getInputValue.substring(getInputValue.indexOf('.') + 1).trim()
-    console.log('getFinalExtension',getFinalExtension);
+    const getFinalExtension = getInputValue.substring(getInputValue.indexOf('.') + 1).trim(); // trim() elimina los espacios que rodean el texto.
     if(getFinalExtension === 'jpg' || getFinalExtension === 'png') {
         document.getElementById('error-img').innerHTML = ''
     } else {
         document.getElementById('error-img').innerHTML = 'Extension no soportada'
     }
-    
-    console.log('getInputs',getInputValue)
 }
 
-nombreValidacion()
+const validacionDescripcion = () => {
+    const getInputValue = document.getElementById('form-principal').querySelector('#descripcion').value;
+
+    document.getElementById('error-descrip').innerHTML=getInputValue.length>255?'No debe superar 255 caracteres.':'';
+}
+
+const validacionPlataforma = () => {
+    const getInputValue = document.getElementById('form-principal').querySelector('#plataforma').value;
+
+    document.getElementById('error-plataforma').innerHTML=getInputValue>0?'':'Campo requerido.';
+}
+
+const validacionUrl = () => {
+    const getInputValue = document.getElementById('form-principal').querySelector('#url').value;
+
+    document.getElementById('error-url').innerHTML=getInputValue.length>80?'No debe superar 80 caracteres.':'';
+}
+
