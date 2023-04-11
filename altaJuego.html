@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FUENTES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- MIS ESTILOS -->
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="icon" href="./imgs/logo.svg"/>
+    <title>Pagina de videojuegos</title>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <img class="imagen-logo" src="./imgs/logo.svg" alt="logo">
+        </nav>
+    </header>
+    <main class="contenedor">
+        <!-- FORMULARIO -->
+        <div class="contenedor100">
+            <form id="form-principal" class="formulario">
+                <div class="campo">
+                    <label class="campo-label" for="nombre">Nombre</label>
+                    <input id="nombre" type="text" onfocus=""></input>
+                    <span id="error-nombre"></span>
+                </div>
+                <div class="campo">
+                    <label class="campo-label" for="img-juego">Imagen del juego</label>
+                    <input id="img-juego" type="file"></input>
+                    <span id="error-img"></span>
+                </div>
+                <div class="campo">
+                    <label class="campo-label" for="descripcion">Descripcion</label>
+                    <input id="descripcion" type="text"></input>
+                </div>
+                <div class="campo">
+                    <label class="campo-label" for="plataforma">Plataforma</label>
+                    <select name="" id="Plataforma">
+                        <option value="Ordenar">Letra</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label class="campo-label" for="url">Url</label>
+                    <input id="url" type="text"></input>
+                </div>
+                <div class="campo">
+                    <label class="campo-label" for="genero">Genero</label>
+                    <select name="" id="genero">
+                        <option value="Ordenar">Letra</option>
+                    </select>
+                </div>
+                <input type="button" value="Agregar" class="boton-filtros" onclick="validacion()"></input>
+                <!-- <button id="btn-form" class="boton-filtros" onClick="Validacion()">Agregar</button> -->
+            </form>
+        </div>
+    </main>
+    <footer class="footer">
+        <span>Diego Ezequiel Nacor - Emanuel Gomez - 2023</span>
+    </footer>
+    <script src="./scripts/emailValidacion.js" type="text/javascript"/>
+</body>
+</html>
