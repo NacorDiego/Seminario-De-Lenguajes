@@ -31,28 +31,30 @@ const validacionImg = () => {
     }
 }
 
-const validacionDescripcion = () => {
-    const getInputValue = document.getElementById('form-principal').querySelector('#descripcion').value;
-
-    document.getElementById('error-descrip').innerHTML= getInputValue.length > 255 ? 'No debe superar 255 caracteres.' : '';
-}
 
 const validacionPlataforma = () => {
     const getInputValue = document.getElementById('form-principal').querySelector('#plataforma').value;
 
-    document.getElementById('error-plataforma').innerHTML= getInputValue > 0 ? '' : 'Campo requerido.';
+    document.getElementById('error-plataforma').innerHTML = getInputValue > 0 ? '' : 'Campo requerido.';
 }
 
-const validacionUrl = () => {
-    const getInputValue = document.getElementById('form-principal').querySelector('#url').value;
+// TODO: Remove comments
+// const validacionDescripcion = () => {
+//     const getInputValue = document.getElementById('form-principal').querySelector('#descripcion').value;
 
-    document.getElementById('error-url').innerHTML= getInputValue.length > 80 ? 'No debe superar 80 caracteres.' : '';
-}
+//     document.getElementById('error-descrip').innerHTML= getInputValue.length > 255 ? 'No debe superar 255 caracteres.' : '';
+// }
+
+// const validacionUrl = () => {
+//     const getInputValue = document.getElementById('form-principal').querySelector('#url').value;
+
+//     document.getElementById('error-url').innerHTML= getInputValue.length > 80 ? 'No debe superar 80 caracteres.' : '';
+// }
 
 const validacionLenght = (idInput, idError, lenght) => {
     
     const getInputValue = document.getElementById('form-principal').querySelector(idInput).value;
     
-    document.getElementById(idError).innerHTML= getInputValue.length > lenght ? `No debe superar ${lenght} caracteres.` : '';
+    document.getElementById(idError).innerHTML = getInputValue.length > lenght ? `No debe superar ${lenght} caracteres.` : '';
 }
 
