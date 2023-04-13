@@ -162,6 +162,13 @@ body {
     margin-bottom: 1rem;
 }
 
+.campo-juego-img {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 0.4rem;
+}
+
 .campo-juego-label {
     margin-bottom: .5rem;
 }
@@ -185,7 +192,7 @@ body {
 /* Estilos para el campo de entrada de archivo */
 .campo-juego-input-img {
     display: none; /* Oculta el campo de entrada de archivo real */
-}
+} 
 
 /* Estilos para la etiqueta del campo de entrada de archivo */
 label[for="img-juego"] {
@@ -231,4 +238,8 @@ label[for="img-juego"]::after {
 
 .span-error {
     color: rgb(242, 49, 49);
+}
+
+.span-info {
+    color: rgb(49, 219, 242);
 }

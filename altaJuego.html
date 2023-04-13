@@ -26,21 +26,23 @@
                 <form id="form-principal" class="form-agregar-juego">
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="nombre">Nombre</label>
-                        <input class="campo-juego-input" id="nombre" type="text" placeholder="Ingrese el nombre del juego..."></input>
+                        <input class="campo-juego-input" id="nombre" type="text" placeholder="Ingrese el nombre del juego...">
                         <div class="contenedor-error">
                             <span class="span-error" id="error-nombre"></span>
                         </div>
                     </div>
-                    <div class="campo-juego">
+                    <div class="campo-juego-img">
+                        <div class="campo-juego-label">Imagen</div>
                         <label class="campo-juego-label" for="img-juego"></label>
-                        <input class="campo-juego-input-img" id="img-juego" type="file"></input>
+                        <input class="campo-juego-input-img" id="img-juego" type="file">
                         <div class="contenedor-error">
                             <span class="span-error" id="error-img"></span>
+                            <span class="span-info" id="info-img"></span>
                         </div>
                     </div>
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="descripcion">Descripción</label>
-                        <input class="campo-juego-input" id="descripcion" type="text"></input>
+                        <input class="campo-juego-input" id="descripcion" type="text">
                         <div class="contenedor-error">
                             <span class="span-error" id="error-descrip"></span>
                         </div>
@@ -58,7 +60,7 @@
                     </div>
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="url">Url</label>
-                        <input class="campo-juego-input" id="url" type="text"></input>
+                        <input class="campo-juego-input" id="url" type="text">
                         <div class="contenedor-error">
                             <span class="span-error" id="error-url"></span>
                         </div>
@@ -71,8 +73,7 @@
                             <option value="Ordenar">Opción 2</option>
                         </select>
                     </div>
-                    <input type="button" value="Agregar juego" class="boton-juego" onclick="validacion()"></input>
-                    <!-- <button id="btn-form" class="boton-filtros" onClick="Validacion()">Agregar</button> -->
+                    <input type="button" value="Agregar juego" class="boton-juego" onclick="validacion()">
                 </form>
             </div>
         </div>
