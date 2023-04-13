@@ -1,9 +1,11 @@
 const validacion = () => {
     validacionNombre();
     validacionImg();
-    validacionDescripcion();
     validacionPlataforma();
-    validacionUrl();
+    //validacionDescripcion();
+    //validacionUrl();
+    validacionLenght('#descripcion','error-descrip',255);
+    validacionLenght('#url','error-url',80);
 }
 
 const validacionNombre = () => {
@@ -38,12 +40,19 @@ const validacionDescripcion = () => {
 const validacionPlataforma = () => {
     const getInputValue = document.getElementById('form-principal').querySelector('#plataforma').value;
 
-    document.getElementById('error-plataforma').innerHTML= getInputValue> 0 ? '' : 'Campo requerido.';
+    document.getElementById('error-plataforma').innerHTML= getInputValue > 0 ? '' : 'Campo requerido.';
 }
 
 const validacionUrl = () => {
     const getInputValue = document.getElementById('form-principal').querySelector('#url').value;
 
     document.getElementById('error-url').innerHTML= getInputValue.length > 80 ? 'No debe superar 80 caracteres.' : '';
+}
+
+const validacionLenght = (idInput, idError, lenght) => {
+    
+    const getInputValue = document.getElementById('form-principal').querySelector(idInput).value;
+    
+    document.getElementById(idError).innerHTML= getInputValue.length > lenght ? `No debe superar ${lenght} caracteres.` : '';
 }
 
