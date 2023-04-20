@@ -23,10 +23,10 @@
         <!-- FORMULARIO -->
         <div class="contenedor100">
             <div class="contenedor70">
-                <form id="form-principal" class="form-agregar-juego">
+                <form id="form-principal" action="./scripts-PHP/dataAltaJuegos.php" method="POST" onsubmit="return validacion(this)" class="form-agregar-juego">
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="nombre">Nombre</label>
-                        <input class="campo-juego-input" id="nombre" type="text" placeholder="Ingrese el nombre del juego...">
+                        <input class="campo-juego-input" id="nombre" name="nombre" type="text" placeholder="Ingrese el nombre del juego...">
                         <div class="contenedor-error">
                             <span class="span-error" id="error-nombre"></span>
                         </div>
@@ -34,7 +34,7 @@
                     <div class="campo-juego-img">
                         <div class="campo-juego-label">Imagen</div>
                         <label class="campo-juego-label" for="img-juego"></label>
-                        <input class="campo-juego-input-img" id="img-juego" type="file">
+                        <input class="campo-juego-input-img" id="img-juego" name="img-juego" type="file">
                         <div class="contenedor-error">
                             <span class="span-error" id="error-img"></span>
                             <span class="span-info" id="info-img"></span>
@@ -42,25 +42,25 @@
                     </div>
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="descripcion">Descripción</label>
-                        <input class="campo-juego-input" id="descripcion" type="text">
+                        <input class="campo-juego-input" id="descripcion" name="descripcion" type="text">
                         <div class="contenedor-error">
                             <span class="span-error" id="error-descrip"></span>
                         </div>
                     </div>
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="plataforma">Plataforma</label>
-                        <select class="campo-juego-input" name="" id="plataforma">
+                        <select class="campo-juego-input" name="plataforma" id="plataforma">
                             <option value="0" selected>Seleccionar...</option>
                             <option value="1">Opción 1</option>
                             <option value="2">Opción 2</option>
                         </select>
-                        <div class="contenedor-error">
+                     <div class="contenedor-error">
                             <span class="span-error" id="error-plataforma"></span>
                         </div>
                     </div>
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="url">Url</label>
-                        <input class="campo-juego-input" id="url" type="text">
+                        <input class="campo-juego-input" id="url" name="url" type="text">
                         <div class="contenedor-error">
                             <span class="span-error" id="error-url"></span>
                         </div>
@@ -73,7 +73,7 @@
                             <option value="Ordenar">Opción 2</option>
                         </select>
                     </div>
-                    <input type="button" value="Agregar juego" class="boton-juego" onclick="validacion()">
+                    <input type="submit" value="Agregar juego" class="boton-juego">
                 </form>
             </div>
         </div>
@@ -83,33 +83,9 @@
     </footer>
     <script src="./scripts/validaciones.js" type="text/javascript"></script>
     <?php
-        // Información de la base de datos
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "juegos";
-
-        // Conexión a la base de datos
-        $link = mysqli_connect($servername, $username, $password, $dbname);
-
-        // Verificar si la conexión es exitosa
-        if (!$link) {
-            die("Conexión fallida: " . mysqli_connect_error());
-        }
-        // echo "Conexión exitosa";
-
-        // Consulta SQL
-        $sql = "SELECT * FROM generos";
-
-        // Enviar consulta a la base de datos
-        $resultado = mysqli_query($link, $sql);
-
-        // Verificar si la consulta es exitosa
-        if (!$resultado) {
-            die("Error al ejecutar la consulta: " . mysqli_error($link));
-        }else{
-            echo "Se conecto correctamente " .  mysqli_num_rows($resultado);
-        }
+        require './scripts-PHP/conexionBD.php';
+        $link = conectar();
+        require './scripts-PHP/dataAltaJuegos.php'
     ?>
 </body>
 </html>

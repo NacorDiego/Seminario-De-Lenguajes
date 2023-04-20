@@ -1,9 +1,15 @@
 const validacion = () => {
-    validacionNombre();
-    validacionImg();
-    validacionPlataforma();
-    validacionLenght('#descripcion','error-descrip',255);
-    validacionLenght('#url','error-url',80);
+    const bNombre = validacionNombre()
+    const bImg = validacionImg()
+    const bPlataforma = validacionPlataforma()
+    const bDesc = validacionLenght('#descripcion','error-descrip',255)
+    const bUrl = validacionLenght('#url','error-url',80)
+
+    if(bNombre && bImg && bPlataforma && bDesc && bUrl){
+        return true
+    } else {
+        return false
+    }
 }
 
 const validacionNombre = () => {
@@ -11,8 +17,10 @@ const validacionNombre = () => {
 
     if (getInputValue === '') {
         document.getElementById('error-nombre').innerHTML = 'Campo requerido.'
+        return false
     } else {
         document.getElementById('error-nombre').innerHTML = ''
+        return true
     }
 }
 
@@ -24,8 +32,10 @@ const validacionImg = () => {
 
     if(getFinalExtension === 'jpg' || getFinalExtension === 'png') {
         document.getElementById('info-img').innerHTML = 'Nombre del archivo: ' + getFileName
+        return true
     } else {
         document.getElementById('error-img').innerHTML = 'Extension no soportada'
+        return false
     }
 }
 
@@ -33,13 +43,25 @@ const validacionImg = () => {
 const validacionPlataforma = () => {
     const getInputValue = document.getElementById('form-principal').querySelector('#plataforma').value;
 
-    document.getElementById('error-plataforma').innerHTML = getInputValue > 0 ? '' : 'Campo requerido.';
+    if (getInputValue > 0){
+        document.getElementById('error-plataforma').innerHTML = 'Campo requerido.'
+        return false
+    } else {
+        document.getElementById('error-plataforma').innerHTML = ''
+        return true
+    }
 }
 
 
 const validacionLenght = (idInput, idError, lenght) => {
     const getInputValue = document.getElementById('form-principal').querySelector(idInput).value;
-    
-    document.getElementById(idError).innerHTML = getInputValue.length > lenght ? `No debe superar ${lenght} caracteres.` : '';
+
+    if (getInputValue.length > lenght){
+        document.getElementById(idError).innerHTML = `No debe superar ${lenght} caracteres.`
+        return false
+    } else {
+        document.getElementById(idError).innerHTML = ''
+        return true
+    }
 }
 
