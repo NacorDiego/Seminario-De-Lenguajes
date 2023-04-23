@@ -15,9 +15,9 @@
 </head>
 <body>
     <?php
-        require "./scripts-PHP/conexionBD.php";
+        require "./scripts-PHP/helpers/conexionBD.php";
         $link = conectar();
-        require "./scripts-PHP/traerData.php";
+        require "./scripts-PHP/helpers/traerData.php";
         $data = traerData($link);
     ?>
     <header class="header">
@@ -61,84 +61,6 @@
                     require "./scripts-PHP/renderizarJuegos.php";
                     renderizarJuegos($data);
                 ?>
-                <!-- <li class="juego">
-                    <div class="card">
-                        <img class="imagen-juego" src="./imgs/imagen-card.jpg" alt="cat">
-                        <div class="card-contenido">
-                            <h4 class="titulo-juego">Titulo del juego</h4>
-                            <ul class="lista-encabezados">
-                                <li class="encabezado-juego"><b>Género:</b></li>
-                                <li class="encabezado-juego"><b>Plataforma:</b></li>
-                                <li class="encabezado-juego"><b>Descripcion:</b></li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                <li class="juego">
-                    <div class="card">
-                        <img class="imagen-juego" src="./imgs/imagen-card.jpg" alt="cat">
-                        <div class="card-contenido">
-                            <h4 class="titulo-juego">Titulo del juego</h4>
-                            <ul class="lista-encabezados">
-                                <li class="encabezado-juego"><b>Género:</b></li>
-                                <li class="encabezado-juego"><b>Plataforma:</b></li>
-                                <li class="encabezado-juego"><b>Descripcion:</b></li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                <li class="juego">
-                    <div class="card">
-                        <img class="imagen-juego" src="./imgs/imagen-card.jpg" alt="cat">
-                        <div class="card-contenido">
-                            <h4 class="titulo-juego">Titulo del juego</h4>
-                            <ul class="lista-encabezados">
-                                <li class="encabezado-juego"><b>Género:</b></li>
-                                <li class="encabezado-juego"><b>Plataforma:</b></li>
-                                <li class="encabezado-juego"><b>Descripcion:</b></li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                <li class="juego">
-                    <div class="card">
-                        <img class="imagen-juego" src="./imgs/imagen-card.jpg" alt="cat">
-                        <div class="card-contenido">
-                            <h4 class="titulo-juego">Titulo del juego</h4>
-                            <ul class="lista-encabezados">
-                                <li class="encabezado-juego"><b>Género:</b></li>
-                                <li class="encabezado-juego"><b>Plataforma:</b></li>
-                                <li class="encabezado-juego"><b>Descripcion:</b></li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                <li class="juego">
-                    <div class="card">
-                        <img class="imagen-juego" src="./imgs/imagen-card.jpg" alt="cat">
-                        <div class="card-contenido">
-                            <h4 class="titulo-juego">Titulo del juego</h4>
-                            <ul class="lista-encabezados">
-                                <li class="encabezado-juego"><b>Género:</b></li>
-                                <li class="encabezado-juego"><b>Plataforma:</b></li>
-                                <li class="encabezado-juego"><b>Descripcion:</b></li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                <li class="juego">
-                    <div class="card">
-                        <img class="imagen-juego" src="./imgs/imagen-card.jpg" alt="cat">
-                        <div class="card-contenido">
-                            <h4 class="titulo-juego">Titulo del juego</h4>
-                            <ul class="lista-encabezados">
-                                <li class="encabezado-juego"><b>Género:</b></li>
-                                <li class="encabezado-juego"><b>Plataforma:</b></li>
-                                <li class="encabezado-juego"><b>Descripcion:</b></li>
-                            </ul>
-                        </div>
-                    </div>
-                </li> -->
             </ul>
         </div>
     </main>

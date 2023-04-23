@@ -14,6 +14,11 @@
     <title>Pagina de videojuegos</title>
 </head>
 <body>
+    <?php
+        require './scripts-PHP/helpers/conexionBD.php';
+        $link = conectar();
+        require './scripts-PHP/helpers/dataAltaJuegos.php'
+    ?>
     <header class="header">
         <nav class="nav">
             <img class="imagen-logo" src="./imgs/logo.svg" alt="logo">
@@ -82,10 +87,5 @@
         <span>Diego Ezequiel Nacor - Emanuel Gomez - 2023</span>
     </footer>
     <script src="./scripts/validaciones.js" type="text/javascript"></script>
-    <?php
-        require './scripts-PHP/conexionBD.php';
-        $link = conectar();
-        require './scripts-PHP/dataAltaJuegos.php'
-    ?>
 </body>
 </html>
