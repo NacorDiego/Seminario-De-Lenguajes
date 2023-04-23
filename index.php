@@ -28,7 +28,7 @@
     <main class="contenedor">
         <!-- FORMULARIO -->
         <div class="contenedor100">
-            <form class="formulario" onsubmit="return filtrarCards(this)">
+            <form class="formulario">
                 <div class="campo">
                     <label class="campo-label" for="nombre">Nombre</label>
                     <input id="nombre" type="text"></input>
@@ -51,14 +51,14 @@
                         <option value="Ordenar">Letra</option>
                     </select>
                 </div>
-                <button class="boton-filtros" type="submit" value="Filtrar juego">Filtrar</button>
+                <button class="boton-filtros"  onclick="filtros(event)" value="Filtrar juego">Filtrar</button>
             </form>
         </div>
         <!-- LISTA DE CARDS -->
         <div id="videojuegos-contenedor" class="videojuegos-contenedor">
             <ul class="videojuegos-lista">
                 <?php
-                    require "./scripts-PHP/renderizarJuegos.php";
+                    require "./scripts-PHP/renderizarCards.php";
                     renderizarJuegos($data);
                 ?>
             </ul>
@@ -67,6 +67,6 @@
     <footer class="footer">
         <span>Diego Ezequiel Nacor - Emanuel Gomez - 2023</span>
     </footer>
-    <script src="./scripts/filtrarCards.js" type="text/javascript"></script>
+    <script src="./scripts/filtros.js" type="text/javascript"></script>
 </body>
 </html>

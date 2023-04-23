@@ -4,8 +4,8 @@
         $query = "SELECT * FROM `juegos`";
         $result = mysqli_query($link,$query);
 
-        if (!$resultado) {
-            die("Error al ejecutar la consulta: " . mysqli_error($link));
+        if (!$result) {
+            die("Error al ejecutar la consulta " . mysqli_error($link));
         }
 
         return $result;
