@@ -14,6 +14,12 @@
     <title>Pagina de videojuegos</title>
 </head>
 <body>
+    <?php
+        require "./scripts-PHP/conexionBD.php";
+        $link = conectar();
+        require "./scripts-PHP/traerData.php";
+        $data = traerData($link);
+    ?>
     <header class="header">
         <nav class="nav">
             <img class="imagen-logo" src="./imgs/logo.svg" alt="logo">
@@ -51,7 +57,11 @@
         <!-- LISTA DE CARDS -->
         <div id="videojuegos-contenedor" class="videojuegos-contenedor">
             <ul class="videojuegos-lista">
-                <li class="juego">
+                <?php
+                    require "./scripts-PHP/renderizarJuegos.php";
+                    renderizarJuegos($data);
+                ?>
+                <!-- <li class="juego">
                     <div class="card">
                         <img class="imagen-juego" src="./imgs/imagen-card.jpg" alt="cat">
                         <div class="card-contenido">
@@ -128,7 +138,7 @@
                             </ul>
                         </div>
                     </div>
-                </li>
+                </li> -->
             </ul>
         </div>
     </main>

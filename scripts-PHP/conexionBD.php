@@ -4,7 +4,7 @@
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname = "juegosdb";
+        $dbname = "juegos";
 
         // Conexión a la base de datos
         $link = mysqli_connect($servername, $username, $password, $dbname);
