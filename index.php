@@ -58,8 +58,9 @@
         <div id="videojuegos-contenedor" class="videojuegos-contenedor">
             <ul class="videojuegos-lista">
                 <?php
-                    require "./scripts-PHP/renderizarCards.php";
-                    renderizarJuegos($data);
+                    // require "./scripts-PHP/renderizarCards.php";
+                    // renderizarJuegos($data);
+                    // echo $data;
                 ?>
             </ul>
         </div>
@@ -67,6 +68,7 @@
     <footer class="footer">
         <span>Diego Ezequiel Nacor - Emanuel Gomez - 2023</span>
     </footer>
+    <script src="./scripts/index.js"></script>
     <script src="./scripts/filtros.js" type="text/javascript"></script>
 </body>
 </html>
