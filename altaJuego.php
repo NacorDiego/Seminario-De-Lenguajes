@@ -19,7 +19,7 @@
         $link = conectar();
         require './scripts-PHP/helpers/traerData.php';
         $data = traerData($link);
-    ?> 
+    ?>
     <header class="header">
         <nav class="nav">
             <img class="imagen-logo" src="./imgs/logo.svg" alt="logo">
@@ -29,7 +29,8 @@
         <!-- FORMULARIO -->
         <div class="contenedor100">
             <div class="contenedor70">
-                <form id="form-principal" method="POST" onsubmit="return validacion(event,this)" class="form-agregar-juego">
+                <!-- onsubmit="return validacion(event,this)" -->
+                <form id="form-principal" action="./scripts-PHP/helpers/insertarData.php" method="POST" class="form-agregar-juego">
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="nombre">Nombre</label>
                         <input class="campo-juego-input" id="nombre" name="nombre" type="text" placeholder="Ingrese el nombre del juego...">
@@ -57,8 +58,8 @@
                         <label class="campo-juego-label" for="plataforma">Plataforma</label>
                         <select class="campo-juego-input" name="plataforma" id="plataforma">
                             <option value="0" selected>Seleccionar...</option>
-                            <option value="1">Opción 1</option>
-                            <option value="2">Opción 2</option>
+                            <option value="1">PC</option>
+                            <option value="2">Playstation 4</option>
                         </select>
                      <div class="contenedor-error">
                             <span class="span-error" id="error-plataforma"></span>
@@ -74,18 +75,13 @@
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="genero">Genero</label>
                         <select class="campo-juego-input" name="" id="genero">
-                            <option value="Ordenar" selected>Seleccionar...</option>
-                            <option value="Ordenar">Opción 1</option>
-                            <option value="Ordenar">Opción 2</option>
+                            <option value="0" selected>Seleccionar...</option>
+                            <option value="1">Avencturas</option>
+                            <option value="2">Accion</option>
                         </select>
                     </div>
-                    <input type="submit" value="Agregar juego" class="boton-juego">
+                    <input type="submit" value="Agregar juego" class="boton-juego"></input>
                 </form>
-                <!-- Ejecutar este codigo cuando hagamos click y se pasen las validaciones -->
-                <?php
-                    require ('./scripts-PHP/helpers/insertarData.php');
-                    insertarData($link);
-                ?>
             </div>
         </div>
     </main>

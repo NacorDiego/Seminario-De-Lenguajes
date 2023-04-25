@@ -10,7 +10,6 @@ const filtros = (event) =>{
   const genero = document.querySelector('#genero').value
   const letra = document.querySelector('#ordenar').value
 
-  
   let cardsNotFiltered = []
   //Filtramos por nombre
   const regex = new RegExp(nombre,'gi')
@@ -20,6 +19,5 @@ const filtros = (event) =>{
   cardsNotFiltered.forEach(item => item.parentElement.parentElement.parentElement.style.display = 'none')
 
 
-  
   return true
 }

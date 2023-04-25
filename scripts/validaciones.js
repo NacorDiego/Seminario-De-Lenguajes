@@ -32,7 +32,7 @@ const validacion = (event) => {
     const getFileName = getInputValue.substring(getInputValue.lastIndexOf('\\') + 1, getInputValue.lastIndexOf('.'));
   
     if(getFinalExtension === 'jpg' || getFinalExtension === 'png') {
-        document.getElementById('info-img').innerHTML = 'Nombre del archivo: ' + getFileName
+        document.getElementById('info-img').innerHTML = ''
         return true
     } else {
         document.getElementById('error-img').innerHTML = 'Extension no soportada'
