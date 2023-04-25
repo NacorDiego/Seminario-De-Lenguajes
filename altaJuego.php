@@ -74,9 +74,9 @@
                     </div>
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="genero">Genero</label>
-                        <select class="campo-juego-input" name="" id="genero">
+                        <select class="campo-juego-input" name="genero" id="genero">
                             <option value="0" selected>Seleccionar...</option>
-                            <option value="1">Avencturas</option>
+                            <option value="1">Aventuras</option>
                             <option value="2">Accion</option>
                         </select>
                     </div>

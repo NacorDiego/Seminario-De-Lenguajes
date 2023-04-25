@@ -1,20 +1,15 @@
 <?php
 
     function traerData($link){
-        $query = "SELECT * FROM `juegos`";
+        $query = "SELECT j.nombre as nombrejuego, g.nombre as nombregenero FROM juegos j INNER JOIN generos g ON j.id_genero = g.id;";
         $result = mysqli_query($link,$query);
 
-        $datos = array();
-        
-        while ($fila = $result -> fetch_assoc()) {
-            $datos[] = $fila;
-        }
 
         if (!$result) {
             die("Error al ejecutar la consulta " . mysqli_error($link));
         }
 
-        return json_encode($datos);
+        return ($result);
     }
 
 ?>

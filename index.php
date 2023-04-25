@@ -57,11 +57,21 @@
         <!-- LISTA DE CARDS -->
         <div id="videojuegos-contenedor" class="videojuegos-contenedor">
             <ul class="videojuegos-lista">
-                <?php
-                    require "./scripts-PHP/renderizarCards.php";
-                    renderizarJuegos($data);
-                    // echo $data;
-                ?>
+                <?php while($row = $data -> fetch_assoc()){?>
+                    <li class='juego'>
+                        <div class='card'>
+                            <a href='$url'><img class='imagen-juego' src='$img' alt='cat'></a>
+                            <div class='card-contenido'>
+                                <h4 class='titulo-juego'><?php echo $row["nombrejuego"]; ?></h4>
+                                <ul class='lista-encabezados'>
+                                    <li class='encabezado-juego'><b>Género:<?php echo $row["nombregenero"]; ?></b></li>
+                                    <li class='encabezado-juego'><b>Plataforma:$id_plataforma</b></li>
+                                    <li class='encabezado-juego'><b>Descripcion:$descripcion</b></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                <?php } ?>
             </ul>
         </div>
     </main>
