@@ -1,6 +1,6 @@
 <?php
 
-    function traerData($link){
+    function traerDataCards($link){
         $query = "SELECT j.nombre as nombrejuego, g.nombre as nombregenero FROM juegos j INNER JOIN generos g ON j.id_genero = g.id;";
         $result = mysqli_query($link,$query);
 

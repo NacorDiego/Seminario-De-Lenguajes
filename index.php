@@ -17,8 +17,12 @@
     <?php
         require "./scripts-PHP/helpers/conexionBD.php";
         $link = conectar();
-        require "./scripts-PHP/helpers/traerData.php";
-        $data = traerData($link);
+        require "./scripts-PHP/helpers/traerDataCards.php";
+        $data = traerDataCards($link);
+        require "./scripts-PHP/helpers/traerFiltrosGeneros.php";
+        $generos = traerFiltrosGeneros($link);
+        require "./scripts-PHP/helpers/traerFiltrosPlataformas.php";
+        $plataformas = traerFiltrosPlataformas($link);
     ?>
     <header class="header">
         <nav class="nav">
@@ -35,14 +39,20 @@
                 </div>
                 <div class="campo">
                     <label class="campo-label" for="genero">Genero</label>
-                    <select name="" id="genero">
-                        <option value="genero">Genero</option>
+                    <select name="genero" id="genero">
+                        <option value="0" selected>Seleccionar...</option>
+                        <?php while($row = $generos -> fetch_assoc()){?>
+                            <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
+                        <?php } ?>
                     </select>
                 </div>
                 <div class="campo">
                     <label class="campo-label" for="plataforma">Plataforma</label>
                     <select name="" id="plataforma">
-                        <option value="plataforma">Plataforma</option>
+                        <option value="0" selected>Seleccionar...</option>
+                        <?php while($row = $plataformas -> fetch_assoc()){?>
+                            <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
+                        <?php } ?>
                     </select>
                 </div>
                 <div class="campo">
