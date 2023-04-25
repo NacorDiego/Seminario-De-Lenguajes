@@ -14,11 +14,12 @@
     <title>Pagina de videojuegos</title>
 </head>
 <body>
-    <?php
+     <?php
         require './scripts-PHP/helpers/conexionBD.php';
         $link = conectar();
-        require './scripts-PHP/helpers/dataAltaJuegos.php'
-    ?>
+        require './scripts-PHP/helpers/traerData.php';
+        $data = traerData($link);
+    ?> 
     <header class="header">
         <nav class="nav">
             <img class="imagen-logo" src="./imgs/logo.svg" alt="logo">
@@ -28,7 +29,7 @@
         <!-- FORMULARIO -->
         <div class="contenedor100">
             <div class="contenedor70">
-                <form id="form-principal" action="./scripts-PHP/dataAltaJuegos.php" method="POST" onsubmit="return validacion(this)" class="form-agregar-juego">
+                <form id="form-principal" method="POST" onsubmit="return validacion(event,this)" class="form-agregar-juego">
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="nombre">Nombre</label>
                         <input class="campo-juego-input" id="nombre" name="nombre" type="text" placeholder="Ingrese el nombre del juego...">
@@ -80,6 +81,11 @@
                     </div>
                     <input type="submit" value="Agregar juego" class="boton-juego">
                 </form>
+                <!-- Ejecutar este codigo cuando hagamos click y se pasen las validaciones -->
+                <?php
+                    require ('./scripts-PHP/helpers/insertarData.php');
+                    insertarData($link);
+                ?>
             </div>
         </div>
     </main>
