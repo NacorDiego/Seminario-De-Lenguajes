@@ -70,13 +70,13 @@
                 <?php while($row = $data -> fetch_assoc()){?>
                     <li class='juego'>
                         <div class='card'>
-                            <a href='$url'><img class='imagen-juego' src='$img' alt='cat'></a>
+                            <a href='<?php echo $row["url"]; ?>' target="_blank"><img class='imagen-juego' src='<?php echo $row["imagen"]; ?>' alt='cat'></a>
                             <div class='card-contenido'>
                                 <h4 class='titulo-juego'><?php echo $row["nombrejuego"]; ?></h4>
                                 <ul class='lista-encabezados'>
-                                    <li class='encabezado-juego'><b>Género:<?php echo $row["nombregenero"]; ?></b></li>
-                                    <li class='encabezado-juego'><b>Plataforma:$id_plataforma</b></li>
-                                    <li class='encabezado-juego'><b>Descripcion:$descripcion</b></li>
+                                    <li class='encabezado-juego'><b>Género:</b> <?php echo $row["nombregenero"]; ?></li>
+                                    <li class='encabezado-juego'><b>Plataforma:</b> <?php echo $row["nombrePlataforma"]; ?></li>
+                                    <li class='encabezado-juego'><b>Descripción:</b> <?php echo $row["descripcion"]; ?></li>
                                 </ul>
                             </div>
                         </div>
