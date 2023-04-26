@@ -39,11 +39,11 @@
             <form class="formulario">
                 <div class="campo">
                     <label class="campo-label" for="nombre">Nombre</label>
-                    <input id="nombre" type="text"></input>
+                    <input class="campo-input" id="nombre" type="text"></input>
                 </div>
                 <div class="campo">
                     <label class="campo-label" for="genero">Genero</label>
-                    <select name="genero" id="genero">
+                    <select class="campo-input" name="genero" id="genero">
                         <option value="0" selected>Seleccionar...</option>
                         <?php while($row = $generos -> fetch_assoc()){?>
                             <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
@@ -52,7 +52,7 @@
                 </div>
                 <div class="campo">
                     <label class="campo-label" for="plataforma">Plataforma</label>
-                    <select name="" id="plataforma">
+                    <select class="campo-input" name="" id="plataforma">
                         <option value="0" selected>Seleccionar...</option>
                         <?php while($row = $plataformas -> fetch_assoc()){?>
                             <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="campo">
                     <label class="campo-label" for="ordenar">Ordenar por nombre</label>
-                    <select name="" id="ordenar">
+                    <select class="campo-input" name="" id="ordenar">
                         <option value="Ordenar">Letra</option>
                     </select>
                 </div>
