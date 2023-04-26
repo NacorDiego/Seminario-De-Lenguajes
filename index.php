@@ -73,17 +73,19 @@
             <ul class="videojuegos-lista">
                 <?php while($row = $data -> fetch_assoc()){?>
                     <li class='juego'>
-                        <div class='card'>
-                            <a href='<?php echo $row["url"]; ?>' target="_blank"><img class='imagen-juego' src='<?php echo $row["imagen"]; ?>' alt='cat'></a>
-                            <div class='card-contenido'>
-                                <h4 class='titulo-juego'><?php echo $row["nombrejuego"]; ?></h4>
-                                <ul class='lista-encabezados'>
-                                    <li class='encabezado-juego'><b>Género:</b> <?php echo $row["nombregenero"]; ?></li>
-                                    <li class='encabezado-juego'><b>Plataforma:</b> <?php echo $row["nombrePlataforma"]; ?></li>
-                                    <li class='encabezado-juego'><b>Descripción:</b> <?php echo $row["descripcion"]; ?></li>
-                                </ul>
+                        <a href='<?php echo $row["url"]; ?>' target="_blank">
+                            <div class='card'>
+                                <img class='imagen-juego' src='<?php echo $row["imagen"]; ?>' alt='cat'>
+                                <div class='card-contenido'>
+                                    <h4 class='titulo-juego'><?php echo $row["nombrejuego"]; ?></h4>
+                                    <ul class='lista-encabezados'>
+                                        <li class='encabezado-juego'><b>Género:</b> <?php echo $row["nombregenero"]; ?></li>
+                                        <li class='encabezado-juego'><b>Plataforma:</b> <?php echo $row["nombrePlataforma"]; ?></li>
+                                        <li class='encabezado-juego'><b>Descripción:</b> <?php echo $row["descripcion"]; ?></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </li>
                 <?php } ?>
             </ul>
