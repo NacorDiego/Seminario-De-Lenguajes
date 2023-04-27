@@ -62,10 +62,10 @@
                 <div class="campo">
                     <label class="campo-label" for="ordenar">Ordenar por nombre</label>
                     <select class="campo-input" name="" id="ordenar">
-                        <option value="Ordenar">Letra</option>
+                        <option value="0">Letra</option>
                     </select>
                 </div>
-                <button class="boton-filtros"  onclick="filtros(event)" value="Filtrar juego">Filtrar</button>
+                <input type="submit" class="boton-filtros"  value="Filtrar">
             </form>
         </div>
         <!-- LISTA DE CARDS -->
