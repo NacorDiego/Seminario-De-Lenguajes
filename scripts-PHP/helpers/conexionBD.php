@@ -4,13 +4,13 @@
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname = "juegos";
+        $dbname = "juegosdb";
 
         // Conexión a la base de datos
         $link = mysqli_connect($servername, $username, $password, $dbname);
 
         if (!$link) {
-            die("Conexión fallida: " . mysqli_connect_error());
+            die("Conexión fallida: ".mysqli_connect_error());
         }
 
         return $link;

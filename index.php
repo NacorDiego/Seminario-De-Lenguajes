@@ -36,15 +36,15 @@
     <main class="contenedor">
         <!-- FORMULARIO -->
         <div class="contenedor100">
-            <form class="formulario">
+            <form class="formulario" action="index.php" method="GET">
                 <div class="campo">
                     <label class="campo-label" for="nombre">Nombre</label>
-                    <input class="campo-input" id="nombre" type="text"></input>
+                    <input class="campo-input" name="nombre" id="nombre" type="text"></input>
                 </div>
                 <div class="campo">
                     <label class="campo-label" for="genero">Genero</label>
                     <select class="campo-input" name="genero" id="genero">
-                        <option value="0" selected>Seleccionar...</option>
+                        <option value="" selected>Seleccionar...</option>
                         <?php while($row = $generos -> fetch_assoc()){?>
                             <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
                         <?php } ?>
@@ -52,8 +52,8 @@
                 </div>
                 <div class="campo">
                     <label class="campo-label" for="plataforma">Plataforma</label>
-                    <select class="campo-input" name="" id="plataforma">
-                        <option value="0" selected>Seleccionar...</option>
+                    <select class="campo-input" name="plataforma" id="plataforma">
+                        <option value="" selected>Seleccionar...</option>
                         <?php while($row = $plataformas -> fetch_assoc()){?>
                             <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
                         <?php } ?>
@@ -61,8 +61,10 @@
                 </div>
                 <div class="campo">
                     <label class="campo-label" for="ordenar">Ordenar por nombre</label>
-                    <select class="campo-input" name="" id="ordenar">
-                        <option value="0">Letra</option>
+                    <select class="campo-input" name="ordenar" id="ordenar">
+                        <option value="">Seleccionar...</option>
+                        <option value="ASC">Ascendente</option>
+                        <option value="DESC">Descendente</option>
                     </select>
                 </div>
                 <input type="submit" class="boton-filtros"  value="Filtrar">

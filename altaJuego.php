@@ -17,8 +17,12 @@
      <?php
         require './scripts-PHP/helpers/conexionBD.php';
         $link = conectar();
-        require './scripts-PHP/helpers/traerData.php';
-        $data = traerData($link);
+        require './scripts-PHP/helpers/traerDataCards.php';
+        $data = traerDataCards($link);
+        require "./scripts-PHP/helpers/traerFiltrosGeneros.php";
+        $generos = traerFiltrosGeneros($link);
+        require "./scripts-PHP/helpers/traerFiltrosPlataformas.php";
+        $plataformas = traerFiltrosPlataformas($link);
     ?>
     <header class="header">
         <nav class="nav">
@@ -30,7 +34,18 @@
         <div class="contenedor100">
             <div class="contenedor70">
                 <!-- onsubmit="return validacion(event,this)" -->
-                <form id="form-principal" action="./scripts-PHP/helpers/insertarData.php" method="POST" class="form-agregar-juego">
+                <?php
+                    session_start();
+                    var_dump($_SESSION["error"]);
+                    if(isset($_SESSION["error"])){
+                ?>
+                        <div class="contenedor-error">
+                            <span class="span-error" id="error-nombre"><?php echo $_SESSION["error"]; ?></span>
+                        </div>
+                <?php
+                    }
+                ?>
+                <form id="form-principal" action="./scripts-PHP/helpers/insertarData.php" method="POST" onsubmit="return validacion()" class="form-agregar-juego">
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="nombre">Nombre</label>
                         <input class="campo-juego-input" id="nombre" name="nombre" type="text" placeholder="Ingrese el nombre del juego...">
@@ -58,8 +73,9 @@
                         <label class="campo-juego-label" for="plataforma">Plataforma</label>
                         <select class="campo-juego-input" name="plataforma" id="plataforma">
                             <option value="0" selected>Seleccionar...</option>
-                            <option value="1">PC</option>
-                            <option value="2">Playstation 4</option>
+                            <?php while($row = $plataformas -> fetch_assoc()){?>
+                                <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
+                            <?php } ?>
                         </select>
                      <div class="contenedor-error">
                             <span class="span-error" id="error-plataforma"></span>
@@ -76,8 +92,9 @@
                         <label class="campo-juego-label" for="genero">Genero</label>
                         <select class="campo-juego-input" name="genero" id="genero">
                             <option value="0" selected>Seleccionar...</option>
-                            <option value="1">Aventuras</option>
-                            <option value="2">Accion</option>
+                            <?php while($row = $generos -> fetch_assoc()){?>
+                                <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
+                            <?php } ?>
                         </select>
                     </div>
                     <input type="submit" value="Agregar juego" class="boton-juego"></input>

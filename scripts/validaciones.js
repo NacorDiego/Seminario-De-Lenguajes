@@ -1,21 +1,20 @@
-const validacion = (event) => {
-    event.preventDefault();
+const validacion = () => {
     const bNombre = validacionNombre()
     const bImg = validacionImg()
     const bPlataforma = validacionPlataforma()
-    const bDesc = validacionLenght('#descripcion','error-descrip',255)
-    const bUrl = validacionLenght('#url','error-url',80)
-  
+    const bDesc = validacionLenght('#descripcion','error-descrip',10)
+    const bUrl = validacionLenght('#url','error-url',10)
+
     if(bNombre && bImg && bPlataforma && bDesc && bUrl){
         return true
     } else {
         return false
     }
   }
-  
+
   const validacionNombre = () => {
     const getInputValue = document.getElementById('form-principal').querySelector('#nombre').value;
-  
+
     if (getInputValue === '') {
         document.getElementById('error-nombre').innerHTML = 'Campo requerido.'
         return false
@@ -24,13 +23,13 @@ const validacion = (event) => {
         return true
     }
   }
-  
+
   const validacionImg = () => {
     const getInputValue = document.getElementById('form-principal').querySelector('#img-juego').value;
-  
+
     const getFinalExtension = getInputValue.substring(getInputValue.indexOf('.') + 1).trim(); // trim() elimina los espacios que rodean el texto.
     const getFileName = getInputValue.substring(getInputValue.lastIndexOf('\\') + 1, getInputValue.lastIndexOf('.'));
-  
+
     if(getFinalExtension === 'jpg' || getFinalExtension === 'png') {
         document.getElementById('info-img').innerHTML = ''
         return true
@@ -39,11 +38,11 @@ const validacion = (event) => {
         return false
     }
   }
-  
-  
+
+
   const validacionPlataforma = () => {
     const getInputValue = document.getElementById('form-principal').querySelector('#plataforma').value;
-  
+
     if (!getInputValue){
         document.getElementById('error-plataforma').innerHTML = 'Campo requerido.'
         return false
@@ -52,11 +51,11 @@ const validacion = (event) => {
         return true
     }
   }
-  
-  
+
+
   const validacionLenght = (idInput, idError, lenght) => {
     const getInputValue = document.getElementById('form-principal').querySelector(idInput).value;
-  
+
     if (getInputValue.length > lenght){
         document.getElementById(idError).innerHTML = `No debe superar ${lenght} caracteres.`
         return false
@@ -65,5 +64,3 @@ const validacion = (event) => {
         return true
     }
   }
-  
-  
