@@ -33,22 +33,20 @@
         <!-- FORMULARIO -->
         <div class="contenedor100">
             <div class="contenedor70">
-                <!-- onsubmit="return validacion(event,this)" -->
-                <?php
-                    session_start();
-                    var_dump($_SESSION["error"]);
-                    if(isset($_SESSION["error"])){
-                ?>
-                        <div class="contenedor-error">
-                            <span class="span-error" id="error-nombre"><?php echo $_SESSION["error"]; ?></span>
-                        </div>
-                <?php
-                    }
-                ?>
                 <form id="form-principal" action="./scripts-PHP/helpers/insertarData.php" method="POST" onsubmit="return validacion()" class="form-agregar-juego">
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="nombre">Nombre</label>
                         <input class="campo-juego-input" id="nombre" name="nombre" type="text" placeholder="Ingrese el nombre del juego...">
+                        <?php
+                          session_start();
+                        if(isset($_SESSION["errorNombre"])){
+                        ?>
+                            <div class="contenedor-error">
+                                <span class="span-error" id="error-nombre"><?php echo $_SESSION["errorNombre"]; ?></span>
+                            </div>
+                        <?php
+                        }
+                        ?>
                         <div class="contenedor-error">
                             <span class="span-error" id="error-nombre"></span>
                         </div>
@@ -57,6 +55,15 @@
                         <div class="campo-juego-label">Imagen</div>
                         <label class="campo-juego-label" for="img-juego"></label>
                         <input class="campo-juego-input-img" id="img-juego" name="img-juego" type="file">
+                        <?php
+                        if(isset($_SESSION["errorImg"])){
+                        ?>
+                            <div class="contenedor-error">
+                                <span class="span-error" id="error-img"><?php echo $_SESSION["errorImg"]; ?></span>
+                            </div>
+                        <?php
+                        }
+                        ?>
                         <div class="contenedor-error">
                             <span class="span-error" id="error-img"></span>
                             <span class="span-info" id="info-img"></span>
@@ -65,6 +72,15 @@
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="descripcion">Descripción</label>
                         <input class="campo-juego-input" id="descripcion" name="descripcion" type="text">
+                        <?php
+                        if(isset($_SESSION["errorDescrip"])){
+                        ?>
+                            <div class="contenedor-error">
+                                <span class="span-error" id="error-descrip"><?php echo $_SESSION["errorDescrip"]; ?></span>
+                            </div>
+                        <?php
+                        }
+                        ?>
                         <div class="contenedor-error">
                             <span class="span-error" id="error-descrip"></span>
                         </div>
@@ -77,6 +93,15 @@
                                 <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
                             <?php } ?>
                         </select>
+                        <?php
+                        if(isset($_SESSION["errorPlataforma"])){
+                        ?>
+                            <div class="contenedor-error">
+                                <span class="span-error" id="error-plataforma"><?php echo $_SESSION["errorPlataforma"]; ?></span>
+                            </div>
+                        <?php
+                        }
+                        ?>
                      <div class="contenedor-error">
                             <span class="span-error" id="error-plataforma"></span>
                         </div>
@@ -84,6 +109,15 @@
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="url">Url</label>
                         <input class="campo-juego-input" id="url" name="url" type="text">
+                        <?php
+                        if(isset($_SESSION["errorUrl"])){
+                        ?>
+                            <div class="contenedor-error">
+                                <span class="span-error" id="error-url"><?php echo $_SESSION["errorUrl"]; ?></span>
+                            </div>
+                        <?php
+                        }
+                        ?>
                         <div class="contenedor-error">
                             <span class="span-error" id="error-url"></span>
                         </div>
@@ -96,6 +130,19 @@
                                 <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
                             <?php } ?>
                         </select>
+
+                        <?php
+                        if(isset($_SESSION["errorGenero"])){
+                        ?>
+                            <div class="contenedor-error">
+                                <span class="span-error" id="error-genero"><?php echo $_SESSION["errorGenero"]; ?></span>
+                            </div>
+                        <?php
+                        }
+                        ?>
+                        <div class="contenedor-error">
+                            <span class="span-error" id="error-genero"></span>
+                        </div>
                     </div>
                     <input type="submit" value="Agregar juego" class="boton-juego"></input>
                 </form>
