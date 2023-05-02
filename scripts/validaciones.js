@@ -2,8 +2,8 @@ const validacion = () => {
     const bNombre = validacionNombre()
     const bImg = validacionImg()
     const bPlataforma = validacionPlataforma()
-    const bDesc = validacionLenght('#descripcion','error-descrip',10)
-    const bUrl = validacionLenght('#url','error-url',10)
+    const bDesc = validacionLenght('#descripcion','error-descrip',255)
+    const bUrl = validacionLenght('#url','error-url',80)
 
     if(bNombre && bImg && bPlataforma && bDesc && bUrl){
         return true
@@ -28,9 +28,8 @@ const validacion = () => {
     const getInputValue = document.getElementById('form-principal').querySelector('#img-juego').value;
 
     const getFinalExtension = getInputValue.substring(getInputValue.indexOf('.') + 1).trim(); // trim() elimina los espacios que rodean el texto.
-    const getFileName = getInputValue.substring(getInputValue.lastIndexOf('\\') + 1, getInputValue.lastIndexOf('.'));
 
-    if(getFinalExtension === 'jpg' || getFinalExtension === 'png') {
+    if(getInputValue !== '' && (getFinalExtension === 'jpg' || getFinalExtension === 'png' || getFinalExtension === 'jpeg')) {
         document.getElementById('info-img').innerHTML = ''
         return true
     } else {

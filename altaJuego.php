@@ -33,22 +33,22 @@
         <!-- FORMULARIO -->
         <div class="contenedor100">
             <div class="contenedor70">
-                <form id="form-principal" action="./scripts-PHP/helpers/insertarData.php" method="POST" onsubmit="return validacion()" class="form-agregar-juego">
+                <!-- enctype: Le avisa a form que se van a enviar archivos. -->
+                <form id="form-principal" action="./scripts-PHP/helpers/insertarData2.php" method="POST" onsubmit="return validacion()" class="form-agregar-juego" enctype='multipart/form-data'>
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="nombre">Nombre</label>
                         <input class="campo-juego-input" id="nombre" name="nombre" type="text" placeholder="Ingrese el nombre del juego...">
-                        <?php
-                          session_start();
-                        if(isset($_SESSION["errorNombre"])){
-                        ?>
-                            <div class="contenedor-error">
-                                <span class="span-error" id="error-nombre"><?php echo $_SESSION["errorNombre"]; ?></span>
-                            </div>
-                        <?php
-                        }
-                        ?>
                         <div class="contenedor-error">
-                            <span class="span-error" id="error-nombre"></span>
+                            <span class="span-error" id="error-nombre">
+                                <?php
+                                    session_start();
+                                    if(isset($_SESSION["errorNombre"])){
+                                ?>
+                                    <?php echo $_SESSION["errorNombre"]; ?>
+                                <?php
+                                }
+                                ?>
+                            </span>
                         </div>
                     </div>
                     <div class="campo-juego-img">
@@ -153,5 +153,6 @@
         <span>Diego Ezequiel Nacor - Emanuel Gomez - 2023</span>
     </footer>
     <script src="./scripts/validaciones.js" type="text/javascript"></script>
+    <?php session_unset(); ?>
 </body>
 </html>

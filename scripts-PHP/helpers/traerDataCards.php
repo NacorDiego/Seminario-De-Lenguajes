@@ -2,7 +2,7 @@
 
     function traerDataCards($link){
 
-        $query = "SELECT j.nombre as nombrejuego, j.imagen, j.descripcion, j.url, g.nombre as nombregenero, p.nombre as nombrePlataforma FROM juegos j INNER JOIN generos g ON j.id_genero = g.id INNER JOIN plataformas p ON j.id_plataforma = p.id WHERE 1 = 1";
+        $query = "SELECT j.nombre as nombrejuego, j.imagen, j.tipo_imagen, j.descripcion, j.url, g.nombre as nombregenero, p.nombre as nombrePlataforma FROM juegos j INNER JOIN generos g ON j.id_genero = g.id INNER JOIN plataformas p ON j.id_plataforma = p.id WHERE 1 = 1";
         if(!empty($_GET)){
             $genero = $_GET["genero"];
             $plataforma = $_GET["plataforma"];

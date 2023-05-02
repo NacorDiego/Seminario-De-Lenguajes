@@ -77,7 +77,8 @@
                     <li class='juego'>
                         <a href='<?php echo $row["url"]; ?>' target="_blank">
                             <div class='card'>
-                                <img class='imagen-juego' src='<?php echo $row["imagen"]; ?>' alt='cat'>
+                                <!--  -->
+                                <img class='imagen-juego' src="data:<?php echo $row["tipo_imagen"]; ?>;base64,<?php echo $row["imagen"]; ?>" alt='cat'>
                                 <div class='card-contenido'>
                                     <h4 class='titulo-juego'><?php echo $row["nombrejuego"]; ?></h4>
                                     <ul class='lista-encabezados'>
