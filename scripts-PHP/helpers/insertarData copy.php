@@ -3,7 +3,8 @@
         session_start();
 
         $nombre = $_POST['nombre'];
-        $img = $_POST['img-juego']; // La imagen no viene por POST sino por $_FILE.
+        $img = addslashes(file_get_contents($_FILES["image"]['tmp_name']));
+        $type = $_FILES['image']['type'];
         $descrip = $_POST['descripcion'];
         $url = $_POST['url'];
         $plataforma = $_POST['plataforma'];
@@ -47,14 +48,12 @@
             return;
         }
 
-        $query = "INSERT INTO `juegos`(`nombre`, `imagen`, `descripcion`, `url`, `id_genero`, `id_plataforma`) VALUES ('$nombre', '$img','$descrip','$url', '$genero','$plataforma')";
+        $query = "INSERT INTO `juegos`(`nombre`, `imagen`, `tipo_imagen`, `descripcion`, `url`, `id_genero`, `id_plataforma`) VALUES ('$nombre', '$img','$type','$descrip','$url', '$genero','$plataforma')";
 
-        $result = mysqli_query($link, $query);
-
-
+        // $result = mysqli_query($link, $query);
+        mysqli_query($link, $query);
 
         header('Location: ../../altaJuego.php');
-
     }
 
     require ("./conexionBD.php");

@@ -31,7 +31,7 @@
 
 	<h1>Img upload example</h1>
 
-	<?php 
+	<?php
 		if ($msg !== '') {
 			?>
 				<p class="<?php echo $errorType ? 'alert-ok': 'alert-ok'?>"> <?php echo $msg ?></p>
@@ -39,7 +39,7 @@
 		}
 	?>
 
-	<form action="upload.php" method="post" enctype="multipart/form-data"> 
+	<form action="uploadImage.php" method="post" enctype="multipart/form-data">
     <!-- enctype permite poder enviar el archivo por el form. -->
 
 		<label>Select Image File:</label>

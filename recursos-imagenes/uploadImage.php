@@ -1,6 +1,6 @@
 <?php
 
-    require "conectar.php";
+    require "conexionBD.php";
 
     try {
         $link = conectar();
