@@ -219,27 +219,6 @@ body {
     border-radius: 5px;
 }
 
-/* Estilos para el campo de entrada de archivo */
-.campo-juego-input-img {
-    display: none; /* Oculta el campo de entrada de archivo real */
-} 
-
-/* Estilos para la etiqueta del campo de entrada de archivo */
-label[for="img-juego"] {
-    background-color: #f1f1f1;
-    color: #333;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-    cursor: pointer; /* Cambia el cursor al pasar por encima */
-}
-
-  /* Estilos para el texto dentro de la etiqueta */
-label[for="img-juego"]::after {
-    content: "Seleccionar archivo";
-}
-
 /* Estilos para el botón del campo de entrada de archivo en Chrome y Safari */
 .campo-juego-input-img::-webkit-file-upload-button {
     background-color: #f1f1f1;

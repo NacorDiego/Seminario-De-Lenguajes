@@ -88,7 +88,7 @@
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="plataforma">Plataforma</label>
                         <select class="campo-juego-input" name="plataforma" id="plataforma">
-                            <option value="0" selected>Seleccionar...</option>
+                            <option value="" selected>Seleccionar...</option>
                             <?php while($row = $plataformas -> fetch_assoc()){?>
                                 <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
                             <?php } ?>
@@ -125,7 +125,7 @@
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="genero">Genero</label>
                         <select class="campo-juego-input" name="genero" id="genero">
-                            <option value="0" selected>Seleccionar...</option>
+                            <option value="" selected>Seleccionar...</option>
                             <?php while($row = $generos -> fetch_assoc()){?>
                                 <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
                             <?php } ?>
