@@ -1,15 +1,10 @@
 const validacion = () => {
-    const bNombre = validacionNombre()
-    const bImg = validacionImg()
-    const bPlataforma = validacionPlataforma()
-    const bDesc = validacionLenght('#descripcion','error-descrip',255)
-    const bUrl = validacionLenght('#url','error-url',80)
-
-    if(bNombre && bImg && bPlataforma && bDesc && bUrl){
-        return true
-    } else {
-        return false
-    }
+     validacionNombre()
+     validacionImg()
+     validacionDropdown('#plataforma','error-plataforma')
+     validacionDropdown('#genero','error-genero')
+     validacionLenght('#descripcion','error-descrip',255)
+     validacionLenght('#url','error-url',80)
   }
 
   const validacionNombre = () => {
@@ -39,24 +34,23 @@ const validacion = () => {
   }
 
 
-  const validacionPlataforma = () => {
-    const getInputValue = document.getElementById('form-principal').querySelector('#plataforma').value;
-
+  const validacionDropdown = (idSelector,idError) => {
+    const getInputValue = document.getElementById('form-principal').querySelector(idSelector).value;
     if (!getInputValue){
-        document.getElementById('error-plataforma').innerHTML = 'Campo requerido.'
+        document.getElementById(idError).innerHTML = 'Campo requerido.'
         return false
     } else {
-        document.getElementById('error-plataforma').innerHTML = ''
+        document.getElementById(idError).innerHTML = ''
         return true
     }
   }
 
 
-  const validacionLenght = (idInput, idError, lenght) => {
+  const validacionLenght = (idInput, idError, length) => {
     const getInputValue = document.getElementById('form-principal').querySelector(idInput).value;
-
-    if (getInputValue.length > lenght){
-        document.getElementById(idError).innerHTML = `No debe superar ${lenght} caracteres.`
+    console.log('getInputValue.length',getInputValue.length)
+    if (getInputValue.length > length){
+        document.getElementById(idError).innerHTML = `No debe superar ${length} caracteres.`
         return false
     } else {
         document.getElementById(idError).innerHTML = ''
