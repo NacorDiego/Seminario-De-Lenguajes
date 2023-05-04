@@ -3,7 +3,13 @@
         session_start();
 
         $nombre = $_POST['nombre'];
-        $img = $_POST['img-juego']; // La imagen no viene por POST sino por $_FILE.
+        //[error] numero que te indica el codigo de error del archivo. 0: No tiene ningun error. Hay uno que el usuario no selecciono archivo, otro que el archivo tuvo un error, otro que supero el tamaño de archivo.
+        if(!$_FILES['img-juego']['error']){
+            $img = base64_encode(file_get_contents($_FILES['img-juego']['tmp_name'])); //addslashes pone barras invertidas y limpia el string. file_get_contents a partir de un path recupera el archivo real o binario que necesitamos.
+        }else{
+            $_SESSION["errorImg"] = "El campo imagen es requerido.";
+        }
+        $type = $_FILES['img-juego']['type']; // [size] trae el tamaño de la imagen.
         $descrip = $_POST['descripcion'];
         $url = $_POST['url'];
         $plataforma = $_POST['plataforma'];
@@ -14,8 +20,8 @@
             $_SESSION["errorNombre"] = "El campo nombre es requerido.";
         }
 
-        if($img === ""){
-            $_SESSION["errorImg"] = "El campo imagen es requerido.";
+        if($type !== "image/jpg" && $type !== "image/png" && $type !== "image/jpeg"){
+            $_SESSION["errorImg"] = "El type no es compatible.";
         }
 
         if(strlen($descrip) > 255){
@@ -47,25 +53,15 @@
             return;
         }
 
-        $query = "INSERT INTO `juegos`(`nombre`, `imagen`, `descripcion`, `url`, `id_genero`, `id_plataforma`) VALUES ('$nombre', '$img','$descrip','$url', '$genero','$plataforma')";
+        $query = "INSERT INTO `juegos`(`nombre`, `imagen`, `tipo_imagen`, `descripcion`, `url`, `id_genero`, `id_plataforma`) VALUES ('$nombre', '$img','$type','$descrip','$url', '$genero','$plataforma')";
 
-        $result = mysqli_query($link, $query);
-
-
+        // $result = mysqli_query($link, $query);
+        mysqli_query($link, $query);
 
         header('Location: ../../altaJuego.php');
-
     }
 
     require ("./conexionBD.php");
     $link = conectar();
     insertarData($link);
 ?>
-
-
-<!-- // CREATE TABLE IF NOT EXISTS `images` (
-        //     `id` int(11) NOT NULL AUTO_INCREMENT,
-        //     `imagen` text NOT NULL,
-        //     `tipo_imagen` varchar(255) NOT NULL,
-        //     UNIQUE KEY `id` (`id`)
-        // ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1; -->

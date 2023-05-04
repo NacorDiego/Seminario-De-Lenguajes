@@ -34,7 +34,7 @@
         <div class="contenedor100">
             <div class="contenedor70">
                 <!-- enctype: Le avisa a form que se van a enviar archivos. -->
-                <form id="form-principal" action="./scripts-PHP/helpers/insertarData2.php" method="POST" onsubmit="return validacion()" class="form-agregar-juego" enctype='multipart/form-data'>
+                <form id="form-principal" action="./scripts-PHP/helpers/insertarData.php" method="POST" onsubmit="return validacion()" class="form-agregar-juego" enctype='multipart/form-data'>
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="nombre">Nombre</label>
                         <input class="campo-juego-input" id="nombre" name="nombre" type="text" placeholder="Ingrese el nombre del juego...">
