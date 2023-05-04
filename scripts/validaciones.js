@@ -48,7 +48,6 @@ const validacion = () => {
 
   const validacionLenght = (idInput, idError, length) => {
     const getInputValue = document.getElementById('form-principal').querySelector(idInput).value;
-    console.log('getInputValue.length',getInputValue.length)
     if (getInputValue.length > length){
         document.getElementById(idError).innerHTML = `No debe superar ${length} caracteres.`
         return false
