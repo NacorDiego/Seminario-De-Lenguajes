@@ -1,3 +1,14 @@
+<?php
+    require './scripts-PHP/helpers/conexionBD.php';
+    $link = conectar();
+    require './scripts-PHP/helpers/traerDataCards.php';
+    $data = traerDataCards($link);
+    require "./scripts-PHP/helpers/traerFiltrosGeneros.php";
+    $generos = traerFiltrosGeneros($link);
+    require "./scripts-PHP/helpers/traerFiltrosPlataformas.php";
+    $plataformas = traerFiltrosPlataformas($link);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,16 +25,6 @@
     <title>Pagina de videojuegos</title>
 </head>
 <body>
-     <?php
-        require './scripts-PHP/helpers/conexionBD.php';
-        $link = conectar();
-        require './scripts-PHP/helpers/traerDataCards.php';
-        $data = traerDataCards($link);
-        require "./scripts-PHP/helpers/traerFiltrosGeneros.php";
-        $generos = traerFiltrosGeneros($link);
-        require "./scripts-PHP/helpers/traerFiltrosPlataformas.php";
-        $plataformas = traerFiltrosPlataformas($link);
-    ?>
     <header class="header">
         <nav class="nav">
             <img class="imagen-logo" src="./imgs/logo.svg" alt="logo">
@@ -34,7 +35,7 @@
         <div class="contenedor100">
             <div class="contenedor70">
                 <!-- enctype: Le avisa a form que se van a enviar archivos. -->
-                <form id="form-principal" action="./scripts-PHP/helpers/insertarData.php" method="POST" onsubmit="return validacion()" class="form-agregar-juego" enctype='multipart/form-data'>
+                <form id="form-principal" action="./scripts-PHP/helpers/insertarData.php" method="POST"  class="form-agregar-juego" onsubmit="return validacion()" enctype='multipart/form-data'>
                     <div class="campo-juego">
                         <label class="campo-juego-label" for="nombre">Nombre</label>
                         <input class="campo-juego-input" id="nombre" name="nombre" type="text" placeholder="Ingrese el nombre del juego...">
@@ -43,10 +44,8 @@
                                 <?php
                                     session_start();
                                     if(isset($_SESSION["errorNombre"])){
-                                ?>
-                                    <?php echo $_SESSION["errorNombre"]; ?>
-                                <?php
-                                }
+                                        echo $_SESSION["errorNombre"];
+                                    }
                                 ?>
                             </span>
                         </div>

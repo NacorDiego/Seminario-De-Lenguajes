@@ -1,3 +1,14 @@
+<?php
+    require "./scripts-PHP/helpers/conexionBD.php";
+    $link = conectar();
+    require "./scripts-PHP/helpers/traerDataCards.php";
+    $data = traerDataCards($link);
+    require "./scripts-PHP/helpers/traerFiltrosGeneros.php";
+    $generos = traerFiltrosGeneros($link);
+    require "./scripts-PHP/helpers/traerFiltrosPlataformas.php";
+    $plataformas = traerFiltrosPlataformas($link);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,16 +29,6 @@
     <title>Pagina de videojuegos</title>
 </head>
 <body>
-    <?php
-        require "./scripts-PHP/helpers/conexionBD.php";
-        $link = conectar();
-        require "./scripts-PHP/helpers/traerDataCards.php";
-        $data = traerDataCards($link);
-        require "./scripts-PHP/helpers/traerFiltrosGeneros.php";
-        $generos = traerFiltrosGeneros($link);
-        require "./scripts-PHP/helpers/traerFiltrosPlataformas.php";
-        $plataformas = traerFiltrosPlataformas($link);
-    ?>
     <header class="header">
         <nav class="nav">
             <img class="imagen-logo" src="./imgs/logo.svg" alt="logo">

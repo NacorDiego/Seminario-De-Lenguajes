@@ -4,12 +4,16 @@
 
         $nombre = $_POST['nombre'];
         //[error] numero que te indica el codigo de error del archivo. 0: No tiene ningun error. Hay uno que el usuario no selecciono archivo, otro que el archivo tuvo un error, otro que supero el tamaño de archivo.
+        $type = $_FILES['img-juego']['type']; // [size] trae el tamaño de la imagen.
         if(!$_FILES['img-juego']['error']){
-            $img = base64_encode(file_get_contents($_FILES['img-juego']['tmp_name'])); //addslashes pone barras invertidas y limpia el string. file_get_contents a partir de un path recupera el archivo real o binario que necesitamos.
+            if($type !== "image/jpg" && $type !== "image/png" && $type !== "image/jpeg"){
+                $_SESSION["errorImg"] = "La extensión seleccionada no es válida.";
+            } else{
+                $img = base64_encode(file_get_contents($_FILES['img-juego']['tmp_name'])); //addslashes pone barras invertidas y limpia el string. file_get_contents a partir de un path recupera el archivo real o binario que necesitamos.
+            }
         }else{
             $_SESSION["errorImg"] = "El campo imagen es requerido.";
         }
-        $type = $_FILES['img-juego']['type']; // [size] trae el tamaño de la imagen.
         $descrip = $_POST['descripcion'];
         $url = $_POST['url'];
         $plataforma = $_POST['plataforma'];
@@ -20,9 +24,6 @@
             $_SESSION["errorNombre"] = "El campo nombre es requerido.";
         }
 
-        if($type !== "image/jpg" && $type !== "image/png" && $type !== "image/jpeg"){
-            $_SESSION["errorImg"] = "El type no es compatible.";
-        }
 
         if(strlen($descrip) > 255){
             $_SESSION["errorDescrip"] = "El campo descripcion excede el largo disponible.";
@@ -32,11 +33,11 @@
             $_SESSION["errorUrl"] = "El campo Url excede el largo disponible.";
         }
 
-        if($plataforma == 0){
+        if($plataforma == ""){
             $_SESSION["errorPlataforma"] = "Debes seleccionar una plataforma.";
         }
 
-        if($genero == 0){
+        if($genero == ""){
             $_SESSION["errorGenero"] = "Debes seleccionar un genero.";
         }
 
