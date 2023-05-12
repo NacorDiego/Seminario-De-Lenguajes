@@ -55,7 +55,7 @@
                         <label class="campo-juego-label" for="img-juego"></label>
                         <input class="campo-juego-input-img" id="img-juego" name="img-juego" type="file">
                         <?php
-                        if(isset($_SESSION["errorImg"])){
+                            if(isset($_SESSION["errorImg"])){
                         ?>
                             <div class="contenedor-error">
                                 <span class="span-error" id="error-img"><?php echo $_SESSION["errorImg"]; ?></span>
@@ -72,7 +72,7 @@
                         <label class="campo-juego-label" for="descripcion">Descripción</label>
                         <input class="campo-juego-input" id="descripcion" name="descripcion" type="text">
                         <?php
-                        if(isset($_SESSION["errorDescrip"])){
+                            if(isset($_SESSION["errorDescrip"])){
                         ?>
                             <div class="contenedor-error">
                                 <span class="span-error" id="error-descrip"><?php echo $_SESSION["errorDescrip"]; ?></span>
@@ -93,7 +93,7 @@
                             <?php } ?>
                         </select>
                         <?php
-                        if(isset($_SESSION["errorPlataforma"])){
+                            if(isset($_SESSION["errorPlataforma"])){
                         ?>
                             <div class="contenedor-error">
                                 <span class="span-error" id="error-plataforma"><?php echo $_SESSION["errorPlataforma"]; ?></span>
@@ -109,7 +109,7 @@
                         <label class="campo-juego-label" for="url">Url</label>
                         <input class="campo-juego-input" id="url" name="url" type="text">
                         <?php
-                        if(isset($_SESSION["errorUrl"])){
+                            if(isset($_SESSION["errorUrl"])){
                         ?>
                             <div class="contenedor-error">
                                 <span class="span-error" id="error-url"><?php echo $_SESSION["errorUrl"]; ?></span>
@@ -131,7 +131,7 @@
                         </select>
 
                         <?php
-                        if(isset($_SESSION["errorGenero"])){
+                            if(isset($_SESSION["errorGenero"])){
                         ?>
                             <div class="contenedor-error">
                                 <span class="span-error" id="error-genero"><?php echo $_SESSION["errorGenero"]; ?></span>
