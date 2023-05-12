@@ -57,11 +57,11 @@
                         <?php
                             if(isset($_SESSION["errorImg"])){
                         ?>
-                            <div class="contenedor-error">
-                                <span class="span-error" id="error-img"><?php echo $_SESSION["errorImg"]; ?></span>
-                            </div>
+                                <div class="contenedor-error">
+                                    <span class="span-error" id="error-img"><?php echo $_SESSION["errorImg"]; ?></span>
+                                </div>
                         <?php
-                        }
+                            }
                         ?>
                         <div class="contenedor-error">
                             <span class="span-error" id="error-img"></span>
@@ -74,11 +74,11 @@
                         <?php
                             if(isset($_SESSION["errorDescrip"])){
                         ?>
-                            <div class="contenedor-error">
-                                <span class="span-error" id="error-descrip"><?php echo $_SESSION["errorDescrip"]; ?></span>
-                            </div>
+                                <div class="contenedor-error">
+                                    <span class="span-error" id="error-descrip"><?php echo $_SESSION["errorDescrip"]; ?></span>
+                                </div>
                         <?php
-                        }
+                            }
                         ?>
                         <div class="contenedor-error">
                             <span class="span-error" id="error-descrip"></span>
@@ -90,16 +90,18 @@
                             <option value="" selected>Seleccionar...</option>
                             <?php while($row = $plataformas -> fetch_assoc()){?>
                                 <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
-                            <?php } ?>
+                            <?php
+                                }
+                            ?>
                         </select>
                         <?php
                             if(isset($_SESSION["errorPlataforma"])){
                         ?>
-                            <div class="contenedor-error">
-                                <span class="span-error" id="error-plataforma"><?php echo $_SESSION["errorPlataforma"]; ?></span>
-                            </div>
+                                <div class="contenedor-error">
+                                    <span class="span-error" id="error-plataforma"><?php echo $_SESSION["errorPlataforma"]; ?></span>
+                                </div>
                         <?php
-                        }
+                            }
                         ?>
                      <div class="contenedor-error">
                             <span class="span-error" id="error-plataforma"></span>
@@ -111,11 +113,11 @@
                         <?php
                             if(isset($_SESSION["errorUrl"])){
                         ?>
-                            <div class="contenedor-error">
-                                <span class="span-error" id="error-url"><?php echo $_SESSION["errorUrl"]; ?></span>
-                            </div>
+                                <div class="contenedor-error">
+                                    <span class="span-error" id="error-url"><?php echo $_SESSION["errorUrl"]; ?></span>
+                                </div>
                         <?php
-                        }
+                            }
                         ?>
                         <div class="contenedor-error">
                             <span class="span-error" id="error-url"></span>
@@ -127,17 +129,19 @@
                             <option value="" selected>Seleccionar...</option>
                             <?php while($row = $generos -> fetch_assoc()){?>
                                 <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
-                            <?php } ?>
+                            <?php
+                                }
+                            ?>
                         </select>
 
                         <?php
                             if(isset($_SESSION["errorGenero"])){
                         ?>
-                            <div class="contenedor-error">
-                                <span class="span-error" id="error-genero"><?php echo $_SESSION["errorGenero"]; ?></span>
-                            </div>
+                                <div class="contenedor-error">
+                                    <span class="span-error" id="error-genero"><?php echo $_SESSION["errorGenero"]; ?></span>
+                                </div>
                         <?php
-                        }
+                            }
                         ?>
                         <div class="contenedor-error">
                             <span class="span-error" id="error-genero"></span>

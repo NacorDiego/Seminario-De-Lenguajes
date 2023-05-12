@@ -48,7 +48,9 @@
                         <option value="" selected>Seleccionar...</option>
                         <?php while($row = $generos -> fetch_assoc()){?>
                             <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
-                        <?php } ?>
+                        <?php
+                            }
+                        ?>
                     </select>
                 </div>
                 <div class="campo">
@@ -57,7 +59,9 @@
                         <option value="" selected>Seleccionar...</option>
                         <?php while($row = $plataformas -> fetch_assoc()){?>
                             <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
-                        <?php } ?>
+                        <?php
+                            }
+                        ?>
                     </select>
                 </div>
                 <div class="campo">
