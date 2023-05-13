@@ -10,6 +10,7 @@
             $orden = $_GET["ordenar"];
             if($genero != ""){
                 $query = $query." AND g.id = $genero";
+                $_SESSION["filtro_genero"] = $genero;
             }
             if($plataforma != ""){
                 $query = $query." AND p.id = $plataforma";

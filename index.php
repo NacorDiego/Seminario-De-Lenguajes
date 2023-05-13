@@ -40,14 +40,14 @@
             <form class="formulario" action="index.php" method="GET">
                 <div class="campo">
                     <label class="campo-label" for="nombre">Nombre</label>
-                    <input class="campo-input" name="nombre" id="nombre" type="text"></input>
+                    <input class="campo-input" name="nombre" id="nombre" type="text" value="<?php echo isset($_GET["nombre"])?$_GET["nombre"]:"" ?>"></input>
                 </div>
                 <div class="campo">
                     <label class="campo-label" for="genero">Genero</label>
                     <select class="campo-input" name="genero" id="genero">
-                        <option value="" selected>Seleccionar...</option>
+                        <option value="">Seleccionar...</option>
                         <?php while($row = $generos -> fetch_assoc()){?>
-                            <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
+                            <option value="<?php echo $row["id"] ?>" <?php echo isset($_GET["genero"]) && $_GET["genero"]==$row["id"]?"selected":"" ?> ><?php echo $row["nombre"] ?></option>
                         <?php
                             }
                         ?>
@@ -58,7 +58,7 @@
                     <select class="campo-input" name="plataforma" id="plataforma">
                         <option value="" selected>Seleccionar...</option>
                         <?php while($row = $plataformas -> fetch_assoc()){?>
-                            <option value="<?php echo $row["id"] ?>"><?php echo $row["nombre"] ?></option>
+                            <option value="<?php echo $row["id"] ?>" <?php echo isset($_GET["plataforma"]) && $_GET["plataforma"]==$row["id"]?"selected":"" ?> ><?php echo $row["nombre"] ?></option>
                         <?php
                             }
                         ?>
@@ -68,8 +68,8 @@
                     <label class="campo-label" for="ordenar">Ordenar por nombre</label>
                     <select class="campo-input" name="ordenar" id="ordenar">
                         <option value="">Seleccionar...</option>
-                        <option value="ASC">Ascendente</option>
-                        <option value="DESC">Descendente</option>
+                        <option value="ASC" <?php echo isset($_GET["ordenar"]) && $_GET["ordenar"]=="ASC"?"selected":""; ?> >Ascendente</option>
+                        <option value="DESC" <?php echo isset($_GET["ordenar"]) && $_GET["ordenar"]=="DESC"?"selected":""; ?> >Descendente</option>
                     </select>
                 </div>
                 <input type="submit" class="boton-filtros"  value="Filtrar">
