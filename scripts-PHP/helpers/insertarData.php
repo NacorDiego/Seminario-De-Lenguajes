@@ -59,6 +59,8 @@
         // $result = mysqli_query($link, $query);
         mysqli_query($link, $query);
 
+        $_SESSION["mensaje_exito"] = "$nombre agregado correctamente";
+
         header('Location: ../../altaJuego.php');
     }
 

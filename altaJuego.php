@@ -7,6 +7,7 @@
     $generos = traerFiltrosGeneros($link);
     require "./scripts-PHP/helpers/traerFiltrosPlataformas.php";
     $plataformas = traerFiltrosPlataformas($link);
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -19,12 +20,27 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- MIS ESTILOS -->
     <link rel="stylesheet" href="estilos.css">
     <link rel="icon" href="./imgs/logo.svg"/>
     <title>Pagina de videojuegos</title>
 </head>
 <body>
+    <!-- Mensaje de éxito si el juego se guarda correctamente en la BD. -->
+    <?php
+        if(isset($_SESSION["mensaje_exito"])){
+            $msj=$_SESSION["mensaje_exito"];
+            echo "  <script>
+                        Swal.fire(
+                            '$msj',
+                            '',
+                            'success'
+                        )
+                    </script>";
+        }
+    ?>
     <header class="header">
         <nav class="nav">
             <img class="imagen-logo" src="./imgs/logo.svg" alt="logo">
@@ -42,7 +58,6 @@
                         <div class="contenedor-error">
                             <span class="span-error" id="error-nombre">
                                 <?php
-                                    session_start();
                                     if(isset($_SESSION["errorNombre"])){
                                         echo $_SESSION["errorNombre"];
                                     }
@@ -155,6 +170,7 @@
     <footer class="footer">
         <span>Diego Ezequiel Nacor - Emanuel Gomez - 2023</span>
     </footer>
+
     <script src="./scripts/validaciones.js" type="text/javascript"></script>
     <?php session_unset(); ?>
 </body>
