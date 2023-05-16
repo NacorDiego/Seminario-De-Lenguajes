@@ -15,6 +15,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- FUENTE - ROBOTO -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +33,16 @@
 <body>
     <header class="header">
         <nav class="nav">
-            <img class="imagen-logo" src="./imgs/logo.svg" alt="logo">
+            <div style="width:30%">
+            </div>
+            <div style="width:40%; display:flex; justify-content:center;">
+                <a href="#">
+                    <img class="imagen-logo" src="./imgs/logo.svg" alt="logo">
+                </a>
+            </div>
+            <div style="width: 30%;">
+                <a href="altajuego.php" class="btn-agregar"><i class="fa-solid fa-plus"></i> Agregar juego</a>
+            </div>
         </nav>
     </header>
     <main class="contenedor">

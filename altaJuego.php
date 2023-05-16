@@ -43,7 +43,9 @@
     ?>
     <header class="header">
         <nav class="nav">
-            <img class="imagen-logo" src="./imgs/logo.svg" alt="logo">
+            <a href="index.php">
+                <img class="imagen-logo" src="./imgs/logo.svg" alt="logo">
+            </a>
         </nav>
     </header>
     <main class="contenedor">

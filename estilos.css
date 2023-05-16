@@ -21,6 +21,15 @@ body {
     align-items: center;
 }
 
+.btn-agregar{
+    /* font-size:1.1rem; */
+    background-color:#FB3640;
+    padding:15px 25px;
+    border-radius:10px;
+    text-decoration:none;
+    color:white;
+}
+
 .imagen-logo {
     height: 60px;
     width: auto;
