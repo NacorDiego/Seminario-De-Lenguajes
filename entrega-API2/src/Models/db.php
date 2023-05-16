@@ -2,7 +2,7 @@
 
 class Db
 {
-    public Db(){
+    // public Db(){
         
-    }
+    // }
 }
