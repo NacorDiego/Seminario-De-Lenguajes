@@ -5,7 +5,7 @@ class Db
     private $servername = "localhost";
     private $username = "root";
     private $password = "";
-    private $dbname = "juegos";
+    private $dbname = "juegosdb";
     private $connection;
 
     public function connect()

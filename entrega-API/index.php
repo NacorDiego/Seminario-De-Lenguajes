@@ -19,7 +19,7 @@
     //Investigar como mover todos los endpoints de genero a otro archivo y modularizarlo.
 
     //? Chequear si los args se pueden borrar
-    $app -> post('/agregarGeneros', function (Request $request, Response $response, $args) use ($db) {
+    $app -> post('/agregarGeneros', function (Request $request, Response $response) use ($db) {
         //getBody obtiene todas las solicitudes enviadas al servidor (POST) //Modularizar
         $requestBody = $request -> getBody();
         //json_decode convierte el json en un array asociativo (basicamente que PHP pueda interpretar la data JSON)
@@ -44,7 +44,7 @@
     });
 
     //? Chequear si los args se pueden borrar
-    $app->post('/actualizarGenero', function (Request $request, Response $response, $args) use ($db){
+    $app->post('/actualizarGenero', function (Request $request, Response $response) use ($db){
         // Obtiene la petición en formato json
         $requestBody = $request -> getBody();
         // Transforma el json a un array y lo guarda en $data
@@ -72,10 +72,8 @@
     });
 
     //? Chequear si los args se pueden borrar
-    $app->post('/eliminarGenero', function (Request $request, Response $response, $args) use ($db){
-        $requestBody = $request -> getBody();
-        $data = json_decode($requestBody, true);
-        $idGenero = $data['idGenero'];
+    $app->delete('/generos/{id}', function (Request $request, Response $response, $args) use ($db){
+        $idGenero = $args['id'];
 
         $connection = $db -> getConnection();
 
@@ -89,7 +87,7 @@
     });
 
     //? Chequear si request debe ir o se puede borrar en los param
-    $app -> get('/obtenerGeneros', function (Request $request, Response $response) use ($db){
+    $app -> get('/generos', function (Request $request, Response $response, $args) use ($db){
         // Conecto a la BD.
         $connection = $db -> getConnection();
         // Defino query
