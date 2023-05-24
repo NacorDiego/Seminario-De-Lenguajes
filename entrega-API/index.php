@@ -46,7 +46,7 @@
 
     //? B) Actualizar información de un género
 
-    $app -> put('/generos/{vars}', function (Request $request, Response $response, $args) use ($db){
+    $app -> put('/generos/{id}', function (Request $request, Response $response, $args) use ($db){
         // Obtiene la petición en formato json
         $requestBody = $request -> getBody();
         // Transforma el json a un array y lo guarda en $data
@@ -147,30 +147,76 @@
     //? E) Crear una nueva plataforma
 
     $app -> post('/plataformas', function (Request $request, Response $response, $args) use ($db){
-        // var_dump($request -> getBody());
-        // die;
+        try{
+            $requestBody = $request -> getBody();
+            $data = json_decode($requestBody,true);
 
-        $requestBody = $request -> getBody();
-        $data = json_decode($requestBody);
-        $nombrePlataforma = $data['nombrePlataforma'];
+            if (!isset($data['nombrePlataforma'])){
+                throw new Exception('El campo nombrePlataforma es requerido');
+            }
 
-        $connection = $db -> getConnection();
+            $nombrePlataforma = $data['nombrePlataforma'];
 
-        $sqlInsert = $connection -> prepare("INSERT INTO `plataformas`(`nombre`) VALUES(?)");
-        $sqlInsert -> execute([$nombrePlataforma]);
+            $connection = $db -> getConnection();
 
-        $jsonData = json_encode(['message' => 'Plataforma creada exitosamente']);
-        $responseBody = $response -> getBody();
-        $responseBody -> write($jsonData);
+            $sqlInsert = $connection -> prepare("INSERT INTO `plataformas`(`nombre`) VALUES(?)");
+            $sqlInsert -> execute([$nombrePlataforma]);
 
-        return $response -> withStatus(200) -> withBody($responseBody);
+            $jsonData = json_encode(['message' => 'Plataforma creada exitosamente']);
+            $responseBody = $response -> getBody();
+            $responseBody -> write($jsonData);
 
+            return $response -> withStatus(200) -> withBody($responseBody);
+        } catch (Exception $e) {
+            $errorData = ['error' => $e -> getMessage()];
+            $jsonError = json_encode($errorData);
+            $response -> getBody() -> write($jsonError);
+
+            return $response -> withStatus(400) -> withHeader('Content-Type', 'application/json');
+        }
     });
-
 
     //? F) Actualizar información de una plataforma
 
+    $app -> put('/plataformas/{id}', function (Request $request, Response $response, $args) use ($db){
+        try {
+            $requestBody = $request -> getBody();
+            $data = json_decode($requestBody, true);
+            $idPlataforma = $args['id'];
 
+            // Si no existe o es null se genera una excepción.
+            if (!isset($data['nombrePlataforma'])){
+                throw new Exception ('El campo nombrePlataforma es requerido.');
+            } elseif ($data['nombrePlataforma'] == ""){
+                throw new Exception ('El campo nombrePlataforma no puede estar vacio.');
+            }
+
+            $nombrePlataforma = $data['nombrePlataforma'];
+            $connection = $db -> getConnection();
+
+            // Valido si el ID existe en la tabla plataformas, sino lanzo excepción.
+            $sqlSelect = $connection -> prepare('SELECT COUNT(*) FROM `plataformas` WHERE id = ?');
+            $sqlSelect -> execute([$idPlataforma]);
+            $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
+            if(!($result[0]['COUNT(*)'] > 0)){
+                throw new Exception ('No hay ningun registro con el ID especificado.');
+            }
+
+            $sqlUpdate = $connection -> prepare('UPDATE `plataformas` SET `nombre` = ? WHERE id = ?');
+            $sqlUpdate -> execute([$nombrePlataforma,$idPlataforma]);
+
+            $jsonData = json_encode('La plataforma se actualizo con exito.');
+            $responseBody = $response -> getBody();
+            $responseBody -> write($jsonData);
+            return $response -> withStatus(200) -> withBody($responseBody);
+
+        } catch (Exception $e) {
+            $errorData = ['error' => $e -> getMessage()];
+            $jsonError = json_encode($errorData);
+            $response -> getBody() -> write($jsonError);
+            return $response -> withStatus(400) -> withHeader('Content-Type', 'application/json');
+        }
+    });
 
 
     //? G) Eliminar una plataforma
