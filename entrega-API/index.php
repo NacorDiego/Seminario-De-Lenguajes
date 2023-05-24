@@ -18,8 +18,9 @@
     //Todas las funciones se repiten pero cambian pocas cosas, falta agregar errores 404 y 400. Por ahora esta todo sin catchear errores
     //Investigar como mover todos los endpoints de genero a otro archivo y modularizarlo.
 
-    //? Chequear si los args se pueden borrar
-    $app -> post('/agregarGeneros', function (Request $request, Response $response) use ($db) {
+    //? A) Crear un nuevo género
+
+    $app -> post('/generos', function (Request $request, Response $response) use ($db) {
         //getBody obtiene todas las solicitudes enviadas al servidor (POST) //Modularizar
         $requestBody = $request -> getBody();
         //json_decode convierte el json en un array asociativo (basicamente que PHP pueda interpretar la data JSON)
@@ -43,15 +44,16 @@
         return $response -> withStatus(200) -> withBody($responseBody);
     });
 
-    //? Chequear si los args se pueden borrar
-    $app->post('/actualizarGenero', function (Request $request, Response $response) use ($db){
+    //? B) Actualizar información de un género
+
+    $app -> put('/generos/{vars}', function (Request $request, Response $response, $args) use ($db){
         // Obtiene la petición en formato json
         $requestBody = $request -> getBody();
         // Transforma el json a un array y lo guarda en $data
         $data = json_decode($requestBody, true);
         // Obtiene los datos que vienen en "nombreGenero" e "idGenero" y los guarda en las variables
         $nombreGenero = $data['nombreGenero'];
-        $idGenero = $data['idGenero'];
+        $idGenero = $args['id'];
 
         // Obtiene la conexión a la bd mediante la instancia de Db.
         $connection = $db -> getConnection();
@@ -71,7 +73,9 @@
         return $response -> withStatus(200) -> withBody($responseBody);
     });
 
-    //? Chequear si los args se pueden borrar
+
+    //? C) Eliminar un género
+
     $app->delete('/generos/{id}', function (Request $request, Response $response, $args) use ($db){
         $idGenero = $args['id'];
 
@@ -80,14 +84,17 @@
         $sqlDelete = $connection -> prepare("DELETE FROM `generos` WHERE `id` = ?");
         $sqlDelete -> execute([$idGenero]);
 
-        $jsonData = json_encode(['message' => 'Genero elimnado exitosamente']);
+        $jsonData = json_encode(['message' => 'Genero eliminado exitosamente']);
         $responseBody = $response -> getBody();
         $responseBody -> write($jsonData);
         return $response -> withStatus(200) -> withBody($responseBody);
     });
 
-    //? Chequear si request debe ir o se puede borrar en los param
+    //? D) Obtener todos los géneros
+
     $app -> get('/generos', function (Request $request, Response $response, $args) use ($db){
+        // var_dump($request->getQueryParams());
+        // die;
         // Conecto a la BD.
         $connection = $db -> getConnection();
         // Defino query
@@ -136,5 +143,39 @@
         $responseBody -> write($errorJson);
         return $response -> withStatus(404) -> withBody($responseBody);
     });
+
+    //? E) Crear una nueva plataforma
+
+    $app -> post('/plataformas', function (Request $request, Response $response, $args) use ($db){
+        // var_dump($request -> getBody());
+        // die;
+
+        $requestBody = $request -> getBody();
+        $data = json_decode($requestBody);
+        $nombrePlataforma = $data['nombrePlataforma'];
+
+        $connection = $db -> getConnection();
+
+        $sqlInsert = $connection -> prepare("INSERT INTO `plataformas`(`nombre`) VALUES(?)");
+        $sqlInsert -> execute([$nombrePlataforma]);
+
+        
+
+    });
+
+
+    //? F) Actualizar información de una plataforma
+
+
+
+
+    //? G) Eliminar una plataforma
+
+
+
+
+    //? H) Obtener todas las plataformas
+
+
 
     $app->run();
