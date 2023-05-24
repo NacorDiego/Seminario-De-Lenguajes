@@ -159,7 +159,11 @@
         $sqlInsert = $connection -> prepare("INSERT INTO `plataformas`(`nombre`) VALUES(?)");
         $sqlInsert -> execute([$nombrePlataforma]);
 
-        
+        $jsonData = json_encode(['message' => 'Plataforma creada exitosamente']);
+        $responseBody = $response -> getBody();
+        $responseBody -> write($jsonData);
+
+        return $response -> withStatus(200) -> withBody($responseBody);
 
     });
 
