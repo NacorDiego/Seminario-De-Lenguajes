@@ -253,6 +253,11 @@
         try {
             $connection = $db -> getConnection();
 
+            //? Chequear si está bien esta validación.
+            if (!$connection){
+                throw new Exception ('No se puede conectar a la base de datos.');
+            }
+
             $sqlGet = $connection -> prepare('SELECT * FROM `plataformas`');
             $sqlGet -> execute();
             $result = $sqlGet -> fetchAll(PDO::FETCH_ASSOC);
