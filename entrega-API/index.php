@@ -243,12 +243,30 @@
         } catch (Exception $e) {
             $errorData = json_encode(['error' => $e -> getMessage()]);
             $response -> getBody() -> write($errorData);
-            return $response -> withStatus(500) -> withHeader('Content-Type', 'application/json');
+            return $response -> withStatus(400) -> withHeader('Content-Type', 'application/json');
         }
     });
 
     //? H) Obtener todas las plataformas
 
+    $app -> get('/plataformas', function(Request $request, Response $response, $args) use ($db){
+        try {
+            $connection = $db -> getConnection();
 
+            $sqlGet = $connection -> prepare('SELECT * FROM `plataformas`');
+            $sqlGet -> execute();
+            $result = $sqlGet -> fetchAll(PDO::FETCH_ASSOC);
+
+            $dataJson = json_encode($result);
+            $response -> getBody() -> write($dataJson);
+            return $response -> withStatus(200) -> withHeader('Content-Type', 'application/json');
+        } catch (Exception $e) {
+            $errorData = ['error' => $e->getMessage()];
+            $errorJson = json_encode($errorData);
+            $response -> getBody() -> write($errorJson);
+            //? Chequear si es error 404 o 400.
+            return $response -> withStatus(404) -> withHeader('Content-Type', 'application/json');
+        }
+    });
 
     $app->run();
