@@ -221,8 +221,31 @@
 
     //? G) Eliminar una plataforma
 
+    $app -> delete('/plataformas/{id}', function (Request $request, Response $response, $args) use ($db){
+        try {
+            $idPlataforma = $args['id'];
 
+            $connection = $db -> getConnection();
 
+            $sqlSelect = $connection -> prepare('SELECT COUNT(*) FROM `plataformas` WHERE id = ?');
+            $sqlSelect -> execute([$idPlataforma]);
+            $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
+            if(!($result[0]['COUNT(*)'] > 0)){
+                throw new Exception ('No hay ningun registro que corresponda al ID especificado.');
+            }
+
+            $sqlDelete = $connection -> prepare('DELETE FROM `generos` WHERE id = ?');
+            $sqlDelete -> execute([$idPlataforma]);
+
+            $jsonData = json_encode('La plataforma fue eliminada con exito.');
+            $response -> getBody() -> write($jsonData);
+            return $response -> withStatus(200) -> withHeader('Content-Type', 'application/json');
+        } catch (Exception $e) {
+            $errorData = json_encode(['error' => $e -> getMessage()]);
+            $response -> getBody() -> write($errorData);
+            return $response -> withStatus(500) -> withHeader('Content-Type', 'application/json');
+        }
+    });
 
     //? H) Obtener todas las plataformas
 
