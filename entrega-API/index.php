@@ -286,31 +286,42 @@
             $genero = $params['genero'];
 
             // VALIDACIONES
+            $msgError = "";
             if ($nombre == ""){
-                throw new Exception ('El campo "nombre" es requerido.');
+                $msgError = $msgError.'El campo "nombre" es requerido. ';
             }
-
             // ------------------------
             // Acá las validaciones de imagenes
             // ------------------------
-
             if(strlen($descripcion) > 255){
-                throw new Exception ('El campo "descripción" no puede superar los 255 caracteres.');
+                $msgError = $msgError.'El campo "descripción" no puede superar los 255 caracteres. ';
             }
-
             if(strlen($url) > 80){
-                throw new Exception ('El campo "url" no puede superar los 80 caracteres.');
+                $msgError = $msgError.'El campo "url" no puede superar los 80 caracteres. ';
             }
-
             if($plataforma == ""){
-                throw new Exception ('El campo "plataforma" es requerido.');
+                $msgError = $msgError.'El campo "plataforma" es requerido. ';
+            }
+            if($genero == ""){
+                $msgError = $msgError.'El campo "genero" es requerido. ';
+            }
+            if (!$msgError == ""){
+                throw new Exception ($msgError);
             }
 
-            if($genero == ""){
-                throw new Exception ('El campo "genero" es requerido.');
-            }
+            $connection = $db -> getConnection();
+
+            $connection -> prepare("INSERT INTO `juegos`(`nombre`, `imagen`, `tipo_imagen`, `descripcion`, `url`, `id_genero`, `id_plataforma`) VALUES ('?', '?','?','?','?', '?','?')");
+            $connection -> execute([$nombre, $img, $tipo_imagen, $descripcion, $url, $plataforma, $genero]);
+
+            $dataJson = json_encode('El juego fue agregado con exito.');
+            $response -> getBody() -> write($dataJson);
+            return $response -> withStatus(200) -> withHeader('Content-Type', 'application/json');
         } catch (Exception $e) {
-            
+            $errorData = $e -> getMessage();
+            $jsonError = json_encode($errorData);
+            $response -> getBody() -> write($jsonError);
+            return $response -> withStatus(400) -> withHeader('Content-Type', 'application/json');
         }
     });
 
