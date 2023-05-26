@@ -274,4 +274,44 @@
         }
     });
 
+    $app -> post('/juegos', function (Request $request, Response $response, $args) use ($db){
+        try {
+            $params = $request -> getParsedBody();
+            $nombre = $params['nombre'];
+            // $tipoImg = $params['img-juego']['type'];
+            // $img = base64_encode(file_get_contents($params['img-juego']['tmp_name']));
+            $descripcion = $params['descripcion'];
+            $url = $params['url'];
+            $plataforma = $params['plataforma'];
+            $genero = $params['genero'];
+
+            // VALIDACIONES
+            if ($nombre == ""){
+                throw new Exception ('El campo "nombre" es requerido.');
+            }
+
+            // ------------------------
+            // Acá las validaciones de imagenes
+            // ------------------------
+
+            if(strlen($descripcion) > 255){
+                throw new Exception ('El campo "descripción" no puede superar los 255 caracteres.');
+            }
+
+            if(strlen($url) > 80){
+                throw new Exception ('El campo "url" no puede superar los 80 caracteres.');
+            }
+
+            if($plataforma == ""){
+                throw new Exception ('El campo "plataforma" es requerido.');
+            }
+
+            if($genero == ""){
+                throw new Exception ('El campo "genero" es requerido.');
+            }
+        } catch (Exception $e) {
+            
+        }
+    });
+
     $app->run();
