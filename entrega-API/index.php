@@ -274,6 +274,8 @@
         }
     });
 
+    //? i) Crear un nuevo juego
+
     $app -> post('/juegos', function (Request $request, Response $response, $args) use ($db){
         try {
             $params = $request -> getParsedBody();
@@ -306,7 +308,7 @@
                 $msgError = $msgError.'El campo "genero" es requerido. ';
             }
             if (!$msgError == ""){
-                throw new Exception ($msgError);
+                throw new Exception ($msgError,400);
             }
 
             $connection = $db -> getConnection();
@@ -318,11 +320,24 @@
             $response -> getBody() -> write($dataJson);
             return $response -> withStatus(200) -> withHeader('Content-Type', 'application/json');
         } catch (Exception $e) {
-            $errorData = $e -> getMessage();
-            $jsonError = json_encode($errorData);
+            $msgError = $e -> getMessage();
+            $codeError = $e -> getCode();
+            $jsonError = json_encode($msgError);
             $response -> getBody() -> write($jsonError);
-            return $response -> withStatus(400) -> withHeader('Content-Type', 'application/json');
+            return $response -> withStatus($codeError) -> withHeader('Content-Type', 'application/json');
         }
+
+        //? j) Actualizar información de un juego
+
+        $app -> put('/juegos/{id}', function (Request $request, Response $response, $args) use ($db){
+            $idJuego = $args['id'];
+
+
+        });
+
+        //? k) Eliminar un juego
+        //? l) Obtener todos los juegos
+        //? m) Buscar juegos
     });
 
     $app->run();
