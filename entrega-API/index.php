@@ -254,7 +254,7 @@
             $connection = $db -> getConnection();
 
             //? Chequear si está bien esta validación.
-            if (!$connection){
+            if ($connection == null){
                 throw new Exception ('No se puede conectar a la base de datos.');
             }
 
@@ -267,7 +267,7 @@
             return $response -> withStatus(200) -> withHeader('Content-Type', 'application/json');
         } catch (Exception $e) {
             $errorData = ['error' => $e->getMessage()];
-            $errorJson = json_encode($errorData);
+            $errorJson = json_encode($errorData. "CATCH");
             $response -> getBody() -> write($errorJson);
             //? Chequear si es error 404 o 400.
             return $response -> withStatus(404) -> withHeader('Content-Type', 'application/json');
