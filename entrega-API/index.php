@@ -348,10 +348,12 @@
 
             // - - - - - - - - Validaciones de campos - - - - - - - -
             $msgError = "";
+            $camposQuery = "";
             // Validación NOMBRE
             if (isset($params['nombre'])){
                 if (!($params['nombre'] == "")){
                     $nombre = $params['nombre'];
+                    $camposQuery = $camposQuery . "`nombre` = ? ";
                 } else {
                     $msgError = $msgError . 'El campo "Nombre" no puede estar vacío.';
                 }
@@ -360,6 +362,7 @@
             if (isset($params['descripcion'])){
                 if (!($params['descripcion'] == "")){
                     $descripcion = $params['descripcion'];
+                    $camposQuery = $camposQuery . "`descripcion` = ? ";
                 } else {
                     $msgError = $msgError . 'El campo "Descripcion" no puede estar vacío.';
                 }
@@ -367,6 +370,7 @@
             if (isset($params['url'])){
                 if (!($params['url'] == "")){
                     $url = $params['url'];
+                    $camposQuery = $camposQuery . "`url` = ? ";
                 } else {
                     $msgError = $msgError . 'El campo "Url" no puede estar vacío.';
                 }
@@ -374,6 +378,7 @@
             if (isset($params['plataforma'])){
                 if (!($params['plataforma'] == "")){
                     $plataforma = $params['plataforma'];
+                    $camposQuery = $camposQuery . "`plataforma` = ? ";
                 } else {
                     $msgError = $msgError . 'El campo "Plataforma" no puede estar vacío.';
                 }
@@ -381,6 +386,7 @@
             if (isset($params['genero'])){
                 if (!($params['genero'] == "")){
                     $genero = $params['genero'];
+                    $camposQuery = $camposQuery . "`genero` = ? ";
                 } else {
                     $msgError = $msgError . 'El campo "Genero" no puede estar vacío.';
                 }
@@ -390,8 +396,8 @@
                 throw new Exception ($msgError,400);
             }
 
-
-            $connection -> prepare();
+            //? Consultar como armar la query y pasar los parámetros que especifica el usuario.
+            // $connection -> prepare("UPDATE `juegos` SET $camposQuery WHERE `id` = ?");
         });
 
         //? k) Eliminar un juego
