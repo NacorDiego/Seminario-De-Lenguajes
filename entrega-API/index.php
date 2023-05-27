@@ -333,8 +333,20 @@
             $idJuego = $args['id'];
             $params = $request -> getParsedBody();
 
-            // VALIDACIONES
+            // - - - - - - - - VALIDACIONES - - - - - - - -
 
+            $connection = $db -> getConnection();
+
+            // - - - - - - - - Validacion de ID - - - - - - - -
+
+            $sqlSelect = $connection -> prepare('SELECT COUNT(*) FROM `juegos` WHERE `id` = ?');
+            $sqlSelect -> execute($idJuego);
+            $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
+            if (!($result > 0)){
+                throw new Exception('No existe ningun juego para el ID especificado.',404);
+            }
+
+            // - - - - - - - - Validaciones de campos - - - - - - - -
             $msgError = "";
             // Validación NOMBRE
             if (isset($params['nombre'])){
@@ -378,8 +390,8 @@
                 throw new Exception ($msgError,400);
             }
 
-            $connection = $db -> getConnection();
-            
+
+            $connection -> prepare();
         });
 
         //? k) Eliminar un juego
