@@ -331,11 +331,61 @@
 
         $app -> put('/juegos/{id}', function (Request $request, Response $response, $args) use ($db){
             $idJuego = $args['id'];
+            $params = $request -> getParsedBody();
 
+            // VALIDACIONES
 
+            $msgError = "";
+            // Validación NOMBRE
+            if (isset($params['nombre'])){
+                if (!($params['nombre'] == "")){
+                    $nombre = $params['nombre'];
+                } else {
+                    $msgError = $msgError . 'El campo "Nombre" no puede estar vacío.';
+                }
+            }
+            // Validación DESCRIPCION
+            if (isset($params['descripcion'])){
+                if (!($params['descripcion'] == "")){
+                    $descripcion = $params['descripcion'];
+                } else {
+                    $msgError = $msgError . 'El campo "Descripcion" no puede estar vacío.';
+                }
+            }
+            if (isset($params['url'])){
+                if (!($params['url'] == "")){
+                    $url = $params['url'];
+                } else {
+                    $msgError = $msgError . 'El campo "Url" no puede estar vacío.';
+                }
+            }
+            if (isset($params['plataforma'])){
+                if (!($params['plataforma'] == "")){
+                    $plataforma = $params['plataforma'];
+                } else {
+                    $msgError = $msgError . 'El campo "Plataforma" no puede estar vacío.';
+                }
+            }
+            if (isset($params['genero'])){
+                if (!($params['genero'] == "")){
+                    $genero = $params['genero'];
+                } else {
+                    $msgError = $msgError . 'El campo "Genero" no puede estar vacío.';
+                }
+            }
+
+            if (!($msgError == "")){
+                throw new Exception ($msgError,400);
+            }
+
+            $connection = $db -> getConnection();
+            
         });
 
         //? k) Eliminar un juego
+
+
+
         //? l) Obtener todos los juegos
         //? m) Buscar juegos
     });
