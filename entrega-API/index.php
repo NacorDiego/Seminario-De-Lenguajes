@@ -330,79 +330,115 @@
         //? j) Actualizar información de un juego
 
         $app -> put('/juegos/{id}', function (Request $request, Response $response, $args) use ($db){
-            $idJuego = $args['id'];
-            $params = $request -> getParsedBody();
+            try {
+                $idJuego = $args['id'];
+                $params = $request -> getParsedBody();
 
-            // - - - - - - - - VALIDACIONES - - - - - - - -
+                // - - - - - - - - VALIDACIONES - - - - - - - -
 
-            $connection = $db -> getConnection();
+                $connection = $db -> getConnection();
 
-            // - - - - - - - - Validacion de ID - - - - - - - -
+                // - - - - - - - - Validacion de ID - - - - - - - -
 
-            $sqlSelect = $connection -> prepare('SELECT COUNT(*) FROM `juegos` WHERE `id` = ?');
-            $sqlSelect -> execute($idJuego);
-            $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
-            if (!($result > 0)){
-                throw new Exception('No existe ningun juego para el ID especificado.',404);
-            }
-
-            // - - - - - - - - Validaciones de campos - - - - - - - -
-            $msgError = "";
-            $camposQuery = "";
-            // Validación NOMBRE
-            if (isset($params['nombre'])){
-                if (!($params['nombre'] == "")){
-                    $nombre = $params['nombre'];
-                    $camposQuery = $camposQuery . "`nombre` = ? ";
-                } else {
-                    $msgError = $msgError . 'El campo "Nombre" no puede estar vacío.';
+                $sqlSelect = $connection -> prepare('SELECT COUNT(*) FROM `juegos` WHERE `id` = ?');
+                $sqlSelect -> execute($idJuego);
+                $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
+                if (!($result > 0)){
+                    throw new Exception('No existe ningun juego para el ID especificado.',404);
                 }
-            }
-            // Validación DESCRIPCION
-            if (isset($params['descripcion'])){
-                if (!($params['descripcion'] == "")){
-                    $descripcion = $params['descripcion'];
-                    $camposQuery = $camposQuery . "`descripcion` = ? ";
-                } else {
-                    $msgError = $msgError . 'El campo "Descripcion" no puede estar vacío.';
-                }
-            }
-            if (isset($params['url'])){
-                if (!($params['url'] == "")){
-                    $url = $params['url'];
-                    $camposQuery = $camposQuery . "`url` = ? ";
-                } else {
-                    $msgError = $msgError . 'El campo "Url" no puede estar vacío.';
-                }
-            }
-            if (isset($params['plataforma'])){
-                if (!($params['plataforma'] == "")){
-                    $plataforma = $params['plataforma'];
-                    $camposQuery = $camposQuery . "`plataforma` = ? ";
-                } else {
-                    $msgError = $msgError . 'El campo "Plataforma" no puede estar vacío.';
-                }
-            }
-            if (isset($params['genero'])){
-                if (!($params['genero'] == "")){
-                    $genero = $params['genero'];
-                    $camposQuery = $camposQuery . "`genero` = ? ";
-                } else {
-                    $msgError = $msgError . 'El campo "Genero" no puede estar vacío.';
-                }
-            }
 
-            if (!($msgError == "")){
-                throw new Exception ($msgError,400);
-            }
+                // - - - - - - - - Validaciones de campos - - - - - - - -
+                $msgError = "";
+                $camposQuery = "";
+                // Validación NOMBRE
+                if (isset($params['nombre'])){
+                    if (!($params['nombre'] == "")){
+                        $nombre = $params['nombre'];
+                        $camposQuery = $camposQuery . "`nombre` = ? ";
+                    } else {
+                        $msgError = $msgError . 'El campo "Nombre" no puede estar vacío.';
+                    }
+                }
+                // Validación DESCRIPCION
+                if (isset($params['descripcion'])){
+                    if (!($params['descripcion'] == "")){
+                        $descripcion = $params['descripcion'];
+                        $camposQuery = $camposQuery . "`descripcion` = ? ";
+                    } else {
+                        $msgError = $msgError . 'El campo "Descripcion" no puede estar vacío.';
+                    }
+                }
+                if (isset($params['url'])){
+                    if (!($params['url'] == "")){
+                        $url = $params['url'];
+                        $camposQuery = $camposQuery . "`url` = ? ";
+                    } else {
+                        $msgError = $msgError . 'El campo "Url" no puede estar vacío.';
+                    }
+                }
+                if (isset($params['plataforma'])){
+                    if (!($params['plataforma'] == "")){
+                        $plataforma = $params['plataforma'];
+                        $camposQuery = $camposQuery . "`plataforma` = ? ";
+                    } else {
+                        $msgError = $msgError . 'El campo "Plataforma" no puede estar vacío.';
+                    }
+                }
+                if (isset($params['genero'])){
+                    if (!($params['genero'] == "")){
+                        $genero = $params['genero'];
+                        $camposQuery = $camposQuery . "`genero` = ? ";
+                    } else {
+                        $msgError = $msgError . 'El campo "Genero" no puede estar vacío.';
+                    }
+                }
 
-            //? Consultar como armar la query y pasar los parámetros que especifica el usuario.
-            // $connection -> prepare("UPDATE `juegos` SET $camposQuery WHERE `id` = ?");
+                if (!($msgError == "")){
+                    throw new Exception ($msgError,400);
+                }
+
+                //TODO Consultar como armar la query y pasar los parámetros que especifica el usuario.
+                // $connection -> prepare("UPDATE `juegos` SET $camposQuery WHERE `id` = ?");
+
+                //TODO retornar $response.
+            } catch (Exception $e){
+                //TODO gestionar excepciones.
+            }
         });
 
         //? k) Eliminar un juego
 
+        $app -> delete('/juegos/{id}', function (Request $request, Response $response, $args) use ($db){
+            try {
+                $idJuego = $args['id'];
 
+                // Conexion a BD
+                $connection = $db -> getConnection();
+                // Validacion de ID
+                $sqlSelect = $connection -> prepare('SELECT COUNT(*) FROM `juegos` WHERE `id` = ?');
+                $sqlSelect -> execute($idJuego);
+                $response = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
+                if (!($response > 0)){
+                    throw new Exception ('No existe ningún juego para el ID especificado.',404);
+                }
+
+                // Realizo la eliminación del juego
+                $sqlDelete = $connection -> prepare('DELETE FROM `juegos` WHERE `id` = ?');
+                $sqlDelete -> execute($idJuego);
+
+                // Retorno RESPUESTA
+                $msg = ('El juego a sido eliminado con exito.');
+                $dataJson = json_encode($msg);
+                $response -> getBody() -> write($dataJson);
+                return $response -> withStatus(200) -> withHeader('Content-Type', 'application/json');
+            } catch (Exception $e) {
+                $msgError = $e -> getMessage();
+                $codeError = $e -> getCode();
+                $jsonError = json_encode($msgError);
+                $response -> getBody() -> write($jsonError);
+                return $response -> withStatus($codeError) -> withHeader('Content-Type', 'application/json');
+            }
+        });
 
         //? l) Obtener todos los juegos
         //? m) Buscar juegos
