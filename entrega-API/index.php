@@ -481,7 +481,7 @@
                     $query = $query." AND p.id = $plataforma";
                 }
                 if($nombre != ""){
-                    $query = $query." AND j.nombre LIKE '$nombre%'"; // Devuelve todos los matcheos.
+                    $query = $query." AND j.nombre LIKE '%$nombre%'"; // Devuelve todos los matcheos.
                 }
                 if($orden != ""){
                     $query = $query." ORDER BY j.nombre $orden";
