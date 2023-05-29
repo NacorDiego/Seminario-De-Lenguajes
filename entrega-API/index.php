@@ -21,50 +21,34 @@
     //? A) Crear un nuevo género
 
     $app -> post('/generos', function (Request $request, Response $response) use ($db) {
-        //getBody obtiene todas las solicitudes enviadas al servidor (POST) //Modularizar
+        //getBody obtiene todas las solicitudes enviadas al servidor (POST) en formato json
         $requestBody = $request -> getBody();
-        //json_decode convierte el json en un array asociativo (basicamente que PHP pueda interpretar la data JSON)
+        //Transforma el json a un array y lo guarda en $data
         $data = json_decode($requestBody, true);
         //en $data estan todos las props que mandamos desde Postman
-        $nombreGenero = $data['nombreGenero'];
+        if(isset($data['nombreGenero'])){
+            $nombreGenero = $data['nombreGenero'];
+        } else {
+            //Escribimos un error y lo encodeamos
+            $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo nombreGenero es requerido']));
+            //Retornamos una respuesta de tipo JSON con el codigo 400 y el cuerpo con el error
+            return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+        }
 
-        // Obtén la conexión a la base de datos
+        // Obtén la conexión a la base de datos el getConnection ya tiene un try/catch
         $connection = $db -> getConnection();
 
-        // Insertar el nuevo género en la base de datos
-        $sqlInsert = $connection -> prepare("INSERT INTO `generos`(`nombre`) VALUES (?)");
-        // Agregar try/catch si falla el execute con 404 creo
-        //Donde va el signo de pregunta es donde se inserta la variable
-        $sqlInsert -> execute([$nombreGenero]);
-
-        // Devolver una respuesta exitosa // Modularizar
-        $jsonData = json_encode(['message' => 'Genero creado exitosamente']);
-        $responseBody = $response -> getBody();
-        $responseBody -> write($jsonData);
-        return $response -> withStatus(200) -> withBody($responseBody);
-    });
-
-    //? B) Actualizar información de un género
-
-    $app -> put('/generos/{id}', function (Request $request, Response $response, $args) use ($db){
-        // Obtiene la petición en formato json
-        $requestBody = $request -> getBody();
-        // Transforma el json a un array y lo guarda en $data
-        $data = json_decode($requestBody, true);
-        // Obtiene los datos que vienen en "nombreGenero" e "idGenero" y los guarda en las variables
-        $nombreGenero = $data['nombreGenero'];
-        $idGenero = $args['id'];
-
-        // Obtiene la conexión a la bd mediante la instancia de Db.
-        $connection = $db -> getConnection();
-
-        // Guarda en $sqlUpdate la query preparada para actualizar el genero de nombre=? y id=?
-        $sqlUpdate = $connection -> prepare("UPDATE `generos` SET `nombre` = ? WHERE `id` = ?");
-        // Ejecuta la query con los datos pasados como param en la BD.
-        $sqlUpdate -> execute([$nombreGenero, $idGenero]);
+        try{
+            $sqlInsert = $connection -> prepare("INSERT INTO `generos`(`nombre`) VALUES (?)");
+            //Donde va el signo de pregunta es donde se inserta la variable
+            $sqlInsert -> execute([$nombreGenero]);
+        } catch (Exception $e) {
+            $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al insertar el género en la base de datos']));
+            return $response->withStatus(404)->withHeader('Content-Type', 'application/json');;
+        }
 
         // Guarda el msj en un array y lo encodea a json
-        $jsonData = json_encode(['message' => 'Genero actualizado exitosamente']);
+        $jsonData = json_encode(['message' => 'Genero creado exitosamente']);
         // Almacena la referencia al cuerpo de la respuesta en $responseBody
         $responseBody = $response -> getBody();
         // Escribe en el cuerpo de la respuesta el json guardado con el msj anteriormente
@@ -73,259 +57,292 @@
         return $response -> withStatus(200) -> withBody($responseBody);
     });
 
+    //? B) Actualizar información de un género
+
+    $app -> put('/generos/{id}', function (Request $request, Response $response, $args) use ($db){
+        $requestBody = $request -> getBody();
+        $data = json_decode($requestBody, true);
+
+        if(isset($data['nombreGenero'] )){
+            $nombreGenero = $data['nombreGenero'];
+        } else {
+            $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo nombreGenero es requerido']));
+            return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+        }
+
+        // Obtiene los datos que vienen por args"idGenero" y los guarda en las variables
+        if(isset($args['id']) && is_numeric($args['id'])){
+            $idGenero = $args['id'];
+        } else {
+            $response->getBody()->write(json_encode(['[400] Error: ' => 'El parametro id es requerido y tiene que ser un numero']));
+            return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+        }
+       
+        $connection = $db -> getConnection();
+        try{
+            // Guarda en $sqlUpdate la query preparada para actualizar el genero de nombre=? y id=?
+            $sqlUpdate = $connection -> prepare("UPDATE `generos` SET `nombre` = ? WHERE `id` = ?");
+        $sqlUpdate -> execute([$nombreGenero, $idGenero]);
+        } catch (Exception $e) {
+            $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al actualizar el genero']));
+            return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
+        }
+
+        $jsonData =  json_encode(['message' => 'Genero actualizado exitosamente']);
+        $response -> getBody() -> write($jsonData);
+        return $response -> withStatus(200) -> withHeader('Content-Type', 'application/json');
+    });
+
 
     //? C) Eliminar un género
 
     $app->delete('/generos/{id}', function (Request $request, Response $response, $args) use ($db){
-        $idGenero = $args['id'];
+        if(isset($args['id']) && is_numeric($args['id'])){
+            $idGenero = $args['id'];
+        } else {
+            $response->getBody()->write(json_encode(['[400] Error: ' => 'El parametro id es requerido y tiene que ser un numero']));
+            return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+        }
 
         $connection = $db -> getConnection();
 
-        $sqlDelete = $connection -> prepare("DELETE FROM `generos` WHERE `id` = ?");
-        $sqlDelete -> execute([$idGenero]);
+        try{
+            $sqlDelete = $connection -> prepare("DELETE FROM `generos` WHERE `id` = ?");
+            $sqlDelete -> execute([$idGenero]);
+        } catch (Exception $e) {
+            $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al eliminar el genero. Revisa que no estes eliminando un genero que este asociado a un juego']));
+            return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
+        }
 
-        $jsonData = json_encode(['message' => 'Genero eliminado exitosamente']);
-        $responseBody = $response -> getBody();
-        $responseBody -> write($jsonData);
-        return $response -> withStatus(200) -> withBody($responseBody);
+        $jsonData =  json_encode(['message' => 'Genero eliminado exitosamente']);
+        $response -> getBody() -> write($jsonData);
+        return $response -> withStatus(200) -> withHeader('Content-Type', 'application/json');
     });
 
     //? D) Obtener todos los géneros
 
     $app -> get('/generos', function (Request $request, Response $response, $args) use ($db){
-        // var_dump($request->getQueryParams());
-        // die;
-        // Conecto a la BD.
         $connection = $db -> getConnection();
-        // Defino query
-        $sqlSelect = $connection -> prepare("SELECT DISTINCT * FROM `generos`");
-
-        if (!$sqlSelect){
-            // Si hay un error en la preparación de la consulta:
-
-            $errorData = ['error' => 'Error en la consulta'];
-            $errorJson = json_encode($errorData);
-            $responseBody = $response -> getBody();
-            $responseBody -> write($errorJson);
-            return $response -> withStatus(400) -> withBody($responseBody);
-        }
-
-        if ($sqlSelect -> execute()){
-            // Si se ejecuta la consulta correctamente en la BD:
-
-            // Ejecuto la query en la BD.
+        try{
+            $sqlSelect = $connection -> prepare("SELECT DISTINCT * FROM `generos`");
             $sqlSelect -> execute();
-            // Obtengo los datos devueltos por la BD y los guardo en $result
-            $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
-            // Encodeo los datos como json
-            $jsonData = json_encode($result);
-            // Obtengo una instancia del cuerpo de la respuesta
-            $responseBody = $response -> getBody();
-            // Guardo la data en el cuerpo de la respuesta
-            $responseBody -> write($jsonData);
-            // Retorno la respuesta
-            return $response -> withStatus(200) -> withBody($responseBody);
-        } else {
-            // Si hay un error en la ejecución de la consulta:
-
-            $errorData = ['error' => 'Error en la ejecución de la consulta a la BD.'];
-            $errorJson = json_encode($errorData);
-            $responseBody = $response -> getBody();
-            $responseBody -> write($errorJson);
-            return $response -> withStatus(400) -> withBody($responseBody);
+        }catch (Exception $e) {
+            $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al obtener los generos']));
+            return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
         }
 
-        // Si la tabla indicada no existe (no se ejecuta ninguno de los return anteriores):
-
-        $errorData = ['error' => 'La tabla indicada no existe'];
-        $errorJson = json_encode($errorData);
+        // Obtengo los datos de la BD y los guardo en $result
+        $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
+        $jsonData = json_encode($result);
         $responseBody = $response -> getBody();
-        $responseBody -> write($errorJson);
-        return $response -> withStatus(404) -> withBody($responseBody);
+        $responseBody -> write($jsonData);
+        return $response -> withStatus(200) -> withBody($responseBody) -> withHeader('Content-Type', 'application/json');
     });
 
     //? E) Crear una nueva plataforma
 
     $app -> post('/plataformas', function (Request $request, Response $response, $args) use ($db){
-        try{
             $requestBody = $request -> getBody();
             $data = json_decode($requestBody,true);
 
-            if (!isset($data['nombrePlataforma'])){
-                throw new Exception('El campo nombrePlataforma es requerido');
+            if(isset($data['nombrePlataforma'] )){
+                $nombrePlataforma = $data['nombrePlataforma'];
+            } else {
+                $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo nombrePlataforma es requerido.']));
+                return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
             }
-
-            $nombrePlataforma = $data['nombrePlataforma'];
 
             $connection = $db -> getConnection();
 
-            $sqlInsert = $connection -> prepare("INSERT INTO `plataformas`(`nombre`) VALUES(?)");
-            $sqlInsert -> execute([$nombrePlataforma]);
+            try{
+                $sqlInsert = $connection -> prepare("INSERT INTO `plataformas`(`nombre`) VALUES(?)");
+                $sqlInsert -> execute([$nombrePlataforma]);
+            } catch (Exception $e) {
+                $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al crear una plataforma.']));
+                return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
+            }
 
-            $jsonData = json_encode(['message' => 'Plataforma creada exitosamente']);
-            $responseBody = $response -> getBody();
-            $responseBody -> write($jsonData);
-
-            return $response -> withStatus(200) -> withBody($responseBody);
-        } catch (Exception $e) {
-            $errorData = ['error' => $e -> getMessage()];
-            $jsonError = json_encode($errorData);
-            $response -> getBody() -> write($jsonError);
-
-            return $response -> withStatus(400) -> withHeader('Content-Type', 'application/json');
-        }
+            $jsonData =  json_encode(['message' => 'Plataforma creada exitosamente.']);
+            $response -> getBody() -> write($jsonData);
+            return $response -> withStatus(200) -> withHeader('Content-Type', 'application/json');
     });
 
     //? F) Actualizar información de una plataforma
 
     $app -> put('/plataformas/{id}', function (Request $request, Response $response, $args) use ($db){
-        try {
             $requestBody = $request -> getBody();
             $data = json_decode($requestBody, true);
-            $idPlataforma = $args['id'];
 
-            // Si no existe o es null se genera una excepción.
-            if (!isset($data['nombrePlataforma'])){
-                throw new Exception ('El campo nombrePlataforma es requerido.');
-            } elseif ($data['nombrePlataforma'] == ""){
-                throw new Exception ('El campo nombrePlataforma no puede estar vacio.');
+            if(isset($data['nombrePlataforma']) && strlen($data['nombrePlataforma'])){
+                $nombrePlataforma = $data['nombrePlataforma'];
+            } else {
+                $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo nombrePlataforma es requerido']));
+                return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
             }
 
-            $nombrePlataforma = $data['nombrePlataforma'];
+            if(isset($args['id']) && is_numeric($args['id'])){
+                $idPlataforma = $args['id'];
+            } else {
+                $response->getBody()->write(json_encode(['[400] Error: ' => 'El parametro id es requerido y tiene que ser un numero']));
+                return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+            }
+
             $connection = $db -> getConnection();
 
-            // Valido si el ID existe en la tabla plataformas, sino lanzo excepción.
-            $sqlSelect = $connection -> prepare('SELECT COUNT(*) FROM `plataformas` WHERE id = ?');
-            $sqlSelect -> execute([$idPlataforma]);
-            $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
-            if(!($result[0]['COUNT(*)'] > 0)){
-                throw new Exception ('No hay ningun registro con el ID especificado.');
+            try{
+                // Valido si el ID existe en la tabla plataformas, sino lanzo excepción.
+                $sqlSelect = $connection -> prepare('SELECT COUNT(*) FROM `plataformas` WHERE id = ?');
+                $sqlSelect -> execute([$idPlataforma]);
+
+                $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
+
+                if(!$result[0]['COUNT(*)']){
+                    $response->getBody()->write(json_encode(['[400] Error: ' => 'No hay ningun registro con el ID especificado.']));
+                    return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+                }
+
+
+                $sqlUpdate = $connection -> prepare('UPDATE `plataformas` SET `nombre` = ? WHERE id = ?');
+                $sqlUpdate -> execute([$nombrePlataforma,$idPlataforma]);
+
+            } catch (Exception $e) {
+                $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al actualizar una plataforma.']));
+                return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
             }
 
-            $sqlUpdate = $connection -> prepare('UPDATE `plataformas` SET `nombre` = ? WHERE id = ?');
-            $sqlUpdate -> execute([$nombrePlataforma,$idPlataforma]);
-
-            $jsonData = json_encode('La plataforma se actualizo con exito.');
-            $responseBody = $response -> getBody();
-            $responseBody -> write($jsonData);
-            return $response -> withStatus(200) -> withBody($responseBody);
-
-        } catch (Exception $e) {
-            $errorData = ['error' => $e -> getMessage()];
-            $jsonError = json_encode($errorData);
-            $response -> getBody() -> write($jsonError);
-            return $response -> withStatus(400) -> withHeader('Content-Type', 'application/json');
-        }
+            $jsonData = json_encode(['message' => 'Plataforma se actualizo exitosamente.']);
+            $response -> getBody() -> write($jsonData);
+            return $response -> withStatus(200) -> withHeader('Content-Type', 'application/json');
     });
 
 
     //? G) Eliminar una plataforma
 
     $app -> delete('/plataformas/{id}', function (Request $request, Response $response, $args) use ($db){
-        try {
-            $idPlataforma = $args['id'];
-
+            if(isset($args['id']) && is_numeric($args['id'])){
+                $idPlataforma = $args['id'];
+            } else {
+                $response->getBody()->write(json_encode(['[400] Error: ' => 'El parametro id es requerido y tiene que ser un numero']));
+                return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+            }
+            
             $connection = $db -> getConnection();
 
-            $sqlSelect = $connection -> prepare('SELECT COUNT(*) FROM `plataformas` WHERE id = ?');
-            $sqlSelect -> execute([$idPlataforma]);
-            $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
-            if(!($result[0]['COUNT(*)'] > 0)){
-                throw new Exception ('No hay ningun registro que corresponda al ID especificado.');
+            try{
+                $sqlSelect = $connection -> prepare('SELECT COUNT(*) FROM `plataformas` WHERE id = ?');
+                $sqlSelect -> execute([$idPlataforma]);
+                $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
+
+                if(!$result[0]['COUNT(*)']){
+                    $response->getBody()->write(json_encode(['[400] Error: ' => 'No hay ningun registro que corresponda al ID especificado.']));
+                    return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+                }
+
+                $sqlDelete = $connection -> prepare('DELETE FROM `plataformas` WHERE id = ?');
+                $sqlDelete -> execute([$idPlataforma]);
+
+            } catch (Exception $e) {
+                $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al eliminar una plataforma.']));
+                return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
             }
 
-            $sqlDelete = $connection -> prepare('DELETE FROM `generos` WHERE id = ?');
-            $sqlDelete -> execute([$idPlataforma]);
-
-            $jsonData = json_encode('La plataforma fue eliminada con exito.');
+            $jsonData =  json_encode(['message' => 'Plataforma fue eliminada con exito.']);
             $response -> getBody() -> write($jsonData);
             return $response -> withStatus(200) -> withHeader('Content-Type', 'application/json');
-        } catch (Exception $e) {
-            $errorData = json_encode(['error' => $e -> getMessage()]);
-            $response -> getBody() -> write($errorData);
-            return $response -> withStatus(400) -> withHeader('Content-Type', 'application/json');
-        }
     });
 
     //? H) Obtener todas las plataformas
 
     $app -> get('/plataformas', function(Request $request, Response $response, $args) use ($db){
-        try {
-            $connection = $db -> getConnection();
-
-            //? Chequear si está bien esta validación.
-            if ($connection == null){
-                throw new Exception ('No se puede conectar a la base de datos.');
-            }
-
+        $connection = $db -> getConnection();
+        try{
             $sqlGet = $connection -> prepare('SELECT * FROM `plataformas`');
             $sqlGet -> execute();
             $result = $sqlGet -> fetchAll(PDO::FETCH_ASSOC);
-
-            $dataJson = json_encode($result);
-            $response -> getBody() -> write($dataJson);
-            return $response -> withStatus(200) -> withHeader('Content-Type', 'application/json');
         } catch (Exception $e) {
-            $errorData = ['error' => $e->getMessage()];
-            $errorJson = json_encode($errorData. "CATCH");
-            $response -> getBody() -> write($errorJson);
-            //? Chequear si es error 404 o 400.
-            return $response -> withStatus(404) -> withHeader('Content-Type', 'application/json');
+            $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al obtener las plataformas.']));
+            return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
         }
+
+        $dataJson = json_encode($result);
+        $response -> getBody() -> write($dataJson);
+        return $response -> withStatus(200) -> withHeader('Content-Type', 'application/json');
     });
 
     //? i) Crear un nuevo juego
 
     $app -> post('/juegos', function (Request $request, Response $response, $args) use ($db){
-        try {
-            $params = $request -> getParsedBody();
-            $nombre = $params['nombre'];
+            $requestBody = $request -> getBody();
+            $params = json_decode($requestBody, true);
+            
+            //Nombre
+            if(isset($params['nombre']) && strlen($params['nombre'])){
+                $nombre = $params['nombre'];
+            } else {
+                $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo nombre es requerido']));
+                return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+            }
+            
+            //Descripcion
+            if(isset($params['descripcion'])){
+                if(strlen($params['descripcion']) > 255){
+                    $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo descripción no puede superar los 255 caracteres.']));
+                    return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+                }
+                $descripcion = $params['descripcion'];
+            } else {
+                $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo descripcion es requerido']));
+                return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+            }
+            
+            //Url
+            if(isset($params['url'])){
+                if(strlen($params['url']) > 80){
+                    $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo url no puede superar los 80 caracteres.']));
+                    return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+                }
+                $url = $params['url'];
+            } else {
+                $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo url es requerido']));
+                return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+            }
+
+            //Plataforma
+            if(isset($params['plataforma'])){
+                $plataforma = $params['plataforma'];
+            } else {
+                $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo plataforma es requerido']));
+                return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+            }
+
+            //Genero
+            if(isset($params['genero'])){
+                $genero = $params['genero'];
+            } else {
+                $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo genero es requerido']));
+                return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+            }
+
+
             // $tipoImg = $params['img-juego']['type'];
             // $img = base64_encode(file_get_contents($params['img-juego']['tmp_name']));
-            $descripcion = $params['descripcion'];
-            $url = $params['url'];
-            $plataforma = $params['plataforma'];
-            $genero = $params['genero'];
-
-            // VALIDACIONES
-            $msgError = "";
-            if ($nombre == ""){
-                $msgError = $msgError.'El campo "nombre" es requerido. ';
-            }
             // ------------------------
             // Acá las validaciones de imagenes
             // ------------------------
-            if(strlen($descripcion) > 255){
-                $msgError = $msgError.'El campo "descripción" no puede superar los 255 caracteres. ';
-            }
-            if(strlen($url) > 80){
-                $msgError = $msgError.'El campo "url" no puede superar los 80 caracteres. ';
-            }
-            if($plataforma == ""){
-                $msgError = $msgError.'El campo "plataforma" es requerido. ';
-            }
-            if($genero == ""){
-                $msgError = $msgError.'El campo "genero" es requerido. ';
-            }
-            if (!$msgError == ""){
-                throw new Exception ($msgError,400);
-            }
 
             $connection = $db -> getConnection();
 
-            $connection -> prepare("INSERT INTO `juegos`(`nombre`, `imagen`, `tipo_imagen`, `descripcion`, `url`, `id_genero`, `id_plataforma`) VALUES ('?', '?','?','?','?', '?','?')");
-            $connection -> execute([$nombre, $img, $tipo_imagen, $descripcion, $url, $plataforma, $genero]);
+            try{
+                $connection -> prepare("INSERT INTO `juegos`(`nombre`, `imagen`, `tipo_imagen`, `descripcion`, `url`, `id_genero`, `id_plataforma`) VALUES ('?', '?','?','?','?', '?','?')");
+                $connection -> execute([$nombre, $img, $tipo_imagen, $descripcion, $url, $plataforma, $genero]);
+            } catch (Exception $e) {
+                $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al actualizar una plataforma.']));
+                return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
+            }
 
-            $dataJson = json_encode('El juego fue agregado con exito.');
+            $dataJson = json_encode(['message' => 'El juego fue agregado con exito.']);
             $response -> getBody() -> write($dataJson);
             return $response -> withStatus(200) -> withHeader('Content-Type', 'application/json');
-        } catch (Exception $e) {
-            $msgError = $e -> getMessage();
-            $codeError = $e -> getCode();
-            $jsonError = json_encode($msgError);
-            $response -> getBody() -> write($jsonError);
-            return $response -> withStatus($codeError) -> withHeader('Content-Type', 'application/json');
-        }
     });
 
     //? j) Actualizar información de un juego
@@ -443,7 +460,7 @@
 
     //? l) Obtener todos los juegos
 
-    $app -> get('/juegos', function (Request $request, Response $response, $args) use ($db){
+    $app -> get('/juegos/traerJuegos', function (Request $request, Response $response, $args) use ($db){
         try {
             // Conexion a BD
             $connection = $db -> getConnection();
@@ -463,7 +480,7 @@
 
     //? m) Buscar juegos
 
-    $app -> get('/juegos', function(Request $request, Response $response, $args) use ($db){
+    $app -> get('/juegos/buscarJuegos', function(Request $request, Response $response, $args) use ($db){
         try{
             $params = $request -> getQueryParams();
 
