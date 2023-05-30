@@ -18,6 +18,11 @@
     //Todas las funciones se repiten pero cambian pocas cosas, falta agregar errores 404 y 400. Por ahora esta todo sin catchear errores
     //Investigar como mover todos los endpoints de genero a otro archivo y modularizarlo.
 
+    //TODO Reemplazar returns por Excepciones.
+    //TODO Validaciones en plataforma y genero.
+    //TODO Validaciones de imagenes por String en juegos.
+    //TODO Validacion ID es 404.
+
     //? A) Crear un nuevo género
 
     $app -> post('/generos', function (Request $request, Response $response) use ($db) {
@@ -114,6 +119,9 @@
             return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
         }
 
+        //TODO Validar si el genero no está relacionado con algun juego. En caso de que sí, catchear error.
+
+
         $jsonData =  json_encode(['message' => 'Genero eliminado exitosamente']);
         $response -> getBody() -> write($jsonData);
         return $response -> withStatus(200) -> withHeader('Content-Type', 'application/json');
@@ -196,6 +204,7 @@
 
                 $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
 
+                //TODO setear un 404.
                 if(!$result[0]['COUNT(*)']){
                     $response->getBody()->write(json_encode(['[400] Error: ' => 'No hay ningun registro con el ID especificado.']));
                     return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
@@ -241,6 +250,8 @@
                 $sqlDelete = $connection -> prepare('DELETE FROM `plataformas` WHERE id = ?');
                 $sqlDelete -> execute([$idPlataforma]);
 
+                //TODO Validar si el plataforma no está relacionado con algun juego. En caso de que sí, catchear error.
+
             } catch (Exception $e) {
                 $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al eliminar una plataforma.']));
                 return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
@@ -274,7 +285,7 @@
     $app -> post('/juegos', function (Request $request, Response $response, $args) use ($db){
             //Otra forma de conseguir la data enviando desde la seccion form-data solo funciona con POST
             $params = $request->getParsedBody();
-      
+
             //Nombre
             if(isset($params['nombre']) && strlen($params['nombre'])){
                 $nombre = $params['nombre'];
@@ -282,7 +293,7 @@
                 $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo nombre es requerido']));
                 return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
             }
-            
+
             //Descripcion
             if(isset($params['descripcion'])){
                 if(strlen( $params['descripcion']) > 255){
@@ -324,25 +335,9 @@
             }
 
 
-            $uploadedFile = $request->getUploadedFiles()['img-juego'];
-            if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
-                // Obtiene el nombre original del archivo cargado
-                $filename = $uploadedFile->getClientFilename();
-                // Codifica el contenido del archivo en base64 para almacenarlo en la base de datos
-                $img = base64_encode($uploadedFile->getStream()->getContents());
-
-                $tipo_imagen = $uploadedFile->getClientMediaType();
-                $allowedTypes = ['image/jpg', 'image/png', 'image/jpeg'];
-
-                // Verifica si el tipo de imagen no está en la lista de tipos permitidos
-                if (!in_array($tipo_imagen, $allowedTypes)) {
-                    $response->getBody()->write(json_encode(['[400] Error: ' => 'La extensión seleccionada no es valida.']));
-                    return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
-                }
-            } else {
-                $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo imagen es requerido.']));
-                return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
-            }
+            //TODO ----------------------------------
+            //TODO Validacion de imagen y tipo_imagen
+            //TODO ----------------------------------
 
 
             $connection = $db -> getConnection();
@@ -393,6 +388,10 @@
                 }
                 $url = $params['url'];
             }
+
+            //TODO ----------------------------------
+            //TODO Validacion de imagen y tipo_imagen
+            //TODO ----------------------------------
 
             //Plataforma
             if(isset($params['plataforma'])){
@@ -480,34 +479,16 @@
             return $response -> withStatus(200) -> withHeader('Content-Type', 'application/json');
     });
 
+
     //? l) Obtener todos los juegos
-
-    $app -> get('/juegos/traerJuegos', function (Request $request, Response $response, $args) use ($db){
-            $connection = $db -> getConnection();
-
-            try{
-                $sqlGet = $connection -> prepare('SELECT DISTINCT * FROM `juegos`');
-                $sqlGet -> execute();
-                $data = $sqlGet -> fetchAll(PDO::FETCH_ASSOC);
-            }catch(Exception $e){
-                $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrió un error al traer los juegos.']));
-                return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
-            }
-
-
-            $dataJson = json_encode(['Lista de juegos' => $data]);
-            $response -> getBody() -> write($dataJson);
-            return $response -> withStatus(200) -> withHeader('Content-Type', 'application/json');
-    });
-
     //? m) Buscar juegos
 
-    $app->get('/juegos/buscarJuegos', function(Request $request, Response $response, $args) use ($db) {
-        $requestBody = $request -> getBody();
-        $params = json_decode($requestBody, true);
+    $app->get('/juegos', function(Request $request, Response $response, $args) use ($db) {
+        $params = $request -> getQueryParams();
+        print_r($params);
 
         $query = "SELECT j.nombre as nombrejuego, j.imagen, j.tipo_imagen, j.descripcion, j.url, g.nombre as nombregenero, p.nombre as nombrePlataforma FROM juegos j INNER JOIN generos g ON j.id_genero = g.id INNER JOIN plataformas p ON j.id_plataforma = p.id WHERE 1 = 1";
-    
+
         if (!empty($params)) {
             if (isset($params["genero"]) && strlen($params["genero"])) {
                 $genero = $params["genero"];
@@ -526,7 +507,7 @@
                 $query = $query . " ORDER BY j.nombre $orden";
             }
         }
-    
+
         $connection = $db->getConnection();
         try {
             $sqlSelect = $connection->prepare($query);
@@ -536,7 +517,7 @@
             $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrió un error al encontrar los juegos.']));
             return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
         }
-    
+
         $dataJson = json_encode(['Lista de juegos encontrados' => $data]);
         $response->getBody()->write($dataJson);
         return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
