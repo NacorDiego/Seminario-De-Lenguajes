@@ -15,13 +15,9 @@
     // Llamar al método connect()
     $db -> connect();
 
-    //Todas las funciones se repiten pero cambian pocas cosas, falta agregar errores 404 y 400. Por ahora esta todo sin catchear errores
     //Investigar como mover todos los endpoints de genero a otro archivo y modularizarlo.
 
     //TODO Reemplazar returns por Excepciones.
-    //TODO Validaciones en plataforma y genero.
-    //TODO Validaciones de imagenes por String en juegos.
-    //TODO Validacion ID es 404.
 
     //? A) Crear un nuevo género
 
@@ -84,10 +80,21 @@
         }
        
         $connection = $db -> getConnection();
+
         try{
+            $sqlSelect = $connection -> prepare('SELECT COUNT(*) FROM `generos` WHERE id = ?');
+            $sqlSelect -> execute([$idGenero]);
+
+            $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
+
+            if(!$result[0]['COUNT(*)']){
+                $response->getBody()->write(json_encode(['[404] Error: ' => 'No hay ningun registro con el ID especificado.']));
+                return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
+            }
+            
             // Guarda en $sqlUpdate la query preparada para actualizar el genero de nombre=? y id=?
             $sqlUpdate = $connection -> prepare("UPDATE `generos` SET `nombre` = ? WHERE `id` = ?");
-        $sqlUpdate -> execute([$nombreGenero, $idGenero]);
+            $sqlUpdate -> execute([$nombreGenero, $idGenero]);
         } catch (Exception $e) {
             $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al actualizar el genero']));
             return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
@@ -112,14 +119,22 @@
         $connection = $db -> getConnection();
 
         try{
+            $sqlSelect = $connection -> prepare('SELECT COUNT(*) FROM `generos` WHERE id = ?');
+            $sqlSelect -> execute([$idGenero]);
+
+            $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
+
+            if(!$result[0]['COUNT(*)']){
+                $response->getBody()->write(json_encode(['[404] Error: ' => 'No hay ningun registro con el ID especificado.']));
+                return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
+            }
+            
             $sqlDelete = $connection -> prepare("DELETE FROM `generos` WHERE `id` = ?");
             $sqlDelete -> execute([$idGenero]);
         } catch (Exception $e) {
             $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al eliminar el genero. Revisa que no estes eliminando un genero que este asociado a un juego']));
             return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
         }
-
-        //TODO Validar si el genero no está relacionado con algun juego. En caso de que sí, catchear error.
 
 
         $jsonData =  json_encode(['message' => 'Genero eliminado exitosamente']);
@@ -204,12 +219,10 @@
 
                 $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
 
-                //TODO setear un 404.
                 if(!$result[0]['COUNT(*)']){
-                    $response->getBody()->write(json_encode(['[400] Error: ' => 'No hay ningun registro con el ID especificado.']));
-                    return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+                    $response->getBody()->write(json_encode(['[404] Error: ' => 'No hay ningun registro con el ID especificado.']));
+                    return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
                 }
-
 
                 $sqlUpdate = $connection -> prepare('UPDATE `plataformas` SET `nombre` = ? WHERE id = ?');
                 $sqlUpdate -> execute([$nombrePlataforma,$idPlataforma]);
@@ -243,14 +256,12 @@
                 $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
 
                 if(!$result[0]['COUNT(*)']){
-                    $response->getBody()->write(json_encode(['[400] Error: ' => 'No hay ningun registro que corresponda al ID especificado.']));
-                    return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+                    $response->getBody()->write(json_encode(['[404] Error: ' => 'No hay ningun registro que corresponda al ID especificado.']));
+                    return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
                 }
 
                 $sqlDelete = $connection -> prepare('DELETE FROM `plataformas` WHERE id = ?');
                 $sqlDelete -> execute([$idPlataforma]);
-
-                //TODO Validar si el plataforma no está relacionado con algun juego. En caso de que sí, catchear error.
 
             } catch (Exception $e) {
                 $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al eliminar una plataforma.']));
@@ -283,8 +294,8 @@
     //? i) Crear un nuevo juego
 
     $app -> post('/juegos', function (Request $request, Response $response, $args) use ($db){
-            //Otra forma de conseguir la data enviando desde la seccion form-data solo funciona con POST
-            $params = $request->getParsedBody();
+            $requestBody = $request -> getBody();
+            $params = json_decode($requestBody,true);
 
             //Nombre
             if(isset($params['nombre']) && strlen($params['nombre'])){
@@ -334,17 +345,61 @@
                 return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
             }
 
+            //Imagen
+            if(isset($params['img'])){
+                $img = $params['img'];
+            } else {
+                $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo imagen es requerido']));
+                return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+            }
 
-            //TODO ----------------------------------
-            //TODO Validacion de imagen y tipo_imagen
-            //TODO ----------------------------------
-
+            //Type
+            if(isset($params['tipoImagen'])){
+                $tipoImagen = $params['tipoImagen'];
+            } else {
+                $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo tipoImagen es requerido']));
+                return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+            }
 
             $connection = $db -> getConnection();
 
+            //Validacion plataformas
+            try{
+                $sqlSelect = $connection -> prepare('SELECT COUNT(*) FROM `plataformas` WHERE id = ?');
+                $sqlSelect -> execute([$plataforma]);
+
+                $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
+
+                if(!$result[0]['COUNT(*)']){
+                    $response->getBody()->write(json_encode(['[404] Error: ' => 'No hay ningun registro con el ID especificado para la plataforma.']));
+                    return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
+                }
+
+            } catch (Exception $e) {
+                $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al buscar el ID de la plataforma.']));
+                return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
+            }
+
+            //Validacion genero
+            try{
+                $sqlSelect = $connection -> prepare('SELECT COUNT(*) FROM `generos` WHERE id = ?');
+                $sqlSelect -> execute([$genero]);
+
+                $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
+
+                if(!$result[0]['COUNT(*)']){
+                    $response->getBody()->write(json_encode(['[404] Error: ' => 'No hay ningun registro con el ID especificado para el genero.']));
+                    return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
+                }
+
+            } catch (Exception $e) {
+                $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al buscar el ID del genero.']));
+                return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
+            }
+
             try{
                 $sqlInsertJuego = $connection->prepare("INSERT INTO `juegos`(`nombre`, `imagen`, `tipo_imagen`, `descripcion`, `url`, `id_genero`, `id_plataforma`) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                $sqlInsertJuego->execute([$nombre, $img, $tipo_imagen, $descripcion, $url, $genero, $plataforma]);
+                $sqlInsertJuego->execute([$nombre, $img, $tipoImagen, $descripcion, $url, $genero, $plataforma]);
 
             } catch (Exception $e) {
                 $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al crear un juego.']));
@@ -389,9 +444,22 @@
                 $url = $params['url'];
             }
 
-            //TODO ----------------------------------
-            //TODO Validacion de imagen y tipo_imagen
-            //TODO ----------------------------------
+            //Imagen
+            if(isset($params['img'])){
+                $img = $params['img'];
+            } else {
+                $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo imagen es requerido']));
+                return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+            }
+
+            //Type
+            if(isset($params['tipoImagen'])){
+                $tipoImagen = $params['tipoImagen'];
+            } else {
+                $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo tipoImagen es requerido']));
+                return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+            }
+
 
             //Plataforma
             if(isset($params['plataforma'])){
@@ -399,8 +467,8 @@
                 $sqlSelect -> execute([$params['plataforma']]);
                 $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
                 if (!$response){
-                    $response->getBody()->write(json_encode(['[400] Error: ' => 'No hay ningun registro que corresponda al ID especificado.']));
-                    return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+                    $response->getBody()->write(json_encode(['[404] Error: ' => 'No hay ningun registro que corresponda al ID especificado.']));
+                    return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
                 }
                 $plataforma = $params['plataforma'];
             }
@@ -411,8 +479,8 @@
                 $sqlSelect -> execute([$params['genero']]);
                 $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
                 if (!$response){
-                    $response->getBody()->write(json_encode(['[400] Error: ' => 'No hay ningun registro que corresponda al ID especificado.']));
-                    return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+                    $response->getBody()->write(json_encode(['[404] Error: ' => 'No hay ningun registro que corresponda al ID especificado.']));
+                    return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
                 }
                 $genero = $params['genero'];
             }
@@ -423,12 +491,12 @@
                 $result = $sqlSelect->fetchAll(PDO::FETCH_ASSOC);
         
                 if (!$result) {
-                    $response->getBody()->write(json_encode(['[400] Error: ' => 'No hay ningún registro que corresponda al ID especificado.']));
-                    return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+                    $response->getBody()->write(json_encode(['[404] Error: ' => 'No hay ningún registro que corresponda al ID especificado.']));
+                    return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
                 }
         
-                $sqlUpdate = $connection->prepare("UPDATE `juegos` SET `nombre` = ?, `descripcion` = ?, `url` = ?, `id_plataforma` = ?, `id_genero` = ? WHERE `id` = ?");
-                $sqlUpdate->execute([$params['nombre'], $descripcion, $url, $plataforma, $genero, $idJuegos]);
+                $sqlUpdate = $connection->prepare("UPDATE `juegos` SET `nombre` = ?, `descripcion` = ?, `url` = ?, `id_plataforma` = ?, `id_genero` = ?, `imagen` = ?, `tipo_imagen` = ? WHERE `id` = ?");
+                $sqlUpdate->execute([$params['nombre'], $descripcion, $url, $plataforma, $genero, $img, $tipoImagen, $idJuegos]);                
             } catch (Exception $e) {
                 $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrió un error al actualizar el juego.']));
                 return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
@@ -458,8 +526,8 @@
                 $sqlSelect -> execute([$idJuego]);
                 $result = $sqlSelect -> fetchAll(PDO::FETCH_ASSOC);
                 if (!$result) {
-                    $response->getBody()->write(json_encode(['[400] Error: ' => 'No hay ningún registro que corresponda al ID especificado.']));
-                    return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
+                    $response->getBody()->write(json_encode(['[404] Error: ' => 'No hay ningún registro que corresponda al ID especificado.']));
+                    return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
                 }
             }catch(Exception $e){
                 $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrió un error al encontrar el juego a eliminar.']));
