@@ -8,8 +8,8 @@ const HeaderComponent = () => {
   return (
     <header className="header">
       <div className="centerHeader">
-        <img className="imagen-logo" src={logo} alt="logo"></img>
-        <h1 className="titulo">Pagina de videojuegos</h1>
+        <img className="imagen-logo" src={logo} alt="logo" />
+        <h1>Pagina de videojuegos</h1>
         <NavBarComponent />
       </div>
     </header>

@@ -553,10 +553,9 @@
 
     $app->get('/juegos', function(Request $request, Response $response, $args) use ($db) {
         $params = $request -> getQueryParams();
-        print_r($params);
-
+    
         $query = "SELECT j.nombre as nombrejuego, j.imagen, j.tipo_imagen, j.descripcion, j.url, g.nombre as nombregenero, p.nombre as nombrePlataforma FROM juegos j INNER JOIN generos g ON j.id_genero = g.id INNER JOIN plataformas p ON j.id_plataforma = p.id WHERE 1 = 1";
-
+    
         if (!empty($params)) {
             if (isset($params["genero"]) && strlen($params["genero"])) {
                 $genero = $params["genero"];
@@ -581,14 +580,14 @@
             $sqlSelect = $connection->prepare($query);
             $sqlSelect->execute();
             $data = $sqlSelect->fetchAll(PDO::FETCH_ASSOC);
+    
+            $dataJson = json_encode(['Lista de juegos encontrados' => $data]);
+            $response->getBody()->write($dataJson);
+            return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
         } catch (Exception $e) {
             $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrió un error al encontrar los juegos.']));
             return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
         }
-
-        $dataJson = json_encode(['Lista de juegos encontrados' => $data]);
-        $response->getBody()->write($dataJson);
-        return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
     });
 
 
