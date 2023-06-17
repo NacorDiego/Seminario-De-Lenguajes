@@ -57,7 +57,7 @@ body {
   display: flex;
   justify-content: space-evenly;
   gap: 10px;
-  align-items: end;
+  align-items: flex-end;
   margin: 2rem 0;
   border: 2px solid white;
   border-radius: 5px;
@@ -96,6 +96,7 @@ body {
 }
 
 .videojuegos-contenedor {
+  min-height: 900px;
   width: 100%;
   display: flex;
   justify-content: center;

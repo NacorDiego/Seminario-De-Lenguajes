@@ -1,35 +1,11 @@
-import { useEffect, useState } from 'react'
-import HeaderComponent from '../../components/HeaderComponent'
+import CardList from '../../components/CardList'
+
 // Estilos
 import './estilos.css'
 
 const DashboardPage = () => {
-  const [data, setData] = useState(null)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await fetch('http://localhost:8000/juegos', {
-          method: 'GET',
-        })
-          .then(response => response.json())
-          .then(data => {
-            console.log(data)
-          })
-          .catch(error => {
-            console.error('Error:', error)
-          })
-      } catch (error) {
-        console.log('Error al obtener los datos:', error)
-      }
-    }
-    fetchData()
-  }, [])
-  console.log('data', data)
-
   return (
     <>
-      <HeaderComponent />
       <main className="contenedor">
         <div className="contenedor100">
           <form className="formulario" action="index.php" method="GET">
@@ -70,6 +46,7 @@ const DashboardPage = () => {
             <input type="submit" className="boton-filtros" value="Filtrar"></input>
           </form>
         </div>
+        <CardList />
       </main>
       {/* Aca abajo agregar el footer */}
     </>

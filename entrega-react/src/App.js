@@ -1,4 +1,5 @@
 //Componentes
+import HeaderComponent from '../src/components/HeaderComponent'
 import DashboardPage from './pages/dashboard/DashboardPage'
 //Estilos
 import './App.css'
@@ -6,7 +7,10 @@ import './App.css'
 function App() {
   return (
     <div className="App-header">
-      <DashboardPage />
+      <HeaderComponent />
+      <div className="centerDashboard">
+        <DashboardPage />
+      </div>
     </div>
   )
 }

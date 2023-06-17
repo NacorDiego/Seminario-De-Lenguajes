@@ -11,3 +11,7 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.centerDashboard {
+  margin-top: 80px;
+}
