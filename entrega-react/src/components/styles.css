@@ -21,6 +21,18 @@
   margin: 15px;
 }
 
+.centerHeader h1{
+  font-size: calc(1rem + 1.2vmin);
+  font-weight: 700;
+  color: cornflowerblue;
+}
+
+.centerHeader a{
+  font-size: calc(1rem + 0.5vmin);
+  color: white;
+  text-decoration: none;
+}
+
 .navbar-lista {
   list-style: none;
   display: flex;

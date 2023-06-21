@@ -38,6 +38,8 @@ body {
 .contenedor {
   min-height: 80vh;
   width: 100%;
+  margin-top: 60px;
+  padding-top: 50px;
 }
 
 .contenedor100 {
@@ -53,15 +55,15 @@ body {
 }
 
 .formulario {
+  width: 100%;
   display: flex;
   justify-content: space-evenly;
   gap: 10px;
   align-items: flex-end;
   margin: 2rem 0;
-  border: 2px solid white;
-  border-radius: 5px;
-  padding: 15px;
+  padding: 20px 50px;
   color: white;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .campo {

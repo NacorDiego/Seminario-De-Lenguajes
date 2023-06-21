@@ -9,7 +9,7 @@ import FooterComponent from './components/FooterComponent'
 function App() {
   return (
     <>
-      <div className="App-header">
+      <div className="app-header">
         <HeaderComponent />
         <Routes>
           <Route path="/inicio" element={<DashboardPage />}></Route>
