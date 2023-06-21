@@ -27,18 +27,26 @@
   color: cornflowerblue;
 }
 
+.navbar-lista {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-right: 10px;
+}
+
 .centerHeader a{
   font-size: calc(1rem + 0.5vmin);
   color: white;
   text-decoration: none;
 }
 
-.navbar-lista {
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-right: 10px;
+.centerHeader a:hover,
+.centerHeader a:active,
+.centerHeader a.active {
+  color: cornflowerblue;
+  border-bottom: 3px solid cornflowerblue;
 }
 
 .separador {
