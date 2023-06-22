@@ -564,7 +564,7 @@
     $app->get('/juegos', function(Request $request, Response $response, $args) use ($db) {
         $params = $request -> getQueryParams();
     
-        $query = "SELECT j.nombre as nombrejuego, j.imagen, j.tipo_imagen, j.descripcion, j.url, g.nombre as nombregenero, p.nombre as nombrePlataforma FROM juegos j INNER JOIN generos g ON j.id_genero = g.id INNER JOIN plataformas p ON j.id_plataforma = p.id WHERE 1 = 1";
+        $query = "SELECT j.id, j.nombre as nombrejuego, j.imagen, j.tipo_imagen, j.descripcion, j.url, g.nombre as nombregenero, p.nombre as nombrePlataforma FROM juegos j INNER JOIN generos g ON j.id_genero = g.id INNER JOIN plataformas p ON j.id_plataforma = p.id WHERE 1 = 1";
     
         if (!empty($params)) {
             if (isset($params["genero"]) && strlen($params["genero"])) {
