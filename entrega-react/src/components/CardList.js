@@ -1,5 +1,4 @@
 import '../pages/dashboard/estilos.css'
-import './estilos.css'
 
 const CardList = ({ results }) => {
   return (
