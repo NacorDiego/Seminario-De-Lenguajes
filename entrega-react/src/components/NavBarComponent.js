@@ -1,14 +1,14 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 //Estilos
-import './styles.css'
+import './estilos.css'
 
 const NavBarComponent = () => {
   return (
     <nav>
       <ul className="navbar-lista">
         <li>
-          <NavLink activeClassName="active" to="/inicio">
+          <NavLink className="active" to="/">
             Inicio
           </NavLink>
         </li>

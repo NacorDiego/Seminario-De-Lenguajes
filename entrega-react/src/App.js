@@ -12,7 +12,7 @@ function App() {
       <div className="app-header">
         <HeaderComponent />
         <Routes>
-          <Route path="/inicio" element={<DashboardPage />}></Route>
+          <Route path="/" element={<DashboardPage />}></Route>
           {/* Acá se agregan las demás rutas cuando tengamos los componentes */}
         </Routes>
       </div>

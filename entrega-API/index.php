@@ -591,7 +591,7 @@
             $sqlSelect->execute();
             $data = $sqlSelect->fetchAll(PDO::FETCH_ASSOC);
     
-            $dataJson = json_encode(['Lista de juegos encontrados' => $data]);
+            $dataJson = json_encode($data);
             $response->getBody()->write($dataJson);
             return $response->withStatus(200)->withHeader('Content-Type', 'application/json');
         } catch (Exception $e) {

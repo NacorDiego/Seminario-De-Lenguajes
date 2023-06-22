@@ -2,7 +2,7 @@ import logo from '../logo.svg'
 //Componentees
 import NavBarComponent from './NavBarComponent'
 //Estilos
-import './styles.css'
+import './estilos.css'
 
 const HeaderComponent = () => {
   return (

@@ -1,4 +1,4 @@
-import './styles.css'
+import './estilos.css'
 
 const FooterComponent = () => {
   return (
