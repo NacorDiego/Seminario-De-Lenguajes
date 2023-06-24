@@ -17,6 +17,8 @@ Si te tira error el prettier tirate ese comando
 - react-router-dom
 - prettier
 - eslint
+- fortawesome
 
 Estas librerias la utilizamos para evitar errores de sintax y mejor lectura de codigo.
+`fortawesome` Es utilizado para el manejo de icons sin usar svgs.
 Por ultimo `react-router-dom` es utilizado para el manejo de rutas.

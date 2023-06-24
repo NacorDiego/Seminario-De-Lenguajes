@@ -21,13 +21,27 @@
 
     //TODO Reemplazar returns por Excepciones.
 
-    $app->add(function ($request, $handler) {
-        $response = $handler->handle($request);
-        return $response
-            ->withHeader('Access-Control-Allow-Origin', '*')
-            ->withHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    });
+    // $app->add(function ($request, $handler) {
+    //     $response = $handler->handle($request);
+    //     return $response
+    //         ->withHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+    //         ->withHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    //         ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    // });
+
+    if(isset($_SERVER['HTTP_HOST'])){
+        header('Access-Control-Allow-Origin: *');
+    }
+
+    if($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
+        if($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']){
+            header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+        }
+
+        if($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']){
+            header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+        }
+    }
 
     //? A) Crear un nuevo género
 
@@ -520,7 +534,7 @@
 
     //? k) Eliminar un juego
     
-    $app -> delete('/juegos/{id}', function (Request $request, Response $response, $args) use ($db){
+    $app-> delete('/juegos/{id}', function (Request $request, Response $response, $args) use ($db){
             if(isset($args['id']) && is_numeric($args['id'])){
                 $idJuego = $args['id'];
             } else {
@@ -562,29 +576,28 @@
     //? m) Buscar juegos
 
     $app->get('/juegos', function(Request $request, Response $response, $args) use ($db) {
-        $params = $request -> getQueryParams();
+        $params = $request->getQueryParams();
     
         $query = "SELECT j.id, j.nombre as nombrejuego, j.imagen, j.tipo_imagen, j.descripcion, j.url, g.nombre as nombregenero, p.nombre as nombrePlataforma FROM juegos j INNER JOIN generos g ON j.id_genero = g.id INNER JOIN plataformas p ON j.id_plataforma = p.id WHERE 1 = 1";
     
-        if (!empty($params)) {
-            if (isset($params["genero"]) && strlen($params["genero"])) {
-                $genero = $params["genero"];
-                $query = $query . " AND g.id = $genero";
-            }
-            if (isset($params["plataforma"]) && strlen($params["plataforma"])) {
-                $plataforma = $params["plataforma"];
-                $query = $query . " AND p.id = $plataforma";
-            }
-            if (isset($params["nombre"]) && strlen($params["nombre"])) {
-                $nombre = $params["nombre"];
-                $query = $query . " AND j.nombre LIKE '%$nombre%'"; // Devuelve todos los matcheos.
-            }
-            if (isset($params["ordenar"]) && strlen($params["ordenar"])) {
-                $orden = $params["ordenar"];
-                $query = $query . " ORDER BY j.nombre $orden";
-            }
+    if (!empty($params)) {
+        if (isset($params["genero"]) && strlen($params["genero"])) {
+            $genero = $params["genero"];
+            $query .= " AND g.id = $genero";
         }
-
+        if (isset($params["plataforma"]) && strlen($params["plataforma"])) {
+            $plataforma = $params["plataforma"];
+            $query .= " AND p.id = $plataforma";
+        }
+        if (isset($params["nombre"]) && strlen($params["nombre"])) {
+            $nombre = $params["nombre"];
+            $query .= " AND j.nombre LIKE '%$nombre%'";
+        }
+        if (isset($params["ordenar"]) && strlen($params["ordenar"])) {
+            $orden = $params["ordenar"];
+            $query .= " ORDER BY j.nombre $orden";
+        }
+    }
         $connection = $db->getConnection();
         try {
             $sqlSelect = $connection->prepare($query);

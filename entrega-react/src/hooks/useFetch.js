@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
 
-const BASE_URL = 'http://localhost:8000/'
+export const BASE_URL = 'http://localhost:8000/'
 
-const useFetch = (path = 'juegos', method = 'GET', data) => {
+//Hook solo para traer data pasandole parametros opcionales
+//Los parametros tienen que ser un objeto con la siguiente estructura:
+//{nombreParametro: valorParametro}
+const useFetch = (path = 'juegos', params) => {
   const [results, setResults] = useState(null)
   const [status, setStatus] = useState('loading')
 
@@ -11,11 +14,11 @@ const useFetch = (path = 'juegos', method = 'GET', data) => {
       try {
         setStatus('loading')
         let url = `${BASE_URL}${path}`
-        if (data) {
-          url = `${url}?${new URLSearchParams(data).toString()}`
+        if (params) {
+          url = `${url}?${new URLSearchParams(params).toString()}`
         }
 
-        const response = await fetch(url, { method })
+        const response = await fetch(url, { method: 'GET' })
         const jsonData = await response.json()
         setResults(jsonData)
         setStatus('success')
@@ -25,7 +28,7 @@ const useFetch = (path = 'juegos', method = 'GET', data) => {
       }
     }
     fetchData()
-  }, [path, method, data])
+  }, [path, params])
 
   return { results, status }
 }

@@ -1,17 +1,19 @@
 import '../pages/dashboard/estilos.css'
+import DeleteButton from './DeleteButton'
 
 const CardList = ({ results }) => {
   return (
     <>
       <div className="videojuegos-contenedor">
         <ul className="videojuegos-lista">
-          {results.map((juego, index) => {
+          {results.map(juego => {
             return (
-              <li className="juego" key={juego.nombrejuego + index}>
+              <li className="juego" key={juego.id}>
                 <a href={juego.url} target="_blank" rel="noreferrer">
                   <div className="card">
-                    <img className="imagen-juego" src={juego.imagen} alt="juego"></img>
+                    <img className="imagen-juego" src={juego.imagen} alt="juego" />
                     <div className="card-contenido">
+                      <DeleteButton endpoint="juegos" id={juego.id} />
                       <h4 className="titulo-juego">{juego.nombrejuego}</h4>
                       <ul className="lista-encabezados">
                         <li className="encabezado-juego">

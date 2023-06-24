@@ -8,14 +8,14 @@ import './estilos.css'
 
 const DashboardPage = () => {
   const [formData, setFormData] = useState({})
-  const { results, status } = useFetch('juegos', 'GET', formData)
+  const { results, status } = useFetch('juegos', formData)
 
   const handleFormData = useCallback(data => {
     setFormData(data)
   }, [])
 
-  const { results: plataformas } = useFetch('plataformas', 'GET')
-  const { results: generos } = useFetch('generos', 'GET')
+  const { results: plataformas } = useFetch('plataformas')
+  const { results: generos } = useFetch('generos')
 
   return (
     <>
