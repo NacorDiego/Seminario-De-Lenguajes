@@ -2,13 +2,13 @@ import '../GenerosPlataformas.css'
 import Listado from '../../components/Listado/Listado'
 import useFetch from '../../hooks/useFetch'
 
-const GenerosPage = () => {
-  const { results, status } = useFetch('generos')
+const PlataformasPage = () => {
+  const { results, status } = useFetch('plataformas')
 
   return (
     <main className="contenedor">
       <div className="contenedorListado">
-        <h1>Géneros</h1>
+        <h1>Plataformas</h1>
         <hr />
         {status === 'loading' ? (
           <p>Cargando..</p>
@@ -22,4 +22,4 @@ const GenerosPage = () => {
   )
 }
 
-export default GenerosPage
+export default PlataformasPage

@@ -8,9 +8,13 @@ const NavBarComponent = () => {
     <nav>
       <ul className="navbar-lista">
         <li>
-          <NavLink className="active" to="/">
-            Inicio
-          </NavLink>
+          <NavLink to="/">Inicio</NavLink>
+        </li>
+        <li>
+          <NavLink to="/generos">Géneros</NavLink>
+        </li>
+        <li>
+          <NavLink to="/plataformas">Plataformas</NavLink>
         </li>
         {/* Acá se agregan los demás navlinks cuando tengamos los componentes */}
       </ul>

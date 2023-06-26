@@ -1,4 +1,4 @@
-import '../pages/dashboard/estilos.css'
+import '../pages/dashboard/DashboardPage.css'
 import DeleteButton from './DeleteButton'
 
 const CardList = ({ results }) => {

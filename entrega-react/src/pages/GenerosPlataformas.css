@@ -1,0 +1,14 @@
+.contenedorListado {
+    margin-top: 50px;
+    width: 100%;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+.contenedorListado hr{
+    width: 80%;
+    border-color: rgba(255, 255, 255, 0.2);
+}
