@@ -1,20 +1,18 @@
+import EditButtons from '../EditButton'
 import './Listado.css'
 
 const Listado = ({ results }) => {
-  console.log(results)
   return (
-    <>
-      {/* <div></div> */}
-      <ul className="listado">
-        {results.map(item => {
-          return (
-            <li className="itemList" key={item.id}>
-              <span>{item.nombre}</span>
-            </li>
-          )
-        })}
-      </ul>
-    </>
+    <ul className="listado">
+      {results.map(item => {
+        return (
+          <li className="itemList" key={item.id}>
+            <span>{item.nombre}</span>
+            <EditButtons id={item.id} item={item} />
+          </li>
+        )
+      })}
+    </ul>
   )
 }
 

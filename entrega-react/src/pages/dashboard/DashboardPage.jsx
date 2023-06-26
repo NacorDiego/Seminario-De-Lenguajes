@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 import useFetch from '../../hooks/useFetch'
 // Componentes
 import CardList from '../../components/CardList'
-import Form from '../../components/Form'
+import Form from '../../components/FormFilter'
 // Estilos
 import './DashboardPage.css'
 

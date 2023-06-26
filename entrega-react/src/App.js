@@ -7,6 +7,7 @@ import './App.css'
 import FooterComponent from './components/FooterComponent'
 import GenerosPage from './pages/generos/GenerosPage'
 import PlataformasPage from './pages/plataformas/PlataformasPage'
+import FormEdit from './components/FormEdit'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<DashboardPage />}></Route>
           <Route path="/generos" element={<GenerosPage />}></Route>
           <Route path="/plataformas" element={<PlataformasPage />}></Route>
+          <Route path="/formEdit/:id" element={<FormEdit />} />
           {/* Acá se agregan las demás rutas cuando tengamos los componentes */}
         </Routes>
       </div>

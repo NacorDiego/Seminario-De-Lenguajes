@@ -16,7 +16,6 @@ const NavBarComponent = () => {
         <li>
           <NavLink to="/plataformas">Plataformas</NavLink>
         </li>
-        {/* Acá se agregan los demás navlinks cuando tengamos los componentes */}
       </ul>
     </nav>
   )
