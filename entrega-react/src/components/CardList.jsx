@@ -13,7 +13,6 @@ const CardList = ({ results }) => {
                   <div className="card">
                     <img className="imagen-juego" src={juego.imagen} alt="juego" />
                     <div className="card-contenido">
-                      <DeleteButton endpoint="juegos" id={juego.id} />
                       <h4 className="titulo-juego">{juego.nombrejuego}</h4>
                       <ul className="lista-encabezados">
                         <li className="encabezado-juego">
