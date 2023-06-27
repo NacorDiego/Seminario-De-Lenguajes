@@ -8,7 +8,7 @@ const Listado = ({ results }) => {
         return (
           <li className="itemList" key={item.id}>
             <span>{item.nombre}</span>
-            <EditButtons id={item.id} item={item} />
+            <EditButtons id={item.id} />
           </li>
         )
       })}

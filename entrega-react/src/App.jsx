@@ -1,6 +1,6 @@
 //Componentes
 import { Route, Routes } from 'react-router-dom'
-import HeaderComponent from '../src/components/HeaderComponent'
+import HeaderComponent from './components/HeaderComponent'
 import DashboardPage from './pages/dashboard/DashboardPage'
 //Estilos
 import './App.css'
