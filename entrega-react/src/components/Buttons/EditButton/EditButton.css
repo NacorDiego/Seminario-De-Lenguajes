@@ -1,0 +1,10 @@
+.btn {
+    padding: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: cornflowerblue;
+    color: white;
+}

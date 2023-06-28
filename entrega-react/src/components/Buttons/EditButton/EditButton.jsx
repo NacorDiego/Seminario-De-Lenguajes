@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
 import './EditButton.css'
 
-const EditButtons = ({ id }) => {
+const EditButton = ({ id }) => {
   return (
     <Link to={`/formEdit/${id}`}>
       <button className="btn">
@@ -13,4 +13,4 @@ const EditButtons = ({ id }) => {
   )
 }
 
-export default EditButtons
+export default EditButton
