@@ -1,4 +1,4 @@
-.btn-new {
+.btn-nuevo {
     background-color: transparent;
     color: white;
     font-size: 1.1rem;
@@ -9,7 +9,11 @@
     cursor: pointer;
 }
 
-.btn-new:hover {
+.btn-nuevo:hover {
     border-color: cornflowerblue;
     background-color: cornflowerblue;
+}
+
+.btn-nuevo__icono {
+    margin-right: 5px;
 }

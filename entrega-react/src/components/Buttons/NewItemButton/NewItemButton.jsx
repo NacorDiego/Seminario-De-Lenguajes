@@ -5,8 +5,8 @@ import './NewItemButton.css'
 function NewItemButton() {
   return (
     <>
-      <button className='btn-new'>
-        <FontAwesomeIcon icon={faPlus} />
+      <button className="btn-nuevo">
+        <FontAwesomeIcon className='btn-nuevo__icono' icon={faPlus} />
         Agregar
       </button>
     </>
