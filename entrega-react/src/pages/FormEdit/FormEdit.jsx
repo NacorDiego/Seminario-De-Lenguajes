@@ -27,10 +27,10 @@ const FormEdit = () => {
   }, [status, id])
 
   return (
-    <div className="contenedor">
-      <h2 className="contenedor__titulo">Editar el nombre</h2>
+    <div className="contenedor-formEdit">
+      <h2 className="contenedor-formEdit__titulo">Editar el nombre</h2>
       <hr />
-      <form className="contenedor__formulario" onSubmit={handleSubmit}>
+      <form className="contenedor-formEdit__formulario" onSubmit={handleSubmit}>
         <input
           className="formulario__input"
           type="text"

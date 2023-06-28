@@ -7,7 +7,7 @@ import './App.css'
 import FooterComponent from './components/FooterComponent'
 import GenerosPage from './pages/generos/GenerosPage'
 import PlataformasPage from './pages/plataformas/PlataformasPage'
-import FormEdit from './components/FormEdit/FormEdit'
+import FormEdit from './pages/FormEdit/FormEdit'
 
 function App() {
   return (

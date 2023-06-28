@@ -1,5 +1,6 @@
-.contenedor{
-    width: 40%;
+.contenedor-formEdit{
+    margin-top: 50px;
+    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -7,18 +8,18 @@
     gap: 2rem;
 }
 
-.contenedor__titulo {
+.contenedor-formEdit__titulo {
     display: inline;
     font-size: 2rem;
 }
 
-.contenedor hr{
+.contenedor-formEdit hr{
     width: 100%;
     border-color: rgba(255, 255, 255, 0.2);
 }
 
-.contenedor__formulario {
-    width: 100%;
+.contenedor-formEdit__formulario {
+    width: 50%;
     margin-top: 2rem;
     display: flex;
     justify-content: start;
@@ -30,6 +31,7 @@
     font-size: 1rem;
     border-radius: 10px 0 0 10px;
     padding: 10px;
+    padding-left: 20px;
     width: 80%;
 }
 
