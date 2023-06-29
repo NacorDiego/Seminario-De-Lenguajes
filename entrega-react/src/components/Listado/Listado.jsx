@@ -1,4 +1,4 @@
-import DeleteButton from '../Buttons/DeleteButtons/DeleteButton'
+import DeleteButton from '../Buttons/DeleteButton/DeleteButton'
 import EditButton from '../Buttons/EditButton/EditButton'
 import NewItemButton from '../Buttons/NewItemButton/NewItemButton'
 import './Listado.css'
