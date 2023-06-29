@@ -41,13 +41,13 @@ Prettier es una herramienta de formateo de código que ayuda a mantener un estil
 
 Para obtener más información sobre cómo utilizar Prettier y configurar las reglas de formato, puedes consultar la [documentación oficial de Prettier](https://prettier.io/docs/en/index.html).
 
-## Librería Slim y API REST
+## Librería Slim 4 y API REST
 
-Utilizando Slint, se ha implementado una API REST en este proyecto para facilitar la comunicación entre el cliente y el servidor. La API REST permite enviar solicitudes HTTP y recibir respuestas con datos en formato JSON, lo que hace posible intercambiar información de manera eficiente y flexible.
+Utilizando Slim, se ha implementado una API REST en este proyecto para facilitar la comunicación entre el cliente y el servidor. La API REST permite enviar solicitudes HTTP y recibir respuestas con datos en formato JSON, lo que hace posible intercambiar información de manera eficiente y flexible.
 
 ### Configuración de la API REST
 
-La configuración y definición de la API REST utilizando Slint se encuentra en los archivos correspondientes en el directorio.
+La configuración y definición de la API REST utilizando Slim se encuentra en los archivos correspondientes en el directorio.
 
 ### Uso de la API REST
 
@@ -55,7 +55,8 @@ La API REST está diseñada para manejar diversas operaciones y funcionalidades 
 
 ### Documentación adicional
 
-Para obtener más información sobre cómo utilizar Slint y desarrollar API RESTful con PHP. Si tenés alguna duda sobre el uso de Slint podés consultar la [documentación oficial de SweetAlert2](https://sweetalert2.github.io/).
+Para obtener más información sobre cómo utilizar Slim y desarrollar API RESTful con PHP. Si tenés alguna duda sobre el uso de Slim podés consultar la [documentación oficial de Slim 4](https://www.slimframework.com/docs/v4/).
+
 ## Librería SweetAlert2
 
 Este proyecto utiliza la librería "SweetAlert2" para el manejo de alertas en pantalla, proporcionando una experiencia visual atractiva y amigable para los usuarios.
