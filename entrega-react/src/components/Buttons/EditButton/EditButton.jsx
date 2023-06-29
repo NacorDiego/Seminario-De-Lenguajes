@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
 import './EditButton.css'
 
-const EditButton = ({ id }) => {
+const EditButton = ({ id, path }) => {
   return (
-    <Link to={`/formEdit/${id}`}>
+    <Link to={`/formEdit/${id}/${path}`}>
       <button className="btn">
         <FontAwesomeIcon icon={faPencil} />
       </button>

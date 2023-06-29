@@ -21,14 +21,6 @@
 
     //TODO Reemplazar returns por Excepciones.
 
-    // $app->add(function ($request, $handler) {
-    //     $response = $handler->handle($request);
-    //     return $response
-    //         ->withHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
-    //         ->withHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-    //         ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    // });
-
     if(isset($_SERVER['HTTP_HOST'])){
         header('Access-Control-Allow-Origin: *');
     }
@@ -51,11 +43,11 @@
         //Transforma el json a un array y lo guarda en $data
         $data = json_decode($requestBody, true);
         //en $data estan todos las props que mandamos desde Postman
-        if(isset($data['nombreGenero']) && strlen($data['nombreGenero'])){
-            $nombreGenero = $data['nombreGenero'];
+        if(isset($data['nombre']) && strlen($data['nombre'])){
+            $nombre = $data['nombre'];
         } else {
             //Escribimos un error y lo encodeamos
-            $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo nombreGenero es requerido']));
+            $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo nombre es requerido']));
             //Retornamos una respuesta de tipo JSON con el codigo 400 y el cuerpo con el error
             return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
         }
@@ -66,7 +58,7 @@
         try{
             $sqlInsert = $connection -> prepare("INSERT INTO `generos`(`nombre`) VALUES (?)");
             //Donde va el signo de pregunta es donde se inserta la variable
-            $sqlInsert -> execute([$nombreGenero]);
+            $sqlInsert -> execute([$nombre]);
         } catch (Exception $e) {
             $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al insertar el género en la base de datos']));
             return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
@@ -88,10 +80,10 @@
         $requestBody = $request -> getBody();
         $data = json_decode($requestBody, true);
 
-        if(isset($data['nombreGenero']) && strlen($data['nombreGenero'])){
-            $nombreGenero = $data['nombreGenero'];
+        if(isset($data['nombre']) && strlen($data['nombre'])){
+            $nombre = $data['nombre'];
         } else {
-            $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo nombreGenero es requerido']));
+            $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo nombre es requerido']));
             return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
         }
 
@@ -118,7 +110,7 @@
             
             // Guarda en $sqlUpdate la query preparada para actualizar el genero de nombre=? y id=?
             $sqlUpdate = $connection -> prepare("UPDATE `generos` SET `nombre` = ? WHERE `id` = ?");
-            $sqlUpdate -> execute([$nombreGenero, $idGenero]);
+            $sqlUpdate -> execute([$nombre, $idGenero]);
         } catch (Exception $e) {
             $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al actualizar el genero']));
             return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
@@ -192,10 +184,10 @@
             $requestBody = $request -> getBody();
             $data = json_decode($requestBody,true);
 
-            if(isset($data['nombrePlataforma']) && strlen($data['nombrePlataforma'])){
-                $nombrePlataforma = $data['nombrePlataforma'];
+            if(isset($data['nombre']) && strlen($data['nombre'])){
+                $nombre = $data['nombre'];
             } else {
-                $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo nombrePlataforma es requerido.']));
+                $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo nombre es requerido.']));
                 return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
             }
 
@@ -203,7 +195,7 @@
 
             try{
                 $sqlInsert = $connection -> prepare("INSERT INTO `plataformas`(`nombre`) VALUES(?)");
-                $sqlInsert -> execute([$nombrePlataforma]);
+                $sqlInsert -> execute([$nombre]);
             } catch (Exception $e) {
                 $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al crear una plataforma.']));
                 return $response->withStatus(404)->withHeader('Content-Type', 'application/json');
@@ -220,10 +212,10 @@
             $requestBody = $request -> getBody();
             $data = json_decode($requestBody, true);
 
-            if(isset($data['nombrePlataforma']) && strlen($data['nombrePlataforma'])){
-                $nombrePlataforma = $data['nombrePlataforma'];
+            if(isset($data['nombre']) && strlen($data['nombre'])){
+                $nombre = $data['nombre'];
             } else {
-                $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo nombrePlataforma es requerido']));
+                $response->getBody()->write(json_encode(['[400] Error: ' => 'El campo nombre es requerido']));
                 return $response->withStatus(400)->withHeader('Content-Type', 'application/json');
             }
 
@@ -249,7 +241,7 @@
                 }
 
                 $sqlUpdate = $connection -> prepare('UPDATE `plataformas` SET `nombre` = ? WHERE id = ?');
-                $sqlUpdate -> execute([$nombrePlataforma,$idPlataforma]);
+                $sqlUpdate -> execute([$nombre,$idPlataforma]);
 
             } catch (Exception $e) {
                 $response->getBody()->write(json_encode(['[404] Error: ' => 'Ocurrio un error al actualizar una plataforma.']));

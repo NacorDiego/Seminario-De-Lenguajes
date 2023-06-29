@@ -1,41 +1,41 @@
-.listado{
-    width: 50%;
-    display: flex;
-    /* justify-content: center; */
-    flex-direction: column;
-    align-items: center;
+.listado {
+  width: 50%;
+  display: flex;
+  /* justify-content: center; */
+  flex-direction: column;
+  align-items: center;
 }
 
-.itemList{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 40px;
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid white;
-    padding: 20px 0;
+.itemList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid white;
+  padding: 20px 0;
 }
-.itemList:hover{
-    background-color: rgba(80, 126, 210, 0.3);
-}
-
-.itemList span{
-    font-size: 1.2rem;
+.itemList:hover {
+  background-color: rgba(80, 126, 210, 0.3);
 }
 
-.contenedor30{
-    width: 30%;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    gap: 2px;
-    padding-right: 15px;
+.itemList span {
+  font-size: 1.2rem;
 }
 
-.contenedor40{
-    width: 40%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.contenedor30 {
+  width: 30%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2px;
+  padding-right: 15px;
+}
+
+.contenedor40 {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

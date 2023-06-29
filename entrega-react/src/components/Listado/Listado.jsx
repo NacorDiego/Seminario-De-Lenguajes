@@ -3,7 +3,7 @@ import EditButton from '../Buttons/EditButton/EditButton'
 import NewItemButton from '../Buttons/NewItemButton/NewItemButton'
 import './Listado.css'
 
-const Listado = ({ results }) => {
+const Listado = ({ path, results }) => {
   return (
     <>
       <ul className="listado">
@@ -15,14 +15,14 @@ const Listado = ({ results }) => {
                 <span>{item.nombre}</span>
               </div>
               <div className="contenedor30">
-                <EditButton id={item.id} />
-                <DeleteButton id={item.id} />
+                <EditButton id={item.id} path={path} />
+                <DeleteButton id={item.id} path={path} name={item.nombre} />
               </div>
             </li>
           )
         })}
       </ul>
-      <NewItemButton />
+      <NewItemButton path={path} />
     </>
   )
 }

@@ -13,7 +13,7 @@ const PlataformasPage = () => {
         {status === 'loading' ? (
           <p>Cargando..</p>
         ) : status === 'success' ? (
-          <Listado results={results} />
+          <Listado path="plataformas" results={results} />
         ) : (
           status === 'error' && <p>Error al obtener los datos</p>
         )}

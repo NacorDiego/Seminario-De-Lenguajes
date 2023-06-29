@@ -13,7 +13,7 @@ const GenerosPage = () => {
         {status === 'loading' ? (
           <p>Cargando..</p>
         ) : status === 'success' ? (
-          <Listado results={results} />
+          <Listado path="generos" results={results} />
         ) : (
           status === 'error' && <p>Error al obtener los datos</p>
         )}
