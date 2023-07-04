@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import useFetch, { BASE_URL } from '../../hooks/useFetch'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import './FormEdit.css'
 
 const FormEdit = () => {
+  const navigate = useNavigate()
   const [responseText, setResponseText] = useState(null)
   const [errorType, setErrorType] = useState(null)
   const [text, setText] = useState(null)
@@ -42,6 +43,14 @@ const FormEdit = () => {
   const nameActual = useMemo(() => {
     return status === 'success' && id && results.find(item => item.id === parseInt(id))
   }, [status, id])
+
+  useEffect(() => {
+    if (errorType === 'success') {
+      //No puedo setear navigate en la linea 32 porque al setear un estado nuevo
+      //Tarda unos segundos en setear y al navegar las variables son null
+      navigate(`/${path}`, { state: { errorType, responseText }, replace: false })
+    }
+  }, [errorType])
 
   return (
     <div className="contenedor-formEdit">

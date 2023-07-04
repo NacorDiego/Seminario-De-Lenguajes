@@ -60,12 +60,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.alert.success {
-  background-color: #c8e6c9;
-  border-color: #81c784;
-  color: #388e3c;
-}
-
 .alert.error {
   background-color: #ffcdd2;
   border-color: #e57373;

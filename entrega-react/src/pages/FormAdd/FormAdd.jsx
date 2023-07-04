@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BASE_URL } from '../../hooks/useFetch'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import './FormAdd.css'
 
 const FormAdd = () => {
+  const navigate = useNavigate()
   const [responseText, setResponseText] = useState('')
   const [errorType, setErrorType] = useState('')
   const [text, setText] = useState('')
@@ -37,6 +38,14 @@ const FormAdd = () => {
   const handleChange = event => {
     setText(event.target.value)
   }
+
+  useEffect(() => {
+    if (errorType === 'success') {
+      //No puedo setear navigate en la linea 32 porque al setear un estado nuevo
+      //Tarda unos segundos en setearse y al navegar las variables son null
+      navigate(`/${path}`, { state: { errorType, responseText }, replace: false })
+    }
+  }, [errorType])
 
   return (
     <div className="contenedor-FormAdd">

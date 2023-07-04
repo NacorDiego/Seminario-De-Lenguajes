@@ -1,9 +1,13 @@
+import React from 'react'
+import useFetch from '../../hooks/useFetch'
+import { useLocation } from 'react-router-dom'
 import '../GenerosPlataformas.css'
 import Listado from '../../components/Listado/Listado'
-import useFetch from '../../hooks/useFetch'
 
 const GenerosPage = () => {
+  const location = useLocation()
   const { results, status } = useFetch('generos')
+  const { errorType, responseText } = location.state || {}
 
   return (
     <main className="contenedor">
@@ -18,6 +22,7 @@ const GenerosPage = () => {
           status === 'error' && <p>Error al obtener los datos</p>
         )}
       </div>
+      {errorType && <div className={`alert ${errorType}`}>{responseText}</div>}
     </main>
   )
 }
