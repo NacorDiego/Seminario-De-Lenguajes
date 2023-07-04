@@ -21,7 +21,7 @@
   margin: 15px;
 }
 
-.centerHeader h1{
+.centerHeader h1 {
   font-size: calc(1rem + 1.2vmin);
   font-weight: 700;
   color: cornflowerblue;
@@ -36,7 +36,7 @@
   margin-right: 10px;
 }
 
-.centerHeader a{
+.centerHeader a {
   font-size: calc(1rem + 0.5vmin);
   color: white;
   text-decoration: none;
@@ -73,4 +73,34 @@
 
 .width30 {
   width: 30%;
+}
+/* Delete Button  */
+
+.btnDelete {
+  background-color: transparent;
+  color: white;
+  padding: 5px;
+  font-size: 1.1rem;
+  border-radius: 50%;
+  box-shadow: none;
+  border: 0;
+  margin-right: 7px;
+}
+
+.btnDelete:hover {
+  background-color: cornflowerblue;
+  color: white;
+}
+
+/* Edit button */
+
+.btnEdit {
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.btnEdit:hover {
+  background-color: cornflowerblue;
+  color: white;
 }

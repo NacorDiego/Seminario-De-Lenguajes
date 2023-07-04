@@ -1,9 +1,34 @@
-import DeleteButton from '../Buttons/DeleteButton/DeleteButton'
-import EditButton from '../Buttons/EditButton/EditButton'
-import NewItemButton from '../Buttons/NewItemButton/NewItemButton'
+import { Link, useNavigate } from 'react-router-dom'
+import NewItemButton from '../NewItemButton/NewItemButton'
+import CustomButtomComponent from '../CustomButtomComponent'
 import './Listado.css'
+import { BASE_URL } from '../../hooks/useFetch'
+import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 const Listado = ({ path, results }) => {
+  const navigate = useNavigate()
+
+  const handleDelete = async (id, name) => {
+    const shouldDelete = window.confirm(
+      `Desea borrar ${path === 'generos' ? 'el' : 'la'} ${path.split('s')[0]} ${name}?`,
+    )
+
+    if (shouldDelete) {
+      try {
+        const response = await fetch(`${BASE_URL}${path}/${id}`, { method: 'DELETE' })
+        const dataJson = await response.json()
+        const message = dataJson.message
+        window.location.reload()
+        navigate(`/${path}`, { state: { errorType: 'success', responseText: message } })
+      } catch (error) {
+        console.log(
+          `Error eliminar ${path === 'generos' ? 'el' : 'la'} ${path.split('s')[0]} ${name}?`,
+          error,
+        )
+      }
+    }
+  }
+
   return (
     <>
       <ul className="listado">
@@ -15,8 +40,16 @@ const Listado = ({ path, results }) => {
                 <span>{item.nombre}</span>
               </div>
               <div className="contenedor30">
-                <EditButton id={item.id} path={path} />
-                <DeleteButton id={item.id} path={path} name={item.nombre} />
+                <Link to={`/formEdit/${item.id}/${path}`}>
+                  <CustomButtomComponent buttonAction={faPencil} openBy={'edit'} />
+                </Link>
+                <CustomButtomComponent
+                  handleAction={() => {
+                    handleDelete(item.id, item.nombre)
+                  }}
+                  buttonAction={faTrash}
+                  openBy={'delete'}
+                />
               </div>
             </li>
           )
