@@ -1,9 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom'
-import NewItemButton from '../NewItemButton/NewItemButton'
 import CustomButtomComponent from '../CustomButtomComponent'
 import './Listado.css'
 import { BASE_URL } from '../../hooks/useFetch'
-import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faPencil, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 const Listado = ({ path, results }) => {
   const navigate = useNavigate()
@@ -55,7 +54,9 @@ const Listado = ({ path, results }) => {
           )
         })}
       </ul>
-      <NewItemButton path={path} />
+      <Link to={`/formAdd/${path}`}>
+        <CustomButtomComponent buttonAction={faPlus} openBy={'add'} buttonTitle={'Agregar'} />
+      </Link>
     </>
   )
 }
