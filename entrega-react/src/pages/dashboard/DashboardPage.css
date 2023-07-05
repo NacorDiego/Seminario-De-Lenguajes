@@ -164,6 +164,7 @@ body {
 } */
 
 .card-contenido {
+  height: 20rem;
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.7);
   color: black;
@@ -171,6 +172,7 @@ body {
 
 .imagen-juego {
   width: 100%;
+  max-height: 12rem;
   border-radius: 5px 5px 0 0;
   /* z-index: -1; */
   /* filter: blur(1px); para darle desenfoque mientras no se le hace hover. */
